@@ -1,0 +1,52 @@
+:root {
+  --primary-background-color: white;
+  --primary-color: #fc5c3c;
+  --secondary-color: #fa4723;
+  --primary-gray: #f1f6f7;
+}
+
+.primary-color {
+  color: var(--primary-color) !important;
+}
+
+.background-gray {
+  background-color: var(--primary-gray);
+}
+
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+.href-unstyled {
+  text-decoration: none;
+  color: black;
+}
+
+.smooth-transform {
+  transition: all 0.2s ease;
+}
+
+.home-button {
+  background-color: #77777720;
+}
+.home-button:hover {
+  background-color: var(--primary-color);
+}
+.home-button:hover i {
+  color: white;
+}
+
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  border: 1px solid var(--primary-color) !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color) !important;
+  border: 1px solid var(--secondary-color) !important;
+  transition: all 0.2s ease;
+}
+
+.forget-pass-btn {
+  /* cursor: pointer; */
+}

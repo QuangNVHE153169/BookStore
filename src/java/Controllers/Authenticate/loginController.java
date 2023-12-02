@@ -56,7 +56,7 @@ public class loginController {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/views/user-profile.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/User/user-profile.jsp").forward(request, response);
     }
 
 //    public static void main(String[] args) {
