@@ -10,7 +10,6 @@ import Utils.EncodeMD5;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -18,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author dell
  */
-public class ChangePasswordController extends HttpServlet {
+public class changePasswordController extends BaseAuthenticationController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,33 +45,19 @@ public class ChangePasswordController extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+    @Override
+    protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/views/User/ChangePassword.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+    protected void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
         User account = (User) request.getSession().getAttribute("account");
 
         String oldPwd = request.getParameter("oldPwd");
@@ -85,23 +70,14 @@ public class ChangePasswordController extends HttpServlet {
 
         User acc = uDao.doLogin(account.getEmail(), encodeOldPass);
         if (acc == null) {
-            request.getSession().setAttribute("changeFail", "0");
-            response.sendRedirect("home");
+            request.getSession().setAttribute("msg", "Change password failed! Please try again");
+            response.sendRedirect("change-password");
         } else {
+            request.getSession().setAttribute("msg", "Change password successfully! Please re-login with new password");
+            request.getSession().removeAttribute("account");
             uDao.changePassword(account.getEmail(),encodeNewPass);
-            request.getSession().setAttribute("changeFail", "1");
             response.sendRedirect("home");
         }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

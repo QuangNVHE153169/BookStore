@@ -54,23 +54,6 @@
                         <h6>Full name <span class="text-danger">*</span></h6>
                         <input id="input-fullname" type="text" class="form-control mb-3" 
                                required placeholder="Enter full name" name="fullName">
-<!--                        <h6>Gender <span class="text-danger">*</span></h6>
-                        <div class="d-flex gap-5 mb-3 align-items-center">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                                       value="true" checked>
-                                <label class="form-check-label" for="exampleRadios1">
-                                    Male
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                                       value="false">
-                                <label class="form-check-label" for="exampleRadios2">
-                                    Female
-                                </label>
-                            </div>
-                        </div>-->
                         <h6>Mobile <span class="text-danger">*</span></h6>
                         <input id="input-phone" type="number" class="form-control mb-3" 
                                required oninput="validatePhone(this)" placeholder="Enter mobile" name="phone">
@@ -86,7 +69,7 @@
                             <p class="mb-0">Already have an account?</p>
                             <a class="btn btn-outline-none text-decoration-underline" data-bs-toggle="modal"
                                data-bs-target="#loginModal">
-                                LOG IN
+                                SIGN IN
                             </a>
                         </div>
                     </div>
@@ -96,31 +79,32 @@
     </div>
 </div>
 
-<div class="modal fade" id="forgetPasswordModal" tabindex="-1" aria-labelledby="forgetPasswordModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="forgetPasswordModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <form action="forgotPassword" method="post">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex flex-column align-items-center gap-3 p-5">
-                    <img src="/assets/reset-pass-img.png" alt="reset-pass-img"
-                         style="max-width: 80px; object-fit: cover;">
-                    <h2>Reset Password</h2>
-                    <input type="text" class="form-control mb-3" placeholder="Enter user email"
-                           aria-label="Useremail">
-                    <button type="button" class="btn btn-primary w-100 mb-2">RESET PASSWORD</button>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <p class="mb-0">Already have an account</p>
-                        <a class="btn btn-outline-none text-decoration-underline" data-bs-toggle="modal"
-                           data-bs-target="#loginModal">
-                            SIGN IN
-                        </a>
+        <div class="modal-content">
+            <form action="forgotPassword" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex flex-column align-items-center gap-3 p-5">
+                        <img src="/assets/reset-pass-img.png" alt="reset-pass-img"
+                             style="max-width: 80px; object-fit: cover;">
+                        <h2>Reset Password</h2>
+                        <input type="text" class="form-control mb-3" placeholder="Enter user email"
+                               aria-label="Useremail">
+                        <button type="button" class="btn btn-primary w-100 mb-2">RESET PASSWORD</button>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <p class="mb-0">Already have an account</p>
+                            <a class="btn btn-outline-none text-decoration-underline" data-bs-toggle="modal"
+                               data-bs-target="#loginModal">
+                                SIGN IN
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>         
+            </form> 
+        </div>
     </div>
 </div>
 
@@ -130,7 +114,7 @@
         var regex = /^0[0-9]{9}$/;
 
         if (!regex.test(value)) {
-            document.getElementById('error-phone').textContent = "S? ?i?n tho?i không h?p l?";
+            document.getElementById('error-phone').textContent = "Invalid Phone Number";
             document.getElementById('error-phone').style.display = "block";
             checkPhone = false;
         } else {
@@ -145,7 +129,7 @@
         var regex = /^(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
 
         if (!regex.test(value)) {
-            document.getElementById('error-password').textContent = "M?t kh?u ph?i ch?a ít nh?t 1 ký t? ??c bi?t và có ?? dài t?i thi?u là 8 ký t?";
+            document.getElementById('error-password').textContent = "Password must have at least one special character and its length is at least 8 characters";
             document.getElementById('error-password').style.display = "block";
             checkPassword = false;
         } else {
@@ -160,7 +144,7 @@
         var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!emailRegex.test(value)) {
-            document.getElementById('error-email').textContent = "Vui lòng nh?p m?t ??a ch? email h?p l?";
+            document.getElementById('error-email').textContent = "Invalid Email";
             document.getElementById('error-email').style.display = "block";
             checkEmail = false;
         } else {
@@ -171,12 +155,13 @@
     }
 
     function regiterAccount() {
-        var fullName = document.getElementById('input-fullName').value;
+        var fullName = document.getElementById('input-fullname').value;
         var dob = document.getElementById('input-dob').value;
         if (fullName !== '' && dob !== '' && checkPhone && checkPassword && checkEmail) {
+            console.log(1);
             document.getElementById('frm-register').submit();
         } else {
-            alert("Vui lòng ki?m tra l?i và nh?p ??y ?? thông tin ??ng nh?p!");
+            alert("Please be sure all required informations were inputed!");
         }
     }
 </script>
