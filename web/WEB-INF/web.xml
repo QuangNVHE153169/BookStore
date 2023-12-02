@@ -16,6 +16,10 @@
         <servlet-name>logoutController</servlet-name>
         <servlet-class>Controllers.Authenticate.logoutController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HomeController</servlet-name>
+        <servlet-class>Controllers.HomeController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -27,6 +31,10 @@
     <servlet-mapping>
         <servlet-name>logoutController</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeController</servlet-name>
+        <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
