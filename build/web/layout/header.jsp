@@ -4,6 +4,7 @@
     Author     : dell
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,9 +22,89 @@
               href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css" />
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+        <style>
+            #snackbar {
+                visibility: hidden;
+                min-width: 250px;
+                margin-left: -125px;
+                background-color: #333;
+                color: #fff;
+                text-align: center;
+                border-radius: 2px;
+                padding: 16px;
+                position: fixed;
+                z-index: 1;
+                left: 50%;
+                top: 30px; /* Changed from bottom: 30px; */
+                font-size: 17px;
+            }
+
+            #snackbar.show {
+                visibility: visible;
+                -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+                animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            }
+
+            @-webkit-keyframes fadein {
+                from {
+                    top: 0;
+                    opacity: 0;
+                } /* Changed from bottom: 0; */
+                to {
+                    top: 30px;
+                    opacity: 1;
+                } /* Changed from bottom: 30px; */
+            }
+
+            @keyframes fadein {
+                from {
+                    top: 0;
+                    opacity: 0;
+                } /* Changed from bottom: 0; */
+                to {
+                    top: 30px;
+                    opacity: 1;
+                } /* Changed from bottom: 30px; */
+            }
+
+            @-webkit-keyframes fadeout {
+                from {
+                    top: 30px;
+                    opacity: 1;
+                } /* Changed from bottom: 30px; */
+                to {
+                    top: 0;
+                    opacity: 0;
+                } /* Changed from bottom: 0; */
+            }
+
+            @keyframes fadeout {
+                from {
+                    top: 30px;
+                    opacity: 1;
+                } /* Changed from bottom: 30px; */
+                to {
+                    top: 0;
+                    opacity: 0;
+                } /* Changed from bottom: 0; */
+            }
+        </style>
     </head>
 
     <body>
+        <!-- display message here -->
+        <div id="snackbar"></div>
+        <c:if test="${msg != null}">
+            <script>
+                var x = document.getElementById("snackbar");
+                x.textContent = '${msg}';
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+            </script>
+        </c:if>
+
         <!-- Header of all content  -->
         <header class="d-flex flex-wrap justify-content-center py-3 border-bottom px-5 background-white">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto">
@@ -35,27 +116,34 @@
 
             <div class="d-flex align-items-center gap-3">
                 <!-- If DO NOT login, show this      -->
-                <button type="button" class="btn btn-outline-none" data-bs-toggle="modal" data-bs-target="#loginModal">
-                    <i class="fa-solid fa-lock primary-color me-1"></i>
-                    Log in
-                </button>
+                <c:if test="${sessionScope.account == null}">
+                    <button type="button" class="btn btn-outline-none" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="fa-solid fa-lock primary-color me-1"></i>
+                        Log in
+                    </button>
 
-                <button type="button" class="btn btn-outline-none" data-bs-toggle="modal" data-bs-target="#registerModal">
-                    <i class="fa-solid fa-user-plus primary-color me-1"></i>
-                    Register
-                </button>
+                    <button type="button" class="btn btn-outline-none" data-bs-toggle="modal" data-bs-target="#registerModal">
+                        <i class="fa-solid fa-user-plus primary-color me-1"></i>
+                        Register
+                    </button>
+                </c:if>
+
                 <!-- If login, show this -->
-                <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-                       id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user me-2 primary-color"></i>
-                        Hello: <strong>Elizabeth</strong>
-                    </a>
-                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
-                    </ul>
-                </div>
+                <c:if test="${sessionScope.account != null}">
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
+                           id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-user me-2 primary-color"></i>
+                            Hello: <strong>${sessionScope.account.fullName}</strong>
+                        </a>
+                        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                            <li><a class="dropdown-item" href="logout">Sign out</a></li>
+                        </ul>
+                    </div>
+                </c:if>
             </div>
+
+            <!-- Modal Login  -->
             <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -64,15 +152,17 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <h6>User email <span class="text-danger">*</span></h6>
-                            <input type="text" class="form-control mb-3" placeholder="Enter user email"
-                                   aria-label="Useremail" />
-                            <h6>Password <span class="text-danger">*</span></h6>
-                            <input type="password" class="form-control mb-2" placeholder="Enter password"
-                                   aria-label="Password" />
-                            <button type="button" class="btn btn-primary w-100 mb-2">
-                                Log in
-                            </button>
+                            <form action="login" method="post">
+                                <h6>User email <span class="text-danger">*</span></h6>
+                                <input type="text" class="form-control mb-3" placeholder="Enter user email"
+                                       aria-label="Useremail" name="email"/>
+                                <h6>Password <span class="text-danger">*</span></h6>
+                                <input type="password" class="form-control mb-2" placeholder="Enter password"
+                                       aria-label="Password" name="pwd"/>
+                                <button type="submit" class="btn btn-primary w-100 mb-2">
+                                    Log in
+                                </button>
+                            </form>
                             <div class="mb-3 d-flex justify-content-end">
                                 <a class="text-decoration-none forget-pass-btn btn text-primary" data-bs-toggle="modal"
                                    data-bs-target="#forgetPasswordModal">
@@ -91,6 +181,7 @@
                 </div>
             </div>
 
+            <!-- Modal Sign up  -->
             <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -144,6 +235,7 @@
                 </div>
             </div>
 
+            <!-- Modal Reset Password  -->
             <div class="modal fade" id="forgetPasswordModal" tabindex="-1" aria-labelledby="forgetPasswordModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -179,14 +271,14 @@
         crossorigin="anonymous"></script>
         <script src="https://kit.fontawesome.com/8d39de38b8.js" crossorigin="anonymous"></script>
         <script>
-            $('.slider-nav').slick({
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                arrows: true,
-                dots: true,
-                autoplay: true,
-                autoplaySpeed: 4000,
-            });
+                $('.slider-nav').slick({
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    arrows: true,
+                    dots: true,
+                    autoplay: true,
+                    autoplaySpeed: 4000,
+                });
         </script>
     </body>
 

@@ -67,7 +67,7 @@ public class loginController extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/views/User/user-profile.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
 //    public static void main(String[] args) {
@@ -97,24 +97,12 @@ public class loginController extends HttpServlet {
         UserDAO uDAO = new UserDAO();
         User user = uDAO.doLogin(email, encodePwd);
         if (user != null) {
+            request.getSession().setAttribute("msg", "Login successful!");
             request.getSession().setAttribute("account", user);
-            switch (user.getRole().getId()) {
-                case 1:
-                    response.sendRedirect("adminDashboard");
-                    break;
-                case 4:
-                    response.sendRedirect("orderRequest");
-                    break;
-                case 2:
-                    response.sendRedirect("staff/product");
-                    break;
-                default:
-                    response.sendRedirect("home");
-                    break;
-            }
+            response.sendRedirect("home");
         } else {
-            request.setAttribute("isFail", true);
-            request.getRequestDispatcher("views/User/user-profile.jsp").forward(request, response);
+            request.getSession().setAttribute("msg", "Login fail! Please check your email and password again!");
+            response.sendRedirect("home");
         }
     }
 
@@ -127,5 +115,4 @@ public class loginController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

@@ -63,18 +63,9 @@ public class UserDAO extends DBContext {
 
     public User doLogin(String email, String pwd) {
         try {
-            String sql = "SELECT [UserID]\n"
-                    + "      ,[FullName]\n"
-                    + "      ,[Email]\n"
-                    + "      ,[Email_Id]\n"
-                    + "      ,[Phone]\n"
-                    + "      ,[DOB]\n"
-                    + "      ,[Address]\n"
-                    + "      ,[Avatar]\n"
-                    + "      ,[RoleID]\n"
-                    + "      ,[Status]\n"
-                    + "      ,[Description]\n"
-                    + "  FROM [Users] Where Email = ? and Password = ? and Status = 1;";
+            String sql = "SELECT *\n"
+                    + "  FROM [Users]\n"
+                    + "  Where Email = ? and Password = ? and Status = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, email);
             stm.setString(2, pwd);
@@ -84,7 +75,7 @@ public class UserDAO extends DBContext {
 
             if (rs.next()) {
 
-                Role role = rDao.getRoleByID(rs.getInt("RoleID"));
+                Role role = rDao.getRoleByID(rs.getInt("RoleId"));
 
                 return new User(rs.getInt("UserID"),
                         rs.getString("FullName"),
@@ -178,38 +169,6 @@ public class UserDAO extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public User getUserGoogle(String EmailID) {
-        try {
-            String sql = "SELECT *\n"
-                    + "  FROM [Users] where Email_Id like ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, EmailID);
-            ResultSet rs = stm.executeQuery();
-
-            RoleDAO rDao = new RoleDAO();
-
-            if (rs.next()) {
-
-                Role role = rDao.getRoleByID(rs.getInt("RoleID"));
-
-                return new User(rs.getInt("UserID"),
-                        rs.getString("FullName"),
-                        rs.getString("Phone"),
-                        rs.getString("Email"),
-                        rs.getString("Email_Id"),
-                        rs.getDate("DOB"),
-                        rs.getString("Address"),
-                        rs.getString("Avatar"),
-                        role,
-                        rs.getBoolean("Status"),
-                        rs.getString("Description"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
     }
 
     public boolean isUserExist(String email) {
@@ -528,7 +487,7 @@ public class UserDAO extends DBContext {
         }
 
     }
-    
+
     public static void main(String[] args) {
         UserDAO uDao = new UserDAO();
         EncodeMD5 encode = new EncodeMD5();
@@ -540,7 +499,7 @@ public class UserDAO extends DBContext {
         user.setAddress("336, Kim Đồng");
         Date dob = Date.valueOf(LocalDate.now());
         user.setDob(dob);
-        
+
         uDao.insert(user);
         System.out.println(uDao.doLogin("email", encode.EncoderMD5("123456")));
     }

@@ -27,6 +27,11 @@ public class HomeController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        String msg = (String) request.getSession().getAttribute("msg");
+        if (msg != null) {
+            request.setAttribute("msg", msg);
+            request.getSession().setAttribute("msg", null);
+        }
         request.getRequestDispatcher("views/Homepage.jsp").forward(request, response);
     } 
 
