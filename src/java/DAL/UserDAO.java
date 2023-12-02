@@ -6,15 +6,19 @@ package DAL;
 
 import Model.Role;
 import Model.User;
+import Utils.EncodeMD5;
 import com.oracle.wls.shaded.org.apache.regexp.recompile;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.omg.CORBA.AnySeqHelper;
 
 /**
  *
@@ -24,7 +28,7 @@ public class UserDAO extends DBContext {
 
     public void insertUser(User user) {
         try {
-            String sql = "INSERT INTO [User]\n"
+            String sql = "INSERT INTO [Users]\n"
                     + "           ([FullName]\n"
                     + "           ,[Email]\n"
                     + "           ,[Password]\n"
@@ -62,16 +66,15 @@ public class UserDAO extends DBContext {
             String sql = "SELECT [UserID]\n"
                     + "      ,[FullName]\n"
                     + "      ,[Email]\n"
-                    + "      ,[EmailID]\n"
+                    + "      ,[Email_Id]\n"
                     + "      ,[Phone]\n"
                     + "      ,[DOB]\n"
                     + "      ,[Address]\n"
                     + "      ,[Avatar]\n"
                     + "      ,[RoleID]\n"
-                    + "      ,[ManagerID]\n"
                     + "      ,[Status]\n"
                     + "      ,[Description]\n"
-                    + "  FROM [User] Where Email = ? and Password = ? and Status = 1;";
+                    + "  FROM [Users] Where Email = ? and Password = ? and Status = 1;";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, email);
             stm.setString(2, pwd);
@@ -87,7 +90,7 @@ public class UserDAO extends DBContext {
                         rs.getString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("EmailID"),
+                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -104,7 +107,7 @@ public class UserDAO extends DBContext {
     public User getUserByID(int userID) {
         try {
             String sql = "SELECT *\n"
-                    + "  FROM [User] where UserID like ?";
+                    + "  FROM [Users] where UserID like ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, userID);
             ResultSet rs = stm.executeQuery();
@@ -119,7 +122,7 @@ public class UserDAO extends DBContext {
                         rs.getString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("EmailID"),
+                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -135,10 +138,10 @@ public class UserDAO extends DBContext {
 
     public void insert(User user) {
         try {
-            String sql = "INSERT INTO [User]\n"
+            String sql = "INSERT INTO [Users]\n"
                     + "           ([FullName]\n"
                     + "           ,[Email]\n"
-                    + "           ,[EmailID]\n"
+                    + "           ,[Email_Id]\n"
                     + "           ,[Password]\n"
                     + "           ,[Phone]\n"
                     + "           ,[DOB]\n"
@@ -180,7 +183,7 @@ public class UserDAO extends DBContext {
     public User getUserGoogle(String EmailID) {
         try {
             String sql = "SELECT *\n"
-                    + "  FROM [User] where EmailID like ?";
+                    + "  FROM [Users] where Email_Id like ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, EmailID);
             ResultSet rs = stm.executeQuery();
@@ -195,7 +198,7 @@ public class UserDAO extends DBContext {
                         rs.getString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("EmailID"),
+                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -212,7 +215,7 @@ public class UserDAO extends DBContext {
     public boolean isUserExist(String email) {
         try {
             String sql = "SELECT *\n"
-                    + "  FROM [User] where Email = ?";
+                    + "  FROM [Users] where Email = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, email);
             ResultSet rs = stm.executeQuery();
@@ -228,7 +231,7 @@ public class UserDAO extends DBContext {
     public User getUserByID(int id, boolean status) {
         try {
             String sql = "SELECT *\n"
-                    + "  FROM [User] where UserID like ? and Status = ?";
+                    + "  FROM [Users] where UserID like ? and Status = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             stm.setBoolean(2, status);
@@ -244,7 +247,7 @@ public class UserDAO extends DBContext {
                         rs.getString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("EmailID"),
+                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -261,7 +264,7 @@ public class UserDAO extends DBContext {
     public ArrayList<User> getAllUsers() {
         try {
             String sql = "SELECT *\n"
-                    + "  FROM [User]";
+                    + "  FROM [Users]";
             PreparedStatement stm = connection.prepareStatement(sql);
 
             ResultSet rs = stm.executeQuery();
@@ -279,7 +282,7 @@ public class UserDAO extends DBContext {
                         rs.getNString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("EmailID"),
+                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -300,7 +303,7 @@ public class UserDAO extends DBContext {
 
     public boolean updateUser(User user) {
         try {
-            String sql = "UPDATE [User] \n"
+            String sql = "UPDATE [Users] \n"
                     + "SET Fullname = ?, \n"
                     + "DOB = ?, \n"
                     + "Gender = ?, \n"
@@ -331,7 +334,7 @@ public class UserDAO extends DBContext {
 
     public boolean changePass(int id, String pass) {
         try {
-            String sql = "UPDATE [User] \n"
+            String sql = "UPDATE [Users] \n"
                     + "SET Password = ? \n"
                     + "WHERE UserID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -354,7 +357,7 @@ public class UserDAO extends DBContext {
 
     public boolean deleteUserById(int id) {
         try {
-            String sql = "UPDATE [dbo].[User]\n"
+            String sql = "UPDATE [dbo].[Users]\n"
                     + "   SET [Status] = ?\n"
                     + "      ,[DeleteFlag] = ?\n"
                     + " WHERE UserID = ?";
@@ -378,7 +381,7 @@ public class UserDAO extends DBContext {
 
     public void changePassword(String email, String encodeNewPass) {
         try {
-            String sql = "UPDATE [dbo].[User]\n"
+            String sql = "UPDATE [dbo].[Users]\n"
                     + "   SET [Password] = ?\n"
                     + " WHERE Email = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -393,7 +396,7 @@ public class UserDAO extends DBContext {
     public boolean isMailExist(String email) {
         try {
             String sql = "SELECT *\n"
-                    + "  FROM [User]\n"
+                    + "  FROM [Users]\n"
                     + "  Where Email = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, email);
@@ -409,7 +412,7 @@ public class UserDAO extends DBContext {
 
     public int resetPassWord(String email, String newPassword) {
         try {
-            String sql = "UPDATE [dbo].[User]\n"
+            String sql = "UPDATE [dbo].[Users]\n"
                     + "   SET [Password] = ?\n"
                     + " WHERE Email = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -429,7 +432,7 @@ public class UserDAO extends DBContext {
             HashMap<Integer, Object> setter = new HashMap<>();
             int count = 0;
             String sql = "SELECT *\n"
-                    + "  FROM [User]\n"
+                    + "  FROM [Users]\n"
                     + "  Where RoleID = ?\n";
             setter.put(++count, roleID);
             if (!textSearch.isEmpty() && !textSearch.equalsIgnoreCase("")) {
@@ -461,7 +464,7 @@ public class UserDAO extends DBContext {
                         rs.getNString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("EmailID"),
+                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -481,7 +484,7 @@ public class UserDAO extends DBContext {
             HashMap<Integer, Object> setter = new HashMap<>();
             int count = 0;
             String sql = "SELECT count(*) as total\n"
-                    + "  FROM [User]\n"
+                    + "  FROM [Users]\n"
                     + "  Where RoleID = ?\n";
             setter.put(++count, roleID);
             if (!textSearch.isEmpty() && !textSearch.equalsIgnoreCase("")) {
@@ -513,7 +516,7 @@ public class UserDAO extends DBContext {
 
     public void changeStatus(int userID, boolean status) {
         try {
-            String sql = "UPDATE [dbo].[User]\n"
+            String sql = "UPDATE [dbo].[Users]\n"
                     + "   SET [Status] = ?\n"
                     + " WHERE UserID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -524,5 +527,21 @@ public class UserDAO extends DBContext {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    public static void main(String[] args) {
+        UserDAO uDao = new UserDAO();
+        EncodeMD5 encode = new EncodeMD5();
+        User user = new User();
+        user.setFullName("Quang NV");
+        user.setPhone("0337498466");
+        user.setEmail("quangnvhe153169@fpt.edu.vn");
+        user.setPassword(encode.EncoderMD5("123456"));
+        user.setAddress("336, Kim Đồng");
+        Date dob = Date.valueOf(LocalDate.now());
+        user.setDob(dob);
+        
+        uDao.insert(user);
+        System.out.println(uDao.doLogin("email", encode.EncoderMD5("123456")));
     }
 }

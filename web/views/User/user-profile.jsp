@@ -1,11 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Book-shop</title>
     <link rel="stylesheet" href="../css/styles.css" type="text/css" />
+    <script src="https://kit.fontawesome.com/8d39de38b8.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
 </head>
@@ -13,7 +16,7 @@
 <body>
     <!-- Main content  -->
     <!-- <div data-include="header"></div> -->
-    <%@include file="../layout/header.jsp" %>
+    <%@include file="../../layout/header.jsp" %>
 
     <div class="d-flex">
         <!-- <div data-include="left-side-profile-bar"></div> -->
@@ -24,6 +27,8 @@
                 Profile
             </h2>
             <ul class="nav d-flex flex-column gap-1">
+                ${sessionScope.user}
+                ${requestScope.isFail}
                 <li class="nav-link">
                     <a class="href-unstyled" href="#"><span class="fa fa-user me-2"></span>
                         Information</a>
