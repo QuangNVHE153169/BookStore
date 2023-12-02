@@ -13,7 +13,7 @@
 <body>
     <!-- Main content  -->
     <!-- <div data-include="header"></div> -->
-    <%@include file="../layout/book-header.jsp" %>
+    <%@include file="../layout/header.jsp" %>
 
     <div class="d-flex">
         <!-- <div data-include="left-side-profile-bar"></div> -->
