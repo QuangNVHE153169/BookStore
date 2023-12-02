@@ -90,15 +90,13 @@ public class registerController extends HttpServlet {
 
         boolean isExist = uDao.isUserExist(user.getEmail());
         if (isExist) {
-            request.getSession().setAttribute("isFail", true);
-            request.getSession().setAttribute("msg", "Email đã được đăng ký, vui lòng thử lại!");
+            request.getSession().setAttribute("msg", "Email is exist! Try again!");
             request.setAttribute("account", user);
             request.getRequestDispatcher("/views/Register.jsp").forward(request, response);
         } else {
             uDao.insert(user);
-            request.getSession().setAttribute("register", "success");
-            request.getSession().setAttribute("user", user);
-            response.sendRedirect("login");
+            request.getSession().setAttribute("msg", "Register successful! You can login now!");
+            response.sendRedirect("home");
         }
     }
 

@@ -191,43 +191,45 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" style="max-height: 450px; overflow: auto">
-                            <h6>Email <span class="text-danger">*</span></h6>
-                            <input type="text" class="form-control mb-3" placeholder="Enter email" />
-                            <h6>Password <span class="text-danger">*</span></h6>
-                            <input type="password" class="form-control mb-2" placeholder="Enter password" />
-                            <h6>Full name <span class="text-danger">*</span></h6>
-                            <input type="text" class="form-control mb-3" placeholder="Enter full name" />
-                            <h6>Gender <span class="text-danger">*</span></h6>
-                            <div class="d-flex gap-5 mb-3 align-items-center">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                                           value="option1" checked />
-                                    <label class="form-check-label" for="exampleRadios1">
-                                        Male
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                                           value="option2" />
-                                    <label class="form-check-label" for="exampleRadios2">
-                                        Female
-                                    </label>
-                                </div>
-                            </div>
-                            <h6>Email <span class="text-danger">*</span></h6>
-                            <input type="text" class="form-control mb-3" placeholder="Enter user email" />
-                            <h6>Mobile <span class="text-danger">*</span></h6>
-                            <input type="number" class="form-control mb-3" placeholder="Enter mobile" />
-                            <h6>Address <span class="text-danger">*</span></h6>
-                            <input type="text" class="form-control mb-3" placeholder="Enter your address" />
-                            <button type="button" class="btn btn-primary w-100 mb-2">
-                                Log in
-                            </button>
+                            <form id="frm-register" action="register" method="post">
+                                <h6>Full name:<span class="text-danger">*</span></h6>
+                                <input type="text" name="fullName" required maxlength="255" id="input-fullName"
+                                       class="form-control mb-3" placeholder="Nhập Họ và Tên" value="${account.fullName}"
+                                       aria-label="Username">
+                                <span id="error-fullName" style="color: red; display: none;"></span>
+                                <h6>Phone<span class="text-danger">*</span></h6>
+                                <input type="text" name="phone" required oninput="validatePhone(this)"
+                                       class="form-control mb-3" placeholder="Nhập Số điện thoại" value="${account.phone}"
+                                       aria-label="Username">
+                                <span id="error-phone" style="color: red; display: none;"></span>
+                                <h6>EMAIL <span class="text-danger">*</span></h6>
+                                <input type="email" name="email" required oninput="validateEmail(this)"
+                                       class="form-control mb-3" placeholder="Nhập địa chỉ Email"
+                                       aria-label="Username">
+                                <span id="error-email" style="color: red; display: none;"></span>
+                                <h6>Password <span class="text-danger">*</span></h6>
+                                <span id="error-password" style="color: red; display: none;"></span>
+                                <input type="password" name="password" required oninput="validatePassword(this)"
+                                       class="form-control mb-2" placeholder="Nhập Mật khẩu"
+                                       aria-label="Username">
+                                <span id="error-password" style="color: red; display: none;"></span>
+                                <h6>Address</h6>
+                                <input type="text" name="address" value="${account.address}"
+                                       class="form-control mb-3" placeholder="Nhập địa chỉ"
+                                       aria-label="Username">
+                                <h6>Date of birth<span class="text-danger">*</span></h6>
+                                <input type="date" name="dob" max="${now}" required value="${account.dob}"
+                                       class="form-control mb-3" placeholder="Nhập ngày sinh" id="input-dob"
+                                       aria-label="Username">
+                                <button class="btn btn-primary w-100 mb-2" onclick="regiterAccount()">
+                                    Register
+                                </button>
+                            </form>
                             <div class="d-flex justify-content-center align-items-center">
                                 <p class="mb-0">Already have an account</p>
                                 <a class="btn btn-outline-none text-decoration-underline" data-bs-toggle="modal"
                                    data-bs-target="#loginModal">
-                                    SIGN IN
+                                    Login
                                 </a>
                             </div>
                         </div>
@@ -279,6 +281,69 @@
                     autoplay: true,
                     autoplaySpeed: 4000,
                 });
+
+                var checkPhone = false;
+                var checkPassword = false;
+                var checkEmail = false;
+
+                function shopRegister() {
+                    window.location.href = "shopRegister";
+                }
+
+                function validatePhone(input) {
+                    var value = input.value;
+                    var regex = /^0[0-9]{9}$/;
+
+                    if (!regex.test(value)) {
+                        document.getElementById('error-phone').textContent = "Số điện thoại không hợp lệ";
+                        document.getElementById('error-phone').style.display = "block";
+                        checkPhone = false;
+                    } else {
+                        document.getElementById('error-phone').textContent = "";
+                        document.getElementById('error-phone').style.display = "none";
+                        checkPhone = true;
+                    }
+                }
+
+                function validatePassword(input) {
+                    var value = input.value;
+                    var regex = /^(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+
+                    if (!regex.test(value)) {
+                        document.getElementById('error-password').textContent = "Mật khẩu phải chứa ít nhất 1 ký tự đặc biệt và có độ dài tối thiểu là 8 ký tự";
+                        document.getElementById('error-password').style.display = "block";
+                        checkPassword = false;
+                    } else {
+                        document.getElementById('error-password').textContent = "";
+                        document.getElementById('error-password').style.display = "none";
+                        checkPassword = true;
+                    }
+                }
+
+                function validateEmail(input) {
+                    var value = input.value;
+                    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                    if (!emailRegex.test(value)) {
+                        document.getElementById('error-email').textContent = "Vui lòng nhập một địa chỉ email hợp lệ";
+                        document.getElementById('error-email').style.display = "block";
+                        checkEmail = false;
+                    } else {
+                        document.getElementById('error-email').textContent = "";
+                        document.getElementById('error-email').style.display = "none";
+                        checkEmail = true;
+                    }
+                }
+
+                function regiterAccount() {
+                    var fullName = document.getElementById('input-fullName').value;
+                    var dob = document.getElementById('input-dob').value;
+                    if (fullName !== '' && dob !== '' && checkPhone && checkPassword && checkEmail) {
+                        document.getElementById('frm-register').submit();
+                    } else {
+                        alert("Vui lòng kiểm tra lại và nhập đầy đủ thông tin đăng nhập!");
+                    }
+                }
         </script>
     </body>
 
