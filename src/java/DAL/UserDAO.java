@@ -120,7 +120,8 @@ public class UserDAO extends DBContext {
                         rs.getString("Avatar"),
                         role,
                         rs.getBoolean("Status"),
-                        rs.getString("Description"));
+                        rs.getString("Description"),
+                        rs.getString("Gender"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -4,14 +4,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/BookStore/web/WEB-INF/web.xml</file>
+            <file>file:/D:/BookStore/src/java/Model/User.java</file>
             <file>file:/D:/BookStore/src/java/DAL/UserDAO.java</file>
             <file>file:/D:/BookStore/src/java/Controllers/Authenticate/logoutController.java</file>
             <file>file:/D:/BookStore/nbproject/build-impl.xml</file>
-            <file>file:/D:/BookStore/web/layout/LeftSideBar.jsp</file>
+            <file>file:/D:/BookStore/src/java/Controllers/Authenticate/registerController.java</file>
+            <file>file:/D:/BookStore/src/java/Controllers/Authenticate/changePasswordController.java</file>
             <file>file:/D:/BookStore/src/java/Controllers/Authenticate/BaseAuthenticationController.java</file>
-            <file>file:/D:/BookStore/src/java/Controllers/Authenticate/ChangePasswordController.java</file>
+            <file>file:/D:/BookStore/src/java/DAL/RoleDAO.java</file>
+            <file>file:/D:/BookStore/src/java/Controllers/NotFound.java</file>
             <file>file:/D:/BookStore/web/modals/user-realated.jsp</file>
-            <file>file:/D:/BookStore/web/layout/ShopHeader.jsp</file>
             <file>file:/D:/BookStore/src/java/Controllers/Authenticate/loginController.java</file>
         </group>
     </open-files>

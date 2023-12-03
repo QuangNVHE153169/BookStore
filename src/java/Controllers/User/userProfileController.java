@@ -58,7 +58,8 @@ public class userProfileController extends BaseAuthenticationController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User account = (User) request.getSession().getAttribute("account");
-        request.setAttribute("account", account);
+        UserDAO uDao = new UserDAO();
+        request.setAttribute("account", uDao.getUserByID(account.getUserID()));
         request.getRequestDispatcher("/views/User/UserProfile.jsp").forward(request, response);
     }
 
