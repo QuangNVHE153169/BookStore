@@ -248,7 +248,7 @@ public class UserDAO extends DBContext {
                         role,
                         rs.getBoolean("Status"),
                         rs.getString("Description"),
-                        rs.getNString("gender"));
+                        rs.getString("gender"));
 
                 users.add(user);
             }

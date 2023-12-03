@@ -3,14 +3,8 @@
     Created on : Dec 2, 2023, 8:15:32 PM
     Author     : dell
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-
-    <body class="overflow-x-hidden background-gray">
-        <!-- Main content  -->
-        <%@ include file="../layout/header.jsp" %>
+<%@ include file="../layout/header.jsp" %>
+<body class="overflow-x-hidden background-gray">
 
         <!-- don't show in profile tab  -->
         <!-- <div data-include="shop-header"></div> -->
@@ -470,7 +464,3 @@
     </div>
 </div>
 <div data-include="footer"></div>
-
-</body>
-
-</html>
