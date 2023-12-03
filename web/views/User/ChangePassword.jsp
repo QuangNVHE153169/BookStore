@@ -4,6 +4,9 @@
     Author     : dell
 --%>
 
+<head>
+    <title>Change Password</title>
+</head>
 <%@include file="../../layout/header.jsp" %>
 <body>
     <div class="d-flex">
@@ -16,11 +19,12 @@
             </h2>
             <ul class="nav d-flex flex-column gap-1">
                 <li class="nav-link">
-                    <a class="href-unstyled" href="user-profile"><span class="fa fa-user me-2"></span>
+                    <a class="href-unstyled ${pageContext.request.servletPath.equals("/views/User/UserProfile.jsp") ? "primary-color" : ""}" href="user-profile"><span class="fa fa-user me-2"></span>
                         Information</a>
                 </li>
+
                 <li class="nav-link">
-                    <a class="href-unstyled primary-color" href="change-password"><span class="fa-solid fa-unlock me-2"></span>
+                    <a class="href-unstyled ${pageContext.request.servletPath.equals("/views/User/ChangePassword.jsp") ? "primary-color" : ""}" href="change-password"><span class="fa-solid fa-unlock me-2"></span>
                         Password</a>
                 </li>
             </ul>

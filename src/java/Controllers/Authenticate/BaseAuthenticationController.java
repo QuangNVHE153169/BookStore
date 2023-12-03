@@ -26,7 +26,7 @@ public abstract class BaseAuthenticationController extends HttpServlet {
         if (acc != null) {
             processGet(request, response);
         } else {
-            response.sendRedirect("notFound");
+            request.getRequestDispatcher("error/403.jsp").forward(request, response);
         }
     }
 
@@ -45,7 +45,7 @@ public abstract class BaseAuthenticationController extends HttpServlet {
         if (acc != null) {
             processPost(request, response);
         } else {
-            response.sendRedirect("notFound");
+            request.getRequestDispatcher("error/403.jsp").forward(request, response);
         }
     }
 

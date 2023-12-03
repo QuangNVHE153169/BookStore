@@ -105,6 +105,7 @@
                     x.className = x.className.replace("show", "");
                 }, 3000);
             </script>
+            <% session.removeAttribute("msg"); %>
         </c:if>
 
         <!-- Header of all content  -->
