@@ -33,7 +33,7 @@ public class ValidateOtp extends HttpServlet {
             if (value == otp) {
                 request.setAttribute("email", request.getParameter("email"));
                 request.setAttribute("status", "success");
-                dispatcher = request.getRequestDispatcher("/views/newPassword.jsp");
+                dispatcher = request.getRequestDispatcher("/views/NewPassword.jsp");
                 dispatcher.forward(request, response);
             } else {
                 request.setAttribute("message", "Wrong OTP! Try again");
