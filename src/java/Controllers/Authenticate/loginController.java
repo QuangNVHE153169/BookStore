@@ -10,14 +10,15 @@ import Utils.EncodeMD5;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author dell
+ * @author Admin
  */
-public class loginController {
+public class loginController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +37,10 @@ public class loginController {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");
+            out.println("<title>Servlet LoginController1</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet LoginController1 at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -54,9 +55,19 @@ public class loginController {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/views/user-profile.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
 //    public static void main(String[] args) {
@@ -73,6 +84,8 @@ public class loginController {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String email = request.getParameter("email");
@@ -84,24 +97,12 @@ public class loginController {
         UserDAO uDAO = new UserDAO();
         User user = uDAO.doLogin(email, encodePwd);
         if (user != null) {
+            request.getSession().setAttribute("msg", "Login successful!");
             request.getSession().setAttribute("account", user);
-            switch (user.getRole().getId()) {
-                case 1:
-                    response.sendRedirect("adminDashboard");
-                    break;
-                case 4:
-                    response.sendRedirect("orderRequest");
-                    break;
-                case 2:
-                    response.sendRedirect("staff/product");
-                    break;
-                default:
-                    response.sendRedirect("home");
-                    break;
-            }
+            response.sendRedirect("home");
         } else {
-            request.setAttribute("isFail", true);
-            request.getRequestDispatcher("views/Login.jsp").forward(request, response);
+            request.getSession().setAttribute("msg", "Login fail! Please check your email and password again!");
+            response.sendRedirect("home");
         }
     }
 
@@ -110,13 +111,8 @@ public class loginController {
      *
      * @return a String containing servlet description
      */
+    @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    public static void main(String[] args) {
-        EncodeMD5 encode = new EncodeMD5();
-        String encodePwd = encode.EncoderMD5("123@123");
-        System.out.println(encodePwd);
-    }
 }

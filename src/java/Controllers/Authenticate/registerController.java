@@ -10,16 +10,16 @@ import Utils.EncodeMD5;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Date;
-import java.time.LocalDate;
 
 /**
  *
- * @author dell
+ * @author Admin
  */
-public class registerController {
+public class registerController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +38,10 @@ public class registerController {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet registerController</title>");
+            out.println("<title>Servlet registerController1</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet registerController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet registerController1 at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,11 +56,12 @@ public class registerController {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Date now = Date.valueOf(LocalDate.now());
-        request.setAttribute("now", now);
-        request.getRequestDispatcher("/views/Register.jsp").forward(request, response);
+//        Date now = Date.valueOf(LocalDate.now());
+//        request.setAttribute("now", now);
+//        request.getRequestDispatcher("/views/Register.jsp").forward(request, response);
     }
 
     /**
@@ -71,6 +72,7 @@ public class registerController {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UserDAO uDao = new UserDAO();
@@ -88,13 +90,12 @@ public class registerController {
 
         boolean isExist = uDao.isUserExist(user.getEmail());
         if (isExist) {
-            request.getSession().setAttribute("isFail", true);
-            request.getSession().setAttribute("msg", "Email đã được đăng ký, vui lòng thử lại!");
+            request.getSession().setAttribute("msg", "Email is exist! Try again!");
             request.setAttribute("account", user);
             request.getRequestDispatcher("/views/Register.jsp").forward(request, response);
         } else {
             uDao.insert(user);
-            request.getSession().setAttribute("register", "success");
+            request.getSession().setAttribute("msg", "Register successful! You can login now!");
             response.sendRedirect("home");
         }
     }
@@ -104,6 +105,7 @@ public class registerController {
      *
      * @return a String containing servlet description
      */
+    @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>

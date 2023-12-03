@@ -21,7 +21,7 @@ public class RoleDAO extends DBContext {
     public Role getRoleByID(int roleID) {
         try {
             String sql = "SELECT *\n"
-                    + "  FROM [Role] where RoleID = ?";
+                    + "  FROM [Roles] where RoleId = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, roleID);
             ResultSet rs = stm.executeQuery();
