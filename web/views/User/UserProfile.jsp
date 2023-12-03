@@ -1,9 +1,3 @@
-<%-- 
-    Document   : UserProfile
-    Created on : Dec 2, 2023, 8:27:12 PM
-    Author     : dell
---%>
-
 <head>
     <title>User Profile</title>
 </head>

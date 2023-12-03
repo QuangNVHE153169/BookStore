@@ -1,9 +1,3 @@
-<%-- 
-    Document   : ShopHeader
-    Created on : Dec 2, 2023, 8:29:32 PM
-    Author     : dell
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,8 +1,3 @@
-<%-- 
-    Document   : Homepage
-    Created on : Dec 2, 2023, 8:15:32 PM
-    Author     : dell
---%>
 <%@ include file="../layout/header.jsp" %>
 <body class="overflow-x-hidden background-gray">
 

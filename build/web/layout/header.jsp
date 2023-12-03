@@ -1,9 +1,3 @@
-<%-- 
-    Document   : header
-    Created on : Dec 2, 2023, 8:28:11 PM
-    Author     : dell
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -164,14 +158,6 @@
                     autoplay: true,
                     autoplaySpeed: 4000,
                 });
-
-                var checkPhone = false;
-                var checkPassword = false;
-                var checkEmail = false;
-
-                function shopRegister() {
-                    window.location.href = "shopRegister";
-                }
         </script>
     </body>
 
