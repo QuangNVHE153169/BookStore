@@ -1,3 +1,4 @@
+<!--Modal Login-->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -33,52 +34,66 @@
     </div>
 </div>
 
+<!--Modal Register-->
 <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="register" id="frm-register" method="post">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="registerModalLabel">Sign up</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" style="max-height: 450px; overflow: auto;">
-                        <h6>Email <span class="text-danger">*</span></h6>
-                        <input id="input-email" type="text" class="form-control mb-3"
-                               required oninput="validateEmail(this)" placeholder="Enter email" name="email">
-                        <span id="error-email" class="mb-2" style="color: red; display: none;"></span>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Sign up</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="max-height: 450px; overflow: auto;">
+                    <form id="frm-register" action="register" method="post">
+                        <h6>Full name:<span class="text-danger">*</span></h6>
+                        <input type="text" name="fullName" required maxlength="255" id="input-fullName"
+                               class="form-control mb-3" placeholder="Enter Full Name" value="${account.fullName}"
+                               aria-label="Username">
+                        <span id="error-fullName" style="color: red; display: none;"></span>
+                        <h6>Phone<span class="text-danger">*</span></h6>
+                        <input id="input-phone" type="text" name="phone" required oninput="validatePhone(this)"
+                               class="form-control mb-3" placeholder="Enter Phone number" value="${account.phone}"
+                               aria-label="Username">
+                        <span id="error-phone" style="color: red; display: none;"></span>
+                        <h6>EMAIL <span class="text-danger">*</span></h6>
+                        <input id="input-email" type="email" name="email" required oninput="validateEmail(this)"
+                               class="form-control mb-3" placeholder="Enter Email"
+                               aria-label="Username">
+                        <span id="error-email" style="color: red; display: none;"></span>
                         <h6>Password <span class="text-danger">*</span></h6>
-                        <input id="input-password" type="password" class="form-control mb-2" 
-                               required oninput="validatePassword(this)" placeholder="Enter password" name="password">
-                        <span id="error-password" class="mb-2" style="color: red; display: none;"></span>
-                        <h6>Full name <span class="text-danger">*</span></h6>
-                        <input id="input-fullname" type="text" class="form-control mb-3" 
-                               required placeholder="Enter full name" name="fullName">
-                        <h6>Mobile <span class="text-danger">*</span></h6>
-                        <input id="input-phone" type="number" class="form-control mb-3" 
-                               required oninput="validatePhone(this)" placeholder="Enter mobile" name="phone">
-                        <span id="error-phone" class="mb-2" style="color: red; display: none;"></span>
+                        <input id="input-pwd" type="password" name="password" required oninput="validatePassword(this)"
+                               class="form-control mb-2" placeholder="Enter Password"
+                               aria-label="Username">
+                        <span id="error-password" style="color: red; display: none;"></span>
+                        <h6>Gender <span class="text-danger">*</span></h6>
+                        <input type="radio" name="gender" value="true" checked>Male
+                        <input type="radio" name="gender" value="false">Female
                         <h6>Address</h6>
-                        <input type="text" class="form-control mb-3" 
-                               placeholder="Enter your address" name="address">
-                        <h6>Date Of Birth <span class="text-danger">*</span></h6>
-                        <input id="input-dob" type="date" class="form-control mb-3" 
-                               name="dob">
-                        <button type="button" onclick="regiterAccount()" class="btn btn-primary w-100 mb-2">Sign In</button>
-                        <div class="d-flex justify-content-center align-items-center">
-                            <p class="mb-0">Already have an account?</p>
-                            <a class="btn btn-outline-none text-decoration-underline" data-bs-toggle="modal"
-                               data-bs-target="#loginModal">
-                                SIGN IN
-                            </a>
-                        </div>
+                        <input type="text" name="address" value="${account.address}"
+                               class="form-control mb-3" placeholder="Enter Address"
+                               aria-label="Username">
+                        <h6>Date of birth<span class="text-danger">*</span></h6>
+                        <input type="date" name="dob" max="${now}" required value="${account.dob}"
+                               class="form-control mb-3" placeholder="Enter Date of birth" id="input-dob"
+                               aria-label="Username">
+                        <button type="button" class="btn btn-primary w-100 mb-2" onclick="regiterAccount()">
+                            Register
+                        </button>
+                    </form>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <p class="mb-0">Already have an account?</p>
+                        <a class="btn btn-outline-none text-decoration-underline" data-bs-toggle="modal"
+                           data-bs-target="#loginModal">
+                            SIGN IN
+                        </a>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
 
+<!--Modal Reset password-->
 <div class="modal fade" id="forgetPasswordModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -88,12 +103,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body d-flex flex-column align-items-center gap-3 p-5">
-                        <img src="/assets/reset-pass-img.png" alt="reset-pass-img"
-                             style="max-width: 80px; object-fit: cover;">
                         <h2>Reset Password</h2>
-                        <input type="text" class="form-control mb-3" placeholder="Enter user email"
-                               aria-label="Useremail">
-                        <button type="button" class="btn btn-primary w-100 mb-2">RESET PASSWORD</button>
+                        <form action="forgotPassword" method="post">
+                            <input type="email" class="form-control mb-3" placeholder="Enter user email"
+                                   aria-label="Useremail" required name="email">
+                            <button type="submit" class="btn btn-primary w-100 mb-2">RESET PASSWORD</button>
+                        </form>
                         <div class="d-flex justify-content-center align-items-center">
                             <p class="mb-0">Already have an account</p>
                             <a class="btn btn-outline-none text-decoration-underline" data-bs-toggle="modal"
@@ -109,6 +124,10 @@
 </div>
 
 <script>
+    var checkPhone = false;
+    var checkPassword = false;
+    var checkEmail = false;
+
     function validatePhone(input) {
         var value = input.value;
         var regex = /^0[0-9]{9}$/;
@@ -155,10 +174,32 @@
     }
 
     function regiterAccount() {
-        var fullName = document.getElementById('input-fullname').value;
+        //check format of phone again
+        var phone = document.getElementById('input-phone').value;
+        var phoneRegex = /^0[0-9]{9}$/;
+        if (phoneRegex.test(phone)) {
+            checkPhone = true;
+        }
+
+        //check format of email again
+        var email = document.getElementById('input-email').value;
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailRegex.test(email)) {
+            checkEmail = true;
+        }
+
+        //check format of password again
+        var pwd = document.getElementById('input-pwd').value;
+        var passRegex = /^(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+        if (passRegex.test(pwd)) {
+            checkPassword = true;
+        }
+
+
+        var fullName = document.getElementById('input-fullName').value;
         var dob = document.getElementById('input-dob').value;
+
         if (fullName !== '' && dob !== '' && checkPhone && checkPassword && checkEmail) {
-            console.log(1);
             document.getElementById('frm-register').submit();
         } else {
             alert("Please be sure all required informations were inputed!");

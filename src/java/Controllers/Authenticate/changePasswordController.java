@@ -70,7 +70,7 @@ public class changePasswordController extends BaseAuthenticationController {
 
         User acc = uDao.doLogin(account.getEmail(), encodeOldPass);
         if (acc == null) {
-            request.getSession().setAttribute("msg", "Change password failed! Please try again");
+            request.getSession().setAttribute("msg", "Old password not correct! Please try again");
             response.sendRedirect("change-password");
         } else {
             request.getSession().setAttribute("msg", "Change password successfully! Please re-login with new password");

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : ShopNavigation
-    Created on : Dec 2, 2023, 8:30:17 PM
-    Author     : dell
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">

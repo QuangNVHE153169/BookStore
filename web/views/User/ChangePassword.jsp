@@ -1,9 +1,3 @@
-<%-- 
-    Document   : ChangePassword
-    Created on : Dec 2, 2023, 8:27:12 PM
-    Author     : dell
---%>
-
 <head>
     <title>Change Password</title>
 </head>
