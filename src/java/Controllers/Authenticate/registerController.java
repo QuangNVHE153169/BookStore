@@ -38,7 +38,7 @@ public class registerController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet registerController1</title>");            
+            out.println("<title>Servlet registerController1</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet registerController1 at " + request.getContextPath() + "</h1>");
@@ -75,28 +75,40 @@ public class registerController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UserDAO uDao = new UserDAO();
 
+        UserDAO uDao = new UserDAO();
         EncodeMD5 encode = new EncodeMD5();
-        
+
+        //create new user model and set data send from client
         User user = new User();
         user.setFullName(request.getParameter("fullName"));
         user.setPhone(request.getParameter("phone"));
         user.setEmail(request.getParameter("email"));
-        user.setPassword(encode.EncoderMD5(request.getParameter("password")));
+        //encode password to MD5
+        String hashPwd = encode.EncoderMD5(request.getParameter("password"));
+        user.setPassword(hashPwd);
         user.setAddress(request.getParameter("address"));
+        //parse string to sql.date
         Date dob = Date.valueOf(request.getParameter("dob"));
         user.setDob(dob);
+        user.setGender(request.getParameter("gender"));
 
+        //check if email exist before or not
         boolean isExist = uDao.isUserExist(user.getEmail());
         if (isExist) {
             request.getSession().setAttribute("msg", "Email is exist! Try again!");
             request.setAttribute("account", user);
-            request.getRequestDispatcher("/views/Register.jsp").forward(request, response);
+            request.getRequestDispatcher("home").forward(request, response);
         } else {
-            uDao.insert(user);
-            request.getSession().setAttribute("msg", "Register successful! You can login now!");
-            response.sendRedirect("home");
+            int flag = uDao.insert(user);
+            if (flag == 0) {
+                request.setAttribute("account", user);
+                request.getSession().setAttribute("msg", "Error when create account! Contact to Admin!");
+                request.getRequestDispatcher("home").forward(request, response);
+            } else {
+                request.getSession().setAttribute("msg", "Register successful! You can login now!");
+                response.sendRedirect("home");
+            }
         }
     }
 

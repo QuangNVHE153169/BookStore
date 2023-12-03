@@ -4,6 +4,7 @@
  */
 package DAL;
 
+import Model.Constant;
 import Model.Role;
 import Model.User;
 import Utils.EncodeMD5;
@@ -127,7 +128,7 @@ public class UserDAO extends DBContext {
         return null;
     }
 
-    public void insert(User user) {
+    public int insert(User user) {
         try {
             String sql = "INSERT INTO [Users]\n"
                     + "           ([FullName]\n"
@@ -138,11 +139,13 @@ public class UserDAO extends DBContext {
                     + "           ,[DOB]\n"
                     + "           ,[Address]\n"
                     + "           ,[Avatar]\n"
-                    + "           ,[RoleID]\n"
+                    + "           ,[gender]\n"
+                    + "           ,[RoleId]\n"
                     + "           ,[Status]\n"
                     + "           ,[DeleteFlag])\n"
                     + "     VALUES\n"
                     + "           (?\n"
+                    + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
@@ -162,13 +165,15 @@ public class UserDAO extends DBContext {
             stm.setDate(6, user.getDob());
             stm.setString(7, user.getAddress());
             stm.setString(8, null);
-            stm.setInt(9, 2);
-            stm.setBoolean(10, true);
-            stm.setBoolean(11, false);
-            stm.executeUpdate();
+             stm.setString(9, user.getGender());
+            stm.setInt(10, Constant.RoleCustomer);
+            stm.setBoolean(11, true);
+            stm.setBoolean(12, false);
+            return stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return 0;
     }
 
     public boolean isUserExist(String email) {

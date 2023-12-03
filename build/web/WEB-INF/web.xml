@@ -28,6 +28,10 @@
         <servlet-name>userProfile</servlet-name>
         <servlet-class>Controllers.User.userProfileController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ForgotPasswordController</servlet-name>
+        <servlet-class>Controllers.Authenticate.ForgotPasswordController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -51,6 +55,10 @@
     <servlet-mapping>
         <servlet-name>userProfile</servlet-name>
         <url-pattern>/user-profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgotPasswordController</servlet-name>
+        <url-pattern>/forgotPassword</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
