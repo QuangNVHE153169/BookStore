@@ -26,14 +26,12 @@ src/java/DAL/DBContext.java
 /dist/
 
 # NetBeans specific files and directories
-/nbproject/private/
-/build/
-/nbbuild/
-/dist/
-/nbactions.xml
-/nb-configuration.xml
-/.nb-gradle/
-/.classpath
-/.project
-/.settings/
-
+nbproject/private
+build
+nbbuild
+nbactions.xml
+nb-configuration.xml
+.nb-gradle
+.classpath
+.project
+.settings
