@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -492,21 +493,18 @@ public class UserDAO extends DBContext {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
+    } 
 
     public static void main(String[] args) {
         UserDAO uDao = new UserDAO();
-        EncodeMD5 encode = new EncodeMD5();
-        User user = new User();
-        user.setFullName("Quang NV");
-        user.setPhone("0337498466");
-        user.setEmail("quangnvhe153169@fpt.edu.vn");
-        user.setPassword(encode.EncoderMD5("123456"));
-        user.setAddress("336, Kim Đồng");
-        Date dob = Date.valueOf(LocalDate.now());
-        user.setDob(dob);
-
-        uDao.insert(user);
-        System.out.println(uDao.doLogin("email", encode.EncoderMD5("123456")));
+//        EncodeMD5 encode = new EncodeMD5();
+//        User user = new User();
+//        user.setFullName("Quang NV");
+//        user.setPhone("0337498466");
+//        user.setEmail("quangnvhe153169@fpt.edu.vn");
+//        user.setPassword(encode.EncoderMD5("123456"));
+//        user.setAddress("336, Kim Đồng");
+//        Date dob = Date.valueOf(LocalDate.now());
+//        user.setDob(dob);
     }
 }
