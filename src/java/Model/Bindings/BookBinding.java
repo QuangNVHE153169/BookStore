@@ -11,10 +11,10 @@ package Model.Bindings;
 public class BookBinding {
     int authorId;
     int categoryID;
-    int pushisherId;
-    String textSearch;
+    int publisherID;
+    String textSearch = "";
     double minPrice; 
-    double maxPrice;
+    double maxPrice = 5000000;
 
     public void setAuthorId(int authorId) {
         this.authorId = authorId;
@@ -22,10 +22,6 @@ public class BookBinding {
 
     public void setCategoryID(int categoryID) {
         this.categoryID = categoryID;
-    }
-
-    public void setPushisherId(int pushisherId) {
-        this.pushisherId = pushisherId;
     }
 
     public void setTextSearch(String textSearch) {
@@ -51,10 +47,6 @@ public class BookBinding {
         return categoryID;
     }
 
-    public int getPushisherId() {
-        return pushisherId;
-    }
-
     public String getTextSearch() {
         return textSearch;
     }
@@ -67,13 +59,27 @@ public class BookBinding {
         return maxPrice;
     }
 
-    public BookBinding(int authorId, int categoryID, int pushisherId, String textSearch, double minPrice, double maxPrice) {
+    public int getPublisherID() {
+        return publisherID;
+    }
+
+    public void setPublisherID(int publisherID) {
+        this.publisherID = publisherID;
+    }
+
+    public BookBinding(int authorId, int categoryID, int publisherID, String textSearch, double minPrice, double maxPrice) {
         this.authorId = authorId;
         this.categoryID = categoryID;
-        this.pushisherId = pushisherId;
+        this.publisherID = publisherID;
         this.textSearch = textSearch;
         this.minPrice = minPrice;
         this.maxPrice = maxPrice;
     }
     
+    
+
+    @Override
+    public String toString() {
+        return "BookBinding{" + "authorId=" + authorId + ", categoryID=" + categoryID + ", publisherID=" + publisherID + ", textSearch=" + textSearch + ", minPrice=" + minPrice + ", maxPrice=" + maxPrice + '}';
+    }
 }

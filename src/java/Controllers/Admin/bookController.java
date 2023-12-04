@@ -5,14 +5,11 @@
 package Controllers.Admin;
 
 import Controllers.Authenticate.BaseAuthenticationController;
-import DAL.UserDAO;
-import Model.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 /**
  *
@@ -58,10 +55,6 @@ public class bookController extends BaseAuthenticationController {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UserDAO uDao = new UserDAO();
-        List<User> users = uDao.getItemsPerPage(User.class, 1, 10, "asc");
-        request.setAttribute("users", users);
-        request.getRequestDispatcher("/views/Admin/Book/test.jsp").forward(request, response);
     }
 
     /**
@@ -90,9 +83,7 @@ public class bookController extends BaseAuthenticationController {
 
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        UserDAO uDao = new UserDAO();
-//        uDao.getItemsPerPage(User.class, 1, 10);
-//        request.getRequestDispatcher("/views/Admin/Book/test.jsp").forward(request, response);
+
     }
 
     @Override

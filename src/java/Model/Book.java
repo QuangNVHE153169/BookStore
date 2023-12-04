@@ -16,11 +16,9 @@ public class Book {
     boolean status;
     int quantity;
     int categoryId;
-    int shopId;
-    int autherId;
-    int pushlisherId;
+    int authorId;
+    int publisherId;
     int publicationYear;
-    int imageId;
     String description;
     boolean deleteFlag;
 
@@ -83,44 +81,12 @@ public class Book {
         this.categoryId = categoryId;
     }
 
-    public int getShopId() {
-        return shopId;
-    }
-
-    public void setShopId(int shopId) {
-        this.shopId = shopId;
-    }
-
-    public int getAutherId() {
-        return autherId;
-    }
-
-    public void setAutherId(int autherId) {
-        this.autherId = autherId;
-    }
-
-    public int getPushlisherId() {
-        return pushlisherId;
-    }
-
-    public void setPushlisherId(int pushlisherId) {
-        this.pushlisherId = pushlisherId;
-    }
-
     public int getPublicationYear() {
         return publicationYear;
     }
 
     public void setPublicationYear(int publicationYear) {
         this.publicationYear = publicationYear;
-    }
-
-    public int getImageId() {
-        return imageId;
-    }
-
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
     }
 
     public String getDescription() {
@@ -139,7 +105,23 @@ public class Book {
         this.deleteFlag = deleteFlag;
     }
 
-    public Book(int bookId, String title, double price, int pageCount, boolean status, int quantity, int categoryId, int shopId, int autherId, int pushlisherId, int publicationYear, int imageId, String description, boolean deleteFlag) {
+    public int getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
+    }
+
+    public int getPublisherId() {
+        return publisherId;
+    }
+
+    public void setPublisherId(int publisherId) {
+        this.publisherId = publisherId;
+    }
+
+    public Book(int bookId, String title, double price, int pageCount, boolean status, int quantity, int categoryId, int authorId, int publisherId, int publicationYear, String description, boolean deleteFlag) {
         this.bookId = bookId;
         this.title = title;
         this.price = price;
@@ -147,33 +129,24 @@ public class Book {
         this.status = status;
         this.quantity = quantity;
         this.categoryId = categoryId;
-        this.shopId = shopId;
-        this.autherId = autherId;
-        this.pushlisherId = pushlisherId;
+        this.authorId = authorId;
+        this.publisherId = publisherId;
         this.publicationYear = publicationYear;
-        this.imageId = imageId;
         this.description = description;
         this.deleteFlag = deleteFlag;
     }
 
-    public Book(String title, double price, int pageCount, int quantity, int categoryId, int shopId, int autherId, int pushlisherId, int publicationYear, int imageId, String description) {
+    public Book(String title, double price, int pageCount, boolean status, int quantity, int categoryId, int authorId, int publisherId, int publicationYear, String description) {
         this.title = title;
         this.price = price;
         this.pageCount = pageCount;
+        this.status = status;
         this.quantity = quantity;
         this.categoryId = categoryId;
-        this.shopId = shopId;
-        this.autherId = autherId;
-        this.pushlisherId = pushlisherId;
+        this.authorId = authorId;
+        this.publisherId = publisherId;
         this.publicationYear = publicationYear;
-        this.imageId = imageId;
         this.description = description;
-    }
-
-
-    @Override
-    public String toString() {
-        return "Book{" + "bookId=" + bookId + ", title=" + title + ", price=" + price + '}';
     }
     
 }
