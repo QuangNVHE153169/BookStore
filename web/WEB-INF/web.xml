@@ -34,7 +34,7 @@
     </servlet>
     <servlet>
         <servlet-name>bookController</servlet-name>
-        <servlet-class>Controllers.Admin.bookController</servlet-class>
+        <servlet-class>Controllers.bookController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>

@@ -18,10 +18,10 @@ public class Constant {
     
     //Paginator
     public static final int RecordPerPage = 12;
-    public static final int BookIdAsc = -1;
-    public static final int BookIdDesc = 1;
-    public static final int TitleAsc = 2;
-    public static final int TitleDesc = 3;
-    public static final int PriceAsc = 4;
-    public static final int PriceDesc = 5;
+    
+    //Actions
+    public static final char Create = 'C';
+    public static final char Update = 'U';
+    public static final char Delete = 'D';
+    
 }

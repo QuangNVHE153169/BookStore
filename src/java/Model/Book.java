@@ -21,7 +21,12 @@ public class Book {
     int publicationYear;
     String description;
     boolean deleteFlag;
-
+    BookImage[] bookImages;
+    BookImage latestImage;
+    Author author;
+    Publisher publisher;
+    Category category;
+    
     public Book() {
     }
 
@@ -147,6 +152,104 @@ public class Book {
         this.publisherId = publisherId;
         this.publicationYear = publicationYear;
         this.description = description;
+    }
+
+    public Book(String title, double price, int pageCount, int quantity, int categoryId, int authorId, int publisherId, int publicationYear, String description) {
+        this.title = title;
+        this.price = price;
+        this.pageCount = pageCount;
+        this.quantity = quantity;
+        this.categoryId = categoryId;
+        this.authorId = authorId;
+        this.publisherId = publisherId;
+        this.publicationYear = publicationYear;
+        this.description = description;
+    }
+
+    public Book(int bookId, String title, double price, int pageCount, boolean status, int quantity, int categoryId, int authorId, int publisherId, int publicationYear, String description, boolean deleteFlag, BookImage[] bookImages, BookImage latestImage) {
+        this.bookId = bookId;
+        this.title = title;
+        this.price = price;
+        this.pageCount = pageCount;
+        this.status = status;
+        this.quantity = quantity;
+        this.categoryId = categoryId;
+        this.authorId = authorId;
+        this.publisherId = publisherId;
+        this.publicationYear = publicationYear;
+        this.description = description;
+        this.deleteFlag = deleteFlag;
+        this.bookImages = bookImages;
+        this.latestImage = latestImage;
+    }
+
+    public BookImage[] getBookImages() {
+        return bookImages;
+    }
+
+    public void setBookImages(BookImage[] bookImages) {
+        this.bookImages = bookImages;
+    }
+
+    public BookImage getLatestImages() {
+        return latestImage;
+    }
+
+    public void setLatestImages(BookImage latestImages) {
+        this.latestImage = latestImages;
+    }
+
+    public Book(int bookId, String title, double price, int pageCount, boolean status, int quantity, int categoryId, int authorId, int publisherId, int publicationYear, String description, boolean deleteFlag, BookImage latestImage) {
+        this.bookId = bookId;
+        this.title = title;
+        this.price = price;
+        this.pageCount = pageCount;
+        this.status = status;
+        this.quantity = quantity;
+        this.categoryId = categoryId;
+        this.authorId = authorId;
+        this.publisherId = publisherId;
+        this.publicationYear = publicationYear;
+        this.description = description;
+        this.deleteFlag = deleteFlag;
+        this.latestImage = latestImage;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" + "bookId=" + bookId + ", title=" + title + ", price=" + price + ", pageCount=" + pageCount + ", status=" + status + ", quantity=" + quantity + ", categoryId=" + categoryId + ", authorId=" + authorId + ", publisherId=" + publisherId + ", publicationYear=" + publicationYear + ", description=" + description + ", deleteFlag=" + deleteFlag + ", bookImages=" + bookImages + ", latestImages=" + latestImage + '}';
+    }
+
+    public BookImage getLatestImage() {
+        return latestImage;
+    }
+
+    public void setLatestImage(BookImage latestImage) {
+        this.latestImage = latestImage;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
     
 }

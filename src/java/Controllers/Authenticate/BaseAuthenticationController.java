@@ -4,6 +4,7 @@
  */
 package Controllers.Authenticate;
 
+import Model.Constant;
 import Model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,10 +25,13 @@ public abstract class BaseAuthenticationController extends HttpServlet {
             throws ServletException, IOException {
         User acc = (User) request.getSession().getAttribute("account");
         if (acc != null) {
-            processGet(request, response);
-        } else {
-            request.getRequestDispatcher("error/403.jsp").forward(request, response);
+            if (acc.getRole().getId() != Constant.RoleAdmin) {
+                processGet(request, response);
+            } else {
+                processAdminGet(request, response);
+            }
         }
+        request.getRequestDispatcher("error/403.jsp").forward(request, response);
     }
 
     /**
@@ -43,15 +47,22 @@ public abstract class BaseAuthenticationController extends HttpServlet {
             throws ServletException, IOException {
         User acc = (User) request.getSession().getAttribute("account");
         if (acc != null) {
-            processPost(request, response);
-        } else {
-            request.getRequestDispatcher("error/403.jsp").forward(request, response);
+            if (acc.getRole().getId() != Constant.RoleAdmin) {
+                processGet(request, response);
+            } else {
+                processAdminGet(request, response);
+            }
         }
+        request.getRequestDispatcher("error/403.jsp").forward(request, response);
     }
 
     protected abstract void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
     protected abstract void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+    
+    protected abstract void processAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+
+    protected abstract void processAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
     /**
      * Returns a short description of the servlet.

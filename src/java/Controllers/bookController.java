@@ -2,20 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controllers.Admin;
+package Controllers;
 
-import Controllers.Authenticate.BaseAuthenticationController;
+import DAL.BookDAO;
+import Model.Bindings.BookBinding;
+import Model.Book;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import Model.Constant;
+import java.util.ArrayList;
 
 /**
  *
  * @author Admin
  */
-public class bookController extends BaseAuthenticationController {
+public class bookController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -55,6 +60,43 @@ public class bookController extends BaseAuthenticationController {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int page = 1;
+        int sortBy = 0;
+        BookBinding bookBinding = new BookBinding();
+        try {
+            if (request.getParameter("authorId") != null) {
+            bookBinding.setAuthorId(Integer.parseInt(request.getParameter("authorId")));
+            }
+            if (request.getParameter("categoryId") != null) {
+                bookBinding.setCategoryID(Integer.parseInt(request.getParameter("categoryId")));
+            }
+            if (request.getParameter("publisherId") != null) {
+                bookBinding.setAuthorId(Integer.parseInt(request.getParameter("publisherId")));
+            }
+            if (request.getParameter("textSearch") != null) {
+                bookBinding.setTextSearch(request.getParameter("textSearch"));
+            }
+            if (request.getParameter("minPrice") != null) {
+                bookBinding.setMinPrice(Double.parseDouble(request.getParameter("minPrice")));
+            }
+            if (request.getParameter("maxPrice") != null) {
+                bookBinding.setMaxPrice(Double.parseDouble(request.getParameter("maxPrice")));
+            }
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+            if (request.getParameter("sortBy") != null) {
+                sortBy = Integer.parseInt(request.getParameter("sortBy"));
+            }
+        } catch (NumberFormatException e) {
+            request.getSession().setAttribute("msg", "Error while input querying, return to default result.");
+        }
+        
+        BookDAO bDao = new BookDAO();
+        ArrayList<Book> books = bDao.getBookPaginate(page, Constant.RecordPerPage, bookBinding, sortBy);
+        request.setAttribute("items", books);
+        request.setAttribute("totalPage", bDao.getTotalPage(Constant.RecordPerPage));
+        request.getRequestDispatcher("views/Admin/Book/test.jsp").forward(request, response);
     }
 
     /**
@@ -80,15 +122,4 @@ public class bookController extends BaseAuthenticationController {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    @Override
-    protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    @Override
-    protected void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-    }
-
 }
