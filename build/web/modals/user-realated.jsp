@@ -45,12 +45,12 @@
                 </div>
                 <div class="modal-body" style="max-height: 450px; overflow: auto;">
                     <form id="frm-register" action="register" method="post">
-                        <h6>Full name:<span class="text-danger">*</span></h6>
+                        <h6>Full name <span class="text-danger">*</span></h6>
                         <input type="text" name="fullName" required maxlength="255" id="input-fullName"
                                class="form-control mb-3" placeholder="Enter Full Name" value="${account.fullName}"
                                aria-label="Username">
                         <span id="error-fullName" style="color: red; display: none;"></span>
-                        <h6>Phone<span class="text-danger">*</span></h6>
+                        <h6>Phone <span class="text-danger">*</span></h6>
                         <input id="input-phone" type="text" name="phone" required oninput="validatePhone(this)"
                                class="form-control mb-3" placeholder="Enter Phone number" value="${account.phone}"
                                aria-label="Username">
@@ -65,14 +65,16 @@
                                class="form-control mb-2" placeholder="Enter Password"
                                aria-label="Username">
                         <span id="error-password" style="color: red; display: none;"></span>
-                        <h6>Gender <span class="text-danger">*</span></h6>
-                        <input type="radio" name="gender" value="true" checked>Male
-                        <input type="radio" name="gender" value="false">Female
+                        <div class="mb-2">
+                            <h6>Gender <span class="text-danger">*</span></h6>
+                            <input class="form-check-input me-1" type="radio" name="gender" value="true" checked>Male
+                            <input class="form-check-input me-1 ms-2" type="radio" name="gender" value="false">Female
+                        </div>                       
                         <h6>Address</h6>
                         <input type="text" name="address" value="${account.address}"
                                class="form-control mb-3" placeholder="Enter Address"
                                aria-label="Username">
-                        <h6>Date of birth<span class="text-danger">*</span></h6>
+                        <h6>Date of birth <span class="text-danger">*</span></h6>
                         <input type="date" name="dob" max="${now}" required value="${account.dob}"
                                class="form-control mb-3" placeholder="Enter Date of birth" id="input-dob"
                                aria-label="Username">
