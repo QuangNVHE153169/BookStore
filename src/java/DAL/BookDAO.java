@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Model.Constant;
 
 /**
  *
@@ -46,9 +47,8 @@ public class BookDAO extends DBContext {
                     + "           ,[CategoryId]\n"
                     + "           ,[ShopID]\n"
                     + "           ,[AuthorId]\n"
-                    + "           ,[PushisherId]\n"
+                    + "           ,[PublisherId]\n"
                     + "           ,[PublicationYear]\n"
-                    + "           ,[ImageId]\n"
                     + "           ,[Description]\n"
                     + "           ,[DeleteFlag])\n"
                     + "     VALUES\n"
@@ -56,7 +56,6 @@ public class BookDAO extends DBContext {
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,1\n"
-                    + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
@@ -73,9 +72,8 @@ public class BookDAO extends DBContext {
             stm.setInt(5, book.getCategoryId());
             stm.setInt(6, book.getShopId());
             stm.setInt(7, book.getAutherId());
-            stm.setInt(8, book.getPushlisherId());
+            stm.setInt(8, book.getPublisherId());
             stm.setInt(9, book.getPublicationYear());
-            stm.setInt(10, book.getImageId());
             stm.setNString(11, book.getDescription());
             stm.executeUpdate();
         } catch (SQLException ex) {
@@ -102,9 +100,8 @@ public class BookDAO extends DBContext {
                         rs.getInt("CategoryId"),
                         rs.getInt("ShopID"),
                         rs.getInt("AuthorId"),
-                        rs.getInt("PushisherId"),
+                        rs.getInt("PublisherId"),
                         rs.getInt("PublicationYear"),
-                        rs.getInt("ImageId"),
                         rs.getString("Description"),
                         rs.getBoolean("DeleteFlag"));
             }
@@ -126,23 +123,23 @@ public class BookDAO extends DBContext {
                     + "on au.AuthorId = b.AuthorId\n"
                     + "left join Categories c\n"
                     + "on c.CategoryId = b.CategoryId\n"
-                    + "left join Pushlishers pu\n"
-                    + "on b.PushisherId = pu.PublisherId\n"
+                    + "left join Publishers pu\n"
+                    + "on b.PublisherId = pu.PublisherId\n"
                     + "left join BookImages bi\n"
                     + "on b.ImageId = bi.ProductImageId\n"
                     + "Where b.Price >= ? and b.Price <= ? and b.DeleteFlag = 0\n";
             setter.put(++count, binding.getMinPrice());
             setter.put(++count, binding.getMaxPrice());
 
-            if (binding.getAuthorId() != -1) {
+            if (binding.getAuthorId() > 0) {
                 sql += "  and b.AuthorId = ?";
                 setter.put(++count, binding.getAuthorId());
             }
-            if (binding.getCategoryID() != -1) {
+            if (binding.getCategoryID() > 0) {
                 sql += " and b.CategoryId = ?";
                 setter.put(++count, binding.getCategoryID());
             }
-            if (binding.getPushisherId() != -1) {
+            if (binding.getPushisherId() > 0) {
                 sql += " and b.PushisherId = ?";
                 setter.put(++count, binding.getPushisherId());
             }
@@ -160,22 +157,19 @@ public class BookDAO extends DBContext {
                     + "on pro.Title = Books.Title\n";
 
             switch (sortOption) {
-                case -1:
+                case Constant.BookIdAsc:
                     sql += " order by BookId asc\n";
                     break;
-                case 1:
-                    sql += " order by BookId desc\n";
-                    break;
-                case 2:
+                case Constant.TitleAsc:
                     sql += " order by Title asc\n";
                     break;
-                case 3:
+                case Constant.TitleDesc:
                     sql += " order by Title desc\n";
                     break;
-                case 4:
+                case Constant.PriceAsc:
                     sql += " order by Price asc\n";
                     break;
-                case 5:
+                case Constant.PriceDesc:
                     sql += " order by Price desc\n";
                     break;
                 default:
@@ -209,10 +203,13 @@ public class BookDAO extends DBContext {
         BookDAO bDao = new BookDAO();
         BookBinding binding = new BookBinding(1, 1, 1, "", 0, 1000000);
 //        bDao.softDeleteBook(3);
-        Book book = new Book("quang", 12343, 1234, 1, 1, 1, 1, 1, 1, 1, "asdf");
-        bDao.insert(book);
-        ArrayList<Book> books = bDao.getAllProductParent(0, 10, binding, -1);
-        System.out.println(bDao.getBookById(3).toString());
+//        Book book = new Book("quang", 12343, 1234, 1, 1, 1, 1, 1, 1, 1, "asdf");
+//        bDao.insert(book);
+//        System.out.println(bDao.getBookById(3).toString());
+        BookBinding test = new BookBinding();
+        test.setAuthorId(1);
+        System.out.println(test.toString());
+        ArrayList<Book> books = bDao.getAllProductParent(0, 10, test, -1);
         for (int i = 0; i < books.size(); i++) {
             System.out.println(books.get(i).toString());
         }
