@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import Model.Constant;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -63,6 +65,14 @@ public class bookController extends HttpServlet {
         int page = 1;
         int sortBy = 0;
         BookBinding bookBinding = new BookBinding();
+        request.setAttribute("authorId", request.getParameter("authorId"));
+        request.setAttribute("categoryId", request.getParameter("categoryId"));
+        request.setAttribute("publisherId", request.getParameter("publisherId"));
+        request.setAttribute("textSearch", request.getParameter("textSearch"));
+        request.setAttribute("minPrice", request.getParameter("minPrice"));
+        request.setAttribute("maxPrice", request.getParameter("maxPrice"));
+        request.setAttribute("status", request.getParameter("status"));
+        request.setAttribute("sortBy", request.getParameter("sortBy"));
         try {
             if (request.getParameter("authorId") != null) {
             bookBinding.setAuthorId(Integer.parseInt(request.getParameter("authorId")));
@@ -88,6 +98,9 @@ public class bookController extends HttpServlet {
             if (request.getParameter("sortBy") != null) {
                 sortBy = Integer.parseInt(request.getParameter("sortBy"));
             }
+            if (request.getParameter("status") != null) {
+                bookBinding.setStatus(Integer.parseInt(request.getParameter("status")));
+            }
         } catch (NumberFormatException e) {
             request.getSession().setAttribute("msg", "Error while input querying, return to default result.");
         }
@@ -96,7 +109,8 @@ public class bookController extends HttpServlet {
         ArrayList<Book> books = bDao.getBookPaginate(page, Constant.RecordPerPage, bookBinding, sortBy);
         request.setAttribute("items", books);
         request.setAttribute("totalPage", bDao.getTotalPage(Constant.RecordPerPage));
-        request.getRequestDispatcher("views/Admin/Book/test.jsp").forward(request, response);
+        request.setAttribute("currentPage", page);
+//        request.getRequestDispatcher("views/Admin/Book/test.jsp").forward(request, response);
     }
 
     /**
@@ -118,6 +132,16 @@ public class bookController extends HttpServlet {
      *
      * @return a String containing servlet description
      */
+    
+    public void getAllBooks(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            doGet(request, response);
+        } catch (ServletException ex) {
+            Logger.getLogger(bookController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(bookController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     @Override
     public String getServletInfo() {
         return "Short description";

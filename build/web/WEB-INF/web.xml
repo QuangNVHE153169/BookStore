@@ -36,6 +36,14 @@
         <servlet-name>bookController</servlet-name>
         <servlet-class>Controllers.bookController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>bookAdminController</servlet-name>
+        <servlet-class>Controllers.Admin.bookAdminController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>bookManageController</servlet-name>
+        <servlet-class>Controllers.Admin.bookManageController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -68,6 +76,14 @@
         <servlet-name>bookController</servlet-name>
         <url-pattern>/books</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>bookAdminController</servlet-name>
+        <url-pattern>/admin-books</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>bookManageController</servlet-name>
+        <url-pattern>/manage-book</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -77,8 +93,8 @@
         <error-code>404</error-code>
         <location>/error/404.jsp</location>
     </error-page>
-    <error-page>
+    <!--    <error-page>
         <error-code>500</error-code>
         <location>/error/500.jsp</location>
-    </error-page>
+    </error-page>-->
 </web-app>

@@ -8,6 +8,7 @@ import Model.Author;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -33,5 +34,26 @@ public class AuthorDAO extends DBContext {
         }
         
         return null;
+    }
+    
+    public ArrayList<Author> getAuthors() {
+        ArrayList<Author> list = new ArrayList<>();
+        try {
+            String sql = "Select * From Author";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(new Author(rs.getInt("AuthorId"),
+                        rs.getString("AuthorName"),
+                        rs.getDate("DOB"),
+                        rs.getBoolean("Status"), 
+                        rs.getBoolean("DeleteFlag")));
+            }
+        } catch (SQLException e) {
+
+        }
+
+        return list;
     }
 }

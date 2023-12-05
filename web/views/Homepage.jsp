@@ -1,4 +1,7 @@
 <%@ include file="../layout/header.jsp" %>
+<head>
+    <title>Home Page</title>
+</head>
 <body class="overflow-x-hidden background-gray">
 
         <!-- don't show in profile tab  -->

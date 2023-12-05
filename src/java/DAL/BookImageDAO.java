@@ -17,6 +17,25 @@ import java.util.logging.Logger;
  * @author Admin
  */
 public class BookImageDAO extends DBContext {
+    public void insert(BookImage bi) {
+        try {
+            String sql = "INSERT INTO [BookImages]\n"
+                    + "           ([BookId]\n"
+                    + "           ,[Url]\n"
+                    + "           ,[DeleteFlag]\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,0)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, bi.getBookId());
+            stm.setNString(2, bi.getUrl());
+            stm.executeUpdate();
+        } catch (SQLException e) {
+            
+        }
+    }
+    
     public ArrayList<BookImage> getImagesByBookId(int id) {
         ArrayList<BookImage> list = new ArrayList<>();
         try {
