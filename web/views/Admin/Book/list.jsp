@@ -21,7 +21,7 @@
             </li>
         </ul>
         <footer class="position-absolute bottom-0 start-0 end-0 text-center p-3" style="background-color: #deded540">
-            © 2023 Copyright by Book Shop
+            ï¿½ 2023 Copyright by Book Shop
         </footer>
     </section>
     <section style="margin-left: 280px; height: calc(92vh); overflow-y: auto;">
@@ -80,7 +80,7 @@
                                         <th class="d-flex align-items-center" style="height: 78px;" scope="row">${item.bookId}</th>
                                         <td style="width: 25%; height: 78px;">
                                             <div class="d-flex gap-2 align-items-center">
-                                                <img src="${item.latestImage.url}"
+                                                <img src="/images/${item.latestImage.url}"
                                                      class="rounded-2" style="width: 60px; height: 60px; object-fit: contain;" />
                                                 <h6 class="truncate-2-line">${item.title}</h6>
                                             </div>
@@ -165,7 +165,7 @@
                     </div>
 
                     <!--Pagination of item (10 item each page)--> 
-                    <c:if test="${items.size() > 0}">
+                    <c:if test="${items.size() > 1}">
                         <div class="d-flex justify-content-center mt-1">
                             <nav aria-label="Page navigation example col-12">
                                 <ul class="pagination">

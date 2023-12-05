@@ -108,7 +108,7 @@ public class bookController extends HttpServlet {
         BookDAO bDao = new BookDAO();
         ArrayList<Book> books = bDao.getBookPaginate(page, Constant.RecordPerPage, bookBinding, sortBy);
         request.setAttribute("items", books);
-        request.setAttribute("totalPage", bDao.getTotalPage(Constant.RecordPerPage));
+        request.setAttribute("totalPage", bDao.getTotalPage(books.size()));
         request.setAttribute("currentPage", page);
 //        request.getRequestDispatcher("views/Admin/Book/test.jsp").forward(request, response);
     }

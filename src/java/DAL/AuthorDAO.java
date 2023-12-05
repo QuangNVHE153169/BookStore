@@ -39,7 +39,7 @@ public class AuthorDAO extends DBContext {
     public ArrayList<Author> getAuthors() {
         ArrayList<Author> list = new ArrayList<>();
         try {
-            String sql = "Select * From Author";
+            String sql = "Select * From Authors";
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -55,5 +55,10 @@ public class AuthorDAO extends DBContext {
         }
 
         return list;
+    }
+    
+    public static void main(String[] args) {
+        AuthorDAO auDao = new AuthorDAO();
+        System.out.println(auDao.getAuthors());
     }
 }
