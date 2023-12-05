@@ -1,4 +1,9 @@
 <%@ include file="../layout/header.jsp" %>
+<head>
+    <title>
+        Enter OTP
+    </title>
+</head>
 <body>
     <div class="form-gap"></div>
     <div class="container">

@@ -30,8 +30,9 @@ public abstract class BaseAuthenticationController extends HttpServlet {
             } else {
                 processAdminGet(request, response);
             }
+        } else {
+            request.getRequestDispatcher("error/403.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("error/403.jsp").forward(request, response);
     }
 
     /**
@@ -48,18 +49,19 @@ public abstract class BaseAuthenticationController extends HttpServlet {
         User acc = (User) request.getSession().getAttribute("account");
         if (acc != null) {
             if (acc.getRole().getId() != Constant.RoleAdmin) {
-                processGet(request, response);
+                processPost(request, response);
             } else {
-                processAdminGet(request, response);
+                processAdminPost(request, response);
             }
+        } else {
+            request.getRequestDispatcher("error/403.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("error/403.jsp").forward(request, response);
     }
 
     protected abstract void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
     protected abstract void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
-    
+
     protected abstract void processAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
     protected abstract void processAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;

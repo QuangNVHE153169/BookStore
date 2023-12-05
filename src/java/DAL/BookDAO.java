@@ -25,6 +25,22 @@ import Model.Publisher;
  * @author Admin
  */
 public class BookDAO extends DBContext {
+    
+    public int getLatestBook() {
+        try {
+            String sql = "Select * FROM [dbo].[Books]\n"
+                    + " Order by BookId desc";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("BookId");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return 0;
+    }
 
     public int getTotalPage(int itemPerPage) {
         int totalRow = 0;
@@ -43,7 +59,7 @@ public class BookDAO extends DBContext {
         return (int) Math.ceil((double) totalRow / itemPerPage);
     }
 
-    public void softDeleteBook(int id) {
+    public Boolean softDeleteBook(int id) {
         try {
             String sql = "UPDATE [dbo].[Books]\n"
                     + "   SET [DeleteFlag] = 1,\n"
@@ -51,10 +67,16 @@ public class BookDAO extends DBContext {
                     + " WHERE BookId = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
-            ps.executeUpdate();
+            int result = ps.executeUpdate();
+
+            if (result > 0) {
+                return true;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        return false;
     }
 
     public void insert(Book book) {
@@ -97,6 +119,44 @@ public class BookDAO extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public Boolean update(Book book) {
+        try {
+            String sql = "UPDATE [Books] \n"
+                    + "SET Title = ?, \n"
+                    + "Price = ?, \n"
+                    + "PageCount = ?, \n"
+                    + "Status = ?, \n"
+                    + "CategoryId = ? \n"
+                    + "AuthorId = ? \n"
+                    + "PublisherId = ? \n"
+                    + "PublicationYear = ? \n"
+                    + "Description = ? \n"
+                    + "WHERE BookId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+
+            stm.setNString(1, book.getTitle());
+            stm.setDouble(2, book.getPrice());
+            stm.setInt(3, book.getPageCount());
+            stm.setBoolean(4, book.isStatus());
+            stm.setInt(5, book.getCategoryId());
+            stm.setInt(6, book.getAuthorId());
+            stm.setInt(7, book.getPublisherId());
+            stm.setInt(8, book.getPublicationYear());
+            stm.setNString(9, book.getDescription());
+
+            int result = stm.executeUpdate();
+
+            if (result > 0) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return false;
     }
 
     public Book getBookById(int id) {
@@ -148,9 +208,10 @@ public class BookDAO extends DBContext {
 //                    + "left join BookImages bi\n"
 //                    + "on b.BookId = bi.BookId\n"
 //                    + "Where b.Price >= ? and b.Price <= ? and b.DeleteFlag = 0\n";
-            String sql = "Where Price >= ? and Price <= ? and DeleteFlag = 0";
+            String sql = "Where Price >= ? and Price <= ? and Status = ? and DeleteFlag = 0";
             setter.put(++count, binding.getMinPrice());
             setter.put(++count, binding.getMaxPrice());
+            setter.put(++count, binding.getStatus());
 
             if (binding.getAuthorId() > 0) {
                 sql += "  and AuthorId = ?";
@@ -161,7 +222,7 @@ public class BookDAO extends DBContext {
                 setter.put(++count, binding.getCategoryID());
             }
             if (binding.getPublisherID() > 0) {
-                sql += " and PushisherId = ?";
+                sql += " and PublisherId = ?";
                 setter.put(++count, binding.getPublisherID());
             }
             if (!binding.getTextSearch().isEmpty() && !binding.getTextSearch().equalsIgnoreCase("")) {
@@ -176,7 +237,6 @@ public class BookDAO extends DBContext {
 //
 //            sql += ") as pro\n"
 //                    + "on pro.Title = Books.Title\n";
-
             sql = "Select * from Books " + sql;
 
             switch (sortOption) {
@@ -219,11 +279,11 @@ public class BookDAO extends DBContext {
             }
             ResultSet rs = stm.executeQuery();
             Book book = new Book();
-            
+
             AuthorDAO auDao = new AuthorDAO();
             PublisherDAO puDao = new PublisherDAO();
             CategoryDAO cDao = new CategoryDAO();
-            
+
             while (rs.next()) {
                 book = getBookById(rs.getInt("BookId"));
                 book.setAuthor(auDao.getAuthorById(rs.getInt("AuthorId")));
@@ -239,18 +299,18 @@ public class BookDAO extends DBContext {
 
     public static void main(String[] args) {
         BookDAO bDao = new BookDAO();
-        BookBinding binding = new BookBinding(1, 1, 1, "", 0, 1000000);
+        BookBinding binding = new BookBinding(1, 1, 1, 1, "", 1000000, 1);
 //        bDao.softDeleteBook(3);
-        Book book = new Book("quangnv", 12343, 1234, 1, 1, 1, 1, 1, "abcd");
-//        bDao.insert(book);
+//        Book book = new Book("quangnv", 12343, 1234, 1, 1, 1, 1, 1, "abcd");
+
 //        System.out.println(bDao.getBookById(3).toString());
         BookBinding test = new BookBinding();
         test.setAuthorId(1);
 //        System.out.println(test.toString());
 
         System.out.println(bDao.getTotalPage(Constant.RecordPerPage));
-        ArrayList<Book> books = bDao.getBookPaginate(1, 10, test, -1);
-        for (int i = 0; i < books.size(); i++) {
+        ArrayList<Book> books = bDao.getBookPaginate(1, 10, binding, -1);
+        for (int i = 0; i < 5; i++) {
             System.out.println(books.get(i).toString());
         }
     }

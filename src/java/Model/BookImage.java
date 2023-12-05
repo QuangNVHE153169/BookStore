@@ -22,7 +22,6 @@ public class BookImage {
     }
 
     public BookImage() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public int getImageId() {
@@ -55,6 +54,11 @@ public class BookImage {
 
     public void setDeleteFlag(Boolean DeleteFlag) {
         this.DeleteFlag = DeleteFlag;
+    }
+
+    public BookImage(int BookId, String Url) {
+        this.BookId = BookId;
+        this.Url = Url;
     }
     
 }

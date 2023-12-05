@@ -82,8 +82,7 @@ public class UserDAO extends DBContext {
                 return new User(rs.getInt("UserID"),
                         rs.getString("FullName"),
                         rs.getString("Phone"),
-                        rs.getString("Email"),
-                        rs.getString("Email_Id"),
+                        rs.getString("Email"),                      
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -115,7 +114,6 @@ public class UserDAO extends DBContext {
                         rs.getString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -135,7 +133,6 @@ public class UserDAO extends DBContext {
             String sql = "INSERT INTO [Users]\n"
                     + "           ([FullName]\n"
                     + "           ,[Email]\n"
-                    + "           ,[Email_Id]\n"
                     + "           ,[Password]\n"
                     + "           ,[Phone]\n"
                     + "           ,[DOB]\n"
@@ -156,21 +153,19 @@ public class UserDAO extends DBContext {
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
-                    + "           ,?\n"
                     + "		  ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, user.getFullName());
             stm.setString(2, user.getEmail());
-            stm.setString(3, user.getEmailID());
-            stm.setString(4, user.getPassword());
-            stm.setString(5, user.getPhone());
-            stm.setDate(6, user.getDob());
-            stm.setString(7, user.getAddress());
-            stm.setString(8, null);
-             stm.setString(9, user.getGender());
-            stm.setInt(10, Constant.RoleCustomer);
-            stm.setBoolean(11, true);
-            stm.setBoolean(12, false);
+            stm.setString(3, user.getPassword());
+            stm.setString(4, user.getPhone());
+            stm.setDate(5, user.getDob());
+            stm.setString(6, user.getAddress());
+            stm.setString(7, null);
+             stm.setString(8, user.getGender());
+            stm.setInt(9, Constant.RoleCustomer);
+            stm.setBoolean(10, true);
+            stm.setBoolean(11, false);
             return stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -213,7 +208,6 @@ public class UserDAO extends DBContext {
                         rs.getString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -248,7 +242,6 @@ public class UserDAO extends DBContext {
                         rs.getNString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -430,7 +423,6 @@ public class UserDAO extends DBContext {
                         rs.getNString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -497,14 +489,15 @@ public class UserDAO extends DBContext {
 
     public static void main(String[] args) {
         UserDAO uDao = new UserDAO();
-//        EncodeMD5 encode = new EncodeMD5();
-//        User user = new User();
-//        user.setFullName("Quang NV");
-//        user.setPhone("0337498466");
-//        user.setEmail("quangnvhe153169@fpt.edu.vn");
-//        user.setPassword(encode.EncoderMD5("123456"));
-//        user.setAddress("336, Kim Đồng");
-//        Date dob = Date.valueOf(LocalDate.now());
-//        user.setDob(dob);
+        EncodeMD5 encode = new EncodeMD5();
+        User user = new User();
+        user.setFullName("Quang NV");
+        user.setPhone("0337498466");
+        user.setEmail("quangnvhe153169@fpt.edu.vn");
+        user.setPassword(encode.EncoderMD5("123456"));
+        user.setAddress("336, Kim Đồng");
+        Date dob = Date.valueOf(LocalDate.now());
+        user.setDob(dob);
+        uDao.insert(user);
     }
 }
