@@ -30,9 +30,8 @@ public abstract class BaseAuthenticationController extends HttpServlet {
             } else {
                 processAdminGet(request, response);
             }
-        } else {
-            request.getRequestDispatcher("error/403.jsp").forward(request, response);
         }
+        request.getRequestDispatcher("error/403.jsp").forward(request, response);
     }
 
     /**
@@ -53,9 +52,8 @@ public abstract class BaseAuthenticationController extends HttpServlet {
             } else {
                 processAdminPost(request, response);
             }
-        } else {
-            request.getRequestDispatcher("error/403.jsp").forward(request, response);
         }
+        request.getRequestDispatcher("error/403.jsp").forward(request, response);
     }
 
     protected abstract void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;

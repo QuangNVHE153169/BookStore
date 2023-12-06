@@ -94,6 +94,19 @@
                             </div>
                             <div class="row align-items-center mb-3">
                                 <div class="col-sm-3">
+                                    <p class="col-form-label">Date of birth</p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <input type="date" name="dob" max="${now}" required value="${requestScope.account.dob}"
+                                           class="form-control" required>
+                                </div>
+                                <div class="offset-sm-3">
+                                    <span id="error-dob" class="mt-2" style="color: red; display: none;"></span>
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center mb-3">
+                                <div class="col-sm-3">
                                     <p class="col-form-label">Mobile</p>
                                 </div>
                                 <div class="col-sm-9">
@@ -128,6 +141,7 @@
 <script>
     checkName = ${requestScope.account.getFullName() != ""}
     checkPhone = ${requestScope.account.getPhone() != ""}
+    checkDob = ${requestScope.account.getDob() != ""}
     function validatePhone(input) {
         var value = input.value;
         var regex = /^0[0-9]{9}$/;
@@ -157,6 +171,34 @@
         }
     }
 
+    function validateName(input) {
+        var value = input.value;
+
+        if (value == "") {
+            document.getElementById('error-name').textContent = "Full Name is required";
+            document.getElementById('error-name').style.display = "block";
+            checkName = false;
+        } else {
+            document.getElementById('error-name').textContent = "";
+            document.getElementById('error-name').style.display = "none";
+            checkName = true;
+        }
+    }
+    
+    function validateDob(input) {
+        var value = input.value;
+
+        if (value == "") {
+            document.getElementById('error-dob').textContent = "Date of Birth is required";
+            document.getElementById('error-dob').style.display = "block";
+            checkDob = false;
+        } else {
+            document.getElementById('error-dob').textContent = "";
+            document.getElementById('error-dob').style.display = "none";
+            checkDob = true;
+        }
+    }
+
 //    function validateEmail(input) {
 //        var value = input.value;
 //        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;       
@@ -174,7 +216,7 @@
 
     function updateProfile() {
 
-        if (checkPhone && checkName) {
+        if (checkPhone && checkName && checkDob) {
             document.getElementById("frm-update").submit();
         }
     }
