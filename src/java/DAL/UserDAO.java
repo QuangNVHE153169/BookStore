@@ -266,7 +266,7 @@ public class UserDAO extends DBContext {
                     + "SET Fullname = ?, \n"
                     + "DOB = ?, \n"
                     + "Gender = ?, \n"
-                    + "Email = ?, \n"
+                    + "Phone = ?, \n"
                     + "Address = ? \n"
                     + "WHERE UserID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -274,7 +274,7 @@ public class UserDAO extends DBContext {
             stm.setNString(1, user.getFullName());
             stm.setDate(2, user.getDob());
             stm.setNString(3, user.getGender());
-            stm.setString(4, user.getEmail());
+            stm.setString(4, user.getPhone());
             stm.setString(5, user.getAddress());
             stm.setInt(6, user.getUserID());
 

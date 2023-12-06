@@ -5,7 +5,7 @@
 package Controllers.Admin;
 
 import Controllers.Authenticate.BaseAuthenticationController;
-import Controllers.bookController;
+import Controllers.Book.bookController;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -37,7 +37,7 @@ public class bookAdminController extends BaseAuthenticationController {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet bookAdminController</title>");            
+            out.println("<title>Servlet bookAdminController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet bookAdminController at " + request.getContextPath() + "</h1>");
@@ -69,15 +69,20 @@ public class bookAdminController extends BaseAuthenticationController {
     @Override
     protected void processAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         bookController bCon = new bookController();
-        bCon.getAllBooks(request, response);
-        CategoryDAO cDao = new CategoryDAO();
-        request.setAttribute("categories", cDao.getCategories());
-        request.getRequestDispatcher("/views/Admin/Book/list.jsp").forward(request, response);
+        if (request.getParameter("bookId") != null) {
+            bCon.getBook(request, response);
+            request.getRequestDispatcher("/views/Admin/Book/detail.jsp").forward(request, response);
+        } else {
+            bCon.getAllBooks(request, response);
+            CategoryDAO cDao = new CategoryDAO();
+            request.setAttribute("categories", cDao.getCategories());
+            request.getRequestDispatcher("/views/Admin/Book/list.jsp").forward(request, response);
+        }
     }
 
     @Override
     protected void processAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
     }
 
 }

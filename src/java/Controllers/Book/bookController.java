@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controllers;
+package Controllers.Book;
 
 import DAL.BookDAO;
 import Model.Bindings.BookBinding;
@@ -15,8 +15,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import Model.Constant;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -41,7 +44,7 @@ public class bookController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet bookController</title>");            
+            out.println("<title>Servlet bookController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet bookController at " + request.getContextPath() + "</h1>");
@@ -62,6 +65,28 @@ public class bookController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    public void getAllBooks(HttpServletRequest request, HttpServletResponse response) {
         int page = 1;
         int sortBy = 0;
         BookBinding bookBinding = new BookBinding();
@@ -75,7 +100,7 @@ public class bookController extends HttpServlet {
         request.setAttribute("sortBy", request.getParameter("sortBy"));
         try {
             if (request.getParameter("authorId") != null) {
-            bookBinding.setAuthorId(Integer.parseInt(request.getParameter("authorId")));
+                bookBinding.setAuthorId(Integer.parseInt(request.getParameter("authorId")));
             }
             if (request.getParameter("categoryId") != null) {
                 bookBinding.setCategoryID(Integer.parseInt(request.getParameter("categoryId")));
@@ -104,44 +129,74 @@ public class bookController extends HttpServlet {
         } catch (NumberFormatException e) {
             request.getSession().setAttribute("msg", "Error while input querying, return to default result.");
         }
-        
         BookDAO bDao = new BookDAO();
         ArrayList<Book> books = bDao.getBookPaginate(page, Constant.RecordPerPage, bookBinding, sortBy);
         request.setAttribute("items", books);
-        request.setAttribute("totalPage", bDao.getTotalPage(books.size()));
+        request.setAttribute("totalPage", bDao.getTotalPage(bookBinding));
         request.setAttribute("currentPage", page);
-//        request.getRequestDispatcher("views/Admin/Book/test.jsp").forward(request, response);
+        request.setAttribute("queryString", getQueryString(request, response));
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    
-    public void getAllBooks(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            doGet(request, response);
-        } catch (ServletException ex) {
-            Logger.getLogger(bookController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(bookController.class.getName()).log(Level.SEVERE, null, ex);
+    public void getBook(HttpServletRequest request, HttpServletResponse response) {
+        if (request.getParameter("bookId") != null) {
+            BookDAO bDao = new BookDAO();
+            Book b = bDao.getBookDetailById(Integer.parseInt(request.getParameter("bookId")));
+            if (b != null) {
+                request.setAttribute("book", b);
+            } else {
+                request.setAttribute("msg", "Book is not exist");
+            }
         }
     }
+
+    public String getQueryString(HttpServletRequest request, HttpServletResponse response) {
+        String queryString = request.getQueryString() != null ? request.getQueryString() : "";
+
+        Map<String, String> params = Arrays.stream(queryString.split("&"))
+                .map(s -> s.split("="))
+                .collect(Collectors.toMap(
+                        arr -> arr[0],
+                        arr -> arr.length > 1 ? arr[1] : ""
+                ));
+
+
+        params.entrySet().removeIf(entry -> entry.getKey().startsWith("page"));
+
+        String newQueryString = params.entrySet().stream()
+                .map(entry -> entry.getKey() + "=" + entry.getValue())
+                .collect(Collectors.joining("&"));
+        if (newQueryString.isEmpty()) {
+            return newQueryString;
+        }
+        return newQueryString + "&";
+    }
+
+    public static void main(String[] args) {
+
+        String queryString = "name=John&page=about&age=25";
+
+        // Phân tách query string thành các cặp key-value
+        Map<String, String> params = Arrays.stream(queryString.split("&"))
+                .map(s -> s.split("="))
+                .collect(Collectors.toMap(
+                        arr -> arr[0],
+                        arr -> arr.length > 1 ? arr[1] : ""
+                ));
+
+        System.out.println(params.get("page"));
+
+        // Loại bỏ tham số bắt đầu từ "page="
+        params.entrySet().removeIf(entry -> entry.getKey().startsWith("page"));
+
+        // Tạo lại query string mới từ Map đã được chỉnh sửa
+        String newQueryString = params.entrySet().stream()
+                .map(entry -> entry.getKey() + "=" + entry.getValue())
+                .collect(Collectors.joining("&"));
+
+        System.out.println("New query string: " + newQueryString);
+
+    }
+
     @Override
     public String getServletInfo() {
         return "Short description";
