@@ -5,6 +5,7 @@
 package Controllers.Admin;
 
 import Controllers.Authenticate.BaseAuthenticationController;
+import Controllers.Book.BookController;
 import DAL.AuthorDAO;
 import DAL.BookDAO;
 import DAL.BookImageDAO;
@@ -29,7 +30,7 @@ import java.time.LocalDate;
  * @author Admin
  */
 @MultipartConfig
-public class bookManageController extends BaseAuthenticationController {
+public class BookManageController extends BaseAuthenticationController {
 
     /**
      * Returns a short description of the servlet.
@@ -59,19 +60,10 @@ public class bookManageController extends BaseAuthenticationController {
             request.setAttribute("authorList", auDao.getAuthors());
             request.setAttribute("categoryList", cDao.getCategories());
             request.setAttribute("publisherList", puDao.getPublishers());
-            if (request.getParameter("bookId") != null) {
-                BookDAO bDao = new BookDAO();
-                Book book = bDao.getBookById(Integer.parseInt(request.getParameter("bookId")));
-                if (book != null) {
-                    request.setAttribute("book", book);
-                } else {
-                    request.getSession().setAttribute("msg", "Book is not exist!");
-                    response.sendRedirect("admin-books");
-                }
-            }
-            request.getRequestDispatcher("/views/Admin/Book/create.jsp").forward(request, response);
+            BookController bCon = new BookController();
+            bCon.getBookUpdate(request, response, "admin-books");
         } catch (Exception e) {
-            request.getSession().setAttribute("msg", "System Error, please try again.");
+            request.getSession().setAttribute("msg", e.getMessage());
             response.sendRedirect("admin-books");
         }
     }
@@ -95,20 +87,20 @@ public class bookManageController extends BaseAuthenticationController {
                     b.setPublicationYear(Integer.parseInt(request.getParameter("publicationYear")));
                     b.setQuantity(Integer.parseInt(request.getParameter("quantity")));
                     bDao.insert(b);
-                    
+
                     int newId = bDao.getLatestBook();
-                    Part file = request.getPart("file");                   
-                    
+                    Part file = request.getPart("file");
+
                     String realPath = getServletContext().getRealPath("") + "images";
 
                     String fileName = Paths.get(file.getSubmittedFileName()).getFileName().toString();
                     if (!Files.exists(Paths.get(realPath))) {
                         Files.createDirectories(Paths.get(realPath));
                     }
-                    file.write(realPath+ File.separator +fileName);
+                    file.write(realPath + File.separator + fileName);
                     BookImage bi = new BookImage(newId, fileName);
                     biDao.insert(bi);
-                    
+
                     request.getSession().setAttribute("msg", "Create Succesfully!");
                     break;
                 }
@@ -121,8 +113,12 @@ public class bookManageController extends BaseAuthenticationController {
                     b.setPublicationYear(Integer.parseInt(request.getParameter("publicationYear")));
                     b.setDescription(request.getParameter("description"));
                     b.setPublicationYear(LocalDate.now().getYear());
-                    bDao.update(b);
-                    request.getSession().setAttribute("msg", "Update Succesfully!");
+                    if (bDao.getBookById(b.getBookId()) != null) {
+                        bDao.update(b);
+                        request.getSession().setAttribute("msg", "Update Succesfully!");
+                    } else {
+                        request.getSession().setAttribute("msg", "Update Failed!");
+                    }
                     break;
                 }
                 case Constant.Delete: {

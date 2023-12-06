@@ -5,20 +5,22 @@
 package Controllers.Admin;
 
 import Controllers.Authenticate.BaseAuthenticationController;
-import Controllers.bookController;
+import Controllers.Book.BookController;
+import DAL.BookDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import DAL.CategoryDAO;
+import Model.Book;
 import jakarta.servlet.jsp.PageContext;
 
 /**
  *
  * @author Admin
  */
-public class bookAdminController extends BaseAuthenticationController {
+public class BookAdminController extends BaseAuthenticationController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,7 +39,7 @@ public class bookAdminController extends BaseAuthenticationController {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet bookAdminController</title>");            
+            out.println("<title>Servlet bookAdminController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet bookAdminController at " + request.getContextPath() + "</h1>");
@@ -68,16 +70,20 @@ public class bookAdminController extends BaseAuthenticationController {
 
     @Override
     protected void processAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        bookController bCon = new bookController();
-        bCon.getAllBooks(request, response);
-        CategoryDAO cDao = new CategoryDAO();
-        request.setAttribute("categories", cDao.getCategories());
-        request.getRequestDispatcher("/views/Admin/Book/list.jsp").forward(request, response);
+        BookController bCon = new BookController();
+        if (request.getParameter("bookId") != null) {
+            bCon.getBook(request, response, "/views/Admin/Book/detail.jsp", "admin-books");
+        } else {
+            bCon.getAllBooks(request, response);
+            CategoryDAO cDao = new CategoryDAO();
+            request.setAttribute("categories", cDao.getCategories());
+            request.getRequestDispatcher("/views/Admin/Book/list.jsp").forward(request, response);
+        }
     }
 
     @Override
     protected void processAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
     }
 
 }

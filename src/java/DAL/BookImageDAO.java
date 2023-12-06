@@ -31,8 +31,8 @@ public class BookImageDAO extends DBContext {
             stm.setInt(1, bi.getBookId());
             stm.setNString(2, bi.getUrl());
             stm.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -56,8 +56,8 @@ public class BookImageDAO extends DBContext {
                 
                 list.add(image);
             }
-        } catch (SQLException e) {
-            
+        } catch (SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return list;
@@ -83,8 +83,8 @@ public class BookImageDAO extends DBContext {
                 
                 return image;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return null;
