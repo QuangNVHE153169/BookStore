@@ -24,7 +24,7 @@ public class User {
     private Role role;
     private boolean status;
     private String description;
-    private String gender;
+    private int gender;
 
     public User() {
     }
@@ -42,56 +42,11 @@ public class User {
         this.description = description;
     }
     
-    public User(int customerId, String fullName, String phone, String email, Date dob, String address, String avatar, Role role, boolean status, String description, String gender) {
+    public User(int customerId, String fullName, String phone, String email, Date dob, String address, String avatar, Role role, boolean status, String description, int gender) {
         this.userID = customerId;
         this.fullName = fullName;
         this.phone = phone;
         this.email = email;
-        this.dob = dob;
-        this.address = address;
-        this.avatar = avatar;
-        this.role = role;
-        this.status = status;
-        this.description = description;
-        this.gender = gender;
-    }
-
-    public User(int customerId, String fullName, String phone, String email, String emailID, Date dob, String address, String avatar, Role role, boolean status, String description) {
-        this.userID = customerId;
-        this.fullName = fullName;
-        this.phone = phone;
-        this.email = email;
-        this.emailID = emailID;
-        this.dob = dob;
-        this.address = address;
-        this.avatar = avatar;
-        this.role = role;
-        this.status = status;
-        this.description = description;
-    }
-
-    public User(int userID, String fullName, String phone, String email, String emailID, String password, Date dob, String address, String avatar, Role role, boolean status, String description, String gender) {
-        this.userID = userID;
-        this.fullName = fullName;
-        this.phone = phone;
-        this.email = email;
-        this.emailID = emailID;
-        this.password = password;
-        this.dob = dob;
-        this.address = address;
-        this.avatar = avatar;
-        this.role = role;
-        this.status = status;
-        this.description = description;
-        this.gender = gender;
-    }
-
-    public User(int userID, String fullName, String phone, String email, String emailID, Date dob, String address, String avatar, Role role, boolean status, String description, String gender) {
-        this.userID = userID;
-        this.fullName = fullName;
-        this.phone = phone;
-        this.email = email;
-        this.emailID = emailID;
         this.dob = dob;
         this.address = address;
         this.avatar = avatar;
@@ -101,11 +56,11 @@ public class User {
         this.gender = gender;
     }
     
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 

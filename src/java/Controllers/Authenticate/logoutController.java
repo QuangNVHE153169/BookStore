@@ -15,7 +15,7 @@ import java.io.PrintWriter;
  *
  * @author Admin
  */
-public class logoutController extends HttpServlet {
+public class LogoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

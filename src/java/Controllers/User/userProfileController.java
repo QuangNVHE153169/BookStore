@@ -12,12 +12,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 
 /**
  *
  * @author Admin
  */
-public class userProfileController extends BaseAuthenticationController {
+public class UserProfileController extends BaseAuthenticationController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,7 +37,7 @@ public class userProfileController extends BaseAuthenticationController {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet userProfileController</title>");            
+            out.println("<title>Servlet userProfileController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet userProfileController at " + request.getContextPath() + "</h1>");
@@ -65,17 +66,24 @@ public class userProfileController extends BaseAuthenticationController {
 
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User account = (User) request.getSession().getAttribute("account");
-        account.setAddress(request.getParameter("address"));
-        account.setFullName(request.getParameter("fullname"));
-        account.setGender(request.getParameter("gender"));
-        account.setPhone(request.getParameter("phone"));
-        
-        UserDAO uDao = new UserDAO();
-        uDao.updateUser(account);
-        
-        request.getSession().setAttribute("msg", "Update Profile Successfully!");
-        response.sendRedirect("user-profile");
+        try {
+            User account = (User) request.getSession().getAttribute("account");
+            account.setAddress(request.getParameter("address"));
+            account.setFullName(request.getParameter("fullname"));
+            account.setGender(Integer.parseInt(request.getParameter("gender")));
+            account.setPhone(request.getParameter("phone"));
+            account.setDob(Date.valueOf(request.getParameter("dob")));
+
+            UserDAO uDao = new UserDAO();
+            uDao.updateUser(account);
+
+            request.getSession().setAttribute("msg", "Update Profile Successfully!");
+            response.sendRedirect("user-profile");
+        } catch (Exception e) {
+            request.getSession().setAttribute("msg", "System Error. Please Try Again.");
+            response.sendRedirect("user-profile");
+        }
+
     }
 
     @Override

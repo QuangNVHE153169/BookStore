@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controllers.Authenticate;
+package Controllers.User;
 
+import Controllers.Authenticate.BaseAuthenticationController;
 import DAL.UserDAO;
 import Model.User;
 import Utils.EncodeMD5;
@@ -17,7 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author dell
  */
-public class changePasswordController extends BaseAuthenticationController {
+public class ChangePasswordController extends BaseAuthenticationController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

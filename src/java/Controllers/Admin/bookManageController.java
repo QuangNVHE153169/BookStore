@@ -29,7 +29,7 @@ import java.time.LocalDate;
  * @author Admin
  */
 @MultipartConfig
-public class bookManageController extends BaseAuthenticationController {
+public class BookManageController extends BaseAuthenticationController {
 
     /**
      * Returns a short description of the servlet.
@@ -65,8 +65,7 @@ public class bookManageController extends BaseAuthenticationController {
                 if (book != null) {
                     request.setAttribute("book", book);
                 } else {
-                    request.getSession().setAttribute("msg", "Book is not exist!");
-                    response.sendRedirect("admin-books");
+                    request.getSession().setAttribute("msg", "Book is not exist!");  
                 }
             }
             request.getRequestDispatcher("/views/Admin/Book/create.jsp").forward(request, response);

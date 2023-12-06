@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -28,8 +30,8 @@ public class PublisherDAO extends DBContext {
                         rs.getInt("FoundedYear"),
                         rs.getBoolean("DeleteFlag"));
             }
-        } catch (SQLException e) {
-            
+        } catch (SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return null;
@@ -49,8 +51,8 @@ public class PublisherDAO extends DBContext {
                         rs.getInt("FoundedYear"),
                         rs.getBoolean("DeleteFlag")));
             }
-        } catch (SQLException e) {
-
+        } catch (SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return list;
