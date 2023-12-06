@@ -100,7 +100,8 @@
 
         <!-- Header of all content  -->
         <header class="d-flex flex-wrap justify-content-center py-3 border-bottom px-5 background-white">
-            <a href="${sessionScope.acc.role != 1 ? "admin-books" : "home"}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto">
+            
+            <a href="${sessionScope.account.role.id != 1 ? "home" : "admin-books"}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto">
                 <div class="rounded-circle d-flex justify-content-center align-items-center home-button smooth-transform"
                      style="width: 40px; height: 40px">
                     <i class="fa fa-home"></i>
@@ -128,15 +129,10 @@
                         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
                            id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-user me-2 primary-color"></i>
-                            <c:if test="${session.Scope.account.role == 1}"> 
-                                Hello:&nbsp;<strong>${sessionScope.account.fullName}</strong>
-                            </c:if>
-                            <c:if test="${session.Scope.account.role != 1}"> 
-                                Hello Admin:&nbsp;<strong>${sessionScope.account.fullName}</strong>
-                            </c:if>
+                                Hello ${sessionScope.account.role.id != 1 ? "" : "Admin"}:&nbsp;<strong>${sessionScope.account.fullName}</strong>
                         </a>
                         <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                            <c:if test="${session.Scope.account.role == 1}"> 
+                            <c:if test="${sessionScope.account.role.id != 1}"> 
                                 <li><a class="dropdown-item" href="user-profile">User Profile</a></li>
                                 <li><a class="dropdown-item" href="change-password">Change Password</a></li>
                             </c:if>                           

@@ -25,7 +25,7 @@ import Model.Publisher;
  * @author Admin
  */
 public class BookDAO extends DBContext {
-    
+
     public int getLatestBook() {
         try {
             String sql = "Select * FROM [dbo].[Books]\n"
@@ -42,7 +42,45 @@ public class BookDAO extends DBContext {
         return 0;
     }
 
-    public int getTotalPage(int totalRecord) {
+    public int getTotalPage(BookBinding binding) {
+        int totalRecord = 0;
+        try {
+            HashMap<Integer, Object> setter = new HashMap<>();
+            int count = 0;
+            String sql = "Where Status = ? and DeleteFlag = 0";
+            setter.put(++count, binding.getStatus());
+
+            if (binding.getAuthorId() > 0) {
+                sql += "  and AuthorId = ?";
+                setter.put(++count, binding.getAuthorId());
+            }
+            if (binding.getCategoryID() > 0) {
+                sql += " and CategoryId = ?";
+                setter.put(++count, binding.getCategoryID());
+            }
+            if (binding.getPublisherID() > 0) {
+                sql += " and PublisherId = ?";
+                setter.put(++count, binding.getPublisherID());
+            }
+            if (!binding.getTextSearch().isEmpty() && !binding.getTextSearch().equalsIgnoreCase("")) {
+                String textSearch = "%" + binding.getTextSearch() + "%";
+                sql += " and Title like ?";
+                setter.put(++count, textSearch);
+            }
+
+            sql = "Select * from Books " + sql;
+            PreparedStatement stm = connection.prepareStatement(sql);
+            for (Map.Entry<Integer, Object> entry : setter.entrySet()) {
+                stm.setObject(entry.getKey(), entry.getValue());
+            }
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                totalRecord++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return (int) Math.ceil((double) totalRecord / Constant.RecordPerPage);
     }
 
@@ -62,7 +100,7 @@ public class BookDAO extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return false;
     }
 
@@ -173,6 +211,33 @@ public class BookDAO extends DBContext {
         return null;
     }
 
+    public Book getBookDetailById(int id) {
+        try {
+            String sql = "SELECT *\n"
+                    + "  FROM [Books] where BookId like ? and DeleteFlag = 0";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            BookImageDAO biDao = new BookImageDAO();
+            AuthorDAO auDao = new AuthorDAO();
+            PublisherDAO puDao = new PublisherDAO();
+            CategoryDAO cDao = new CategoryDAO();
+
+            if (rs.next()) {
+                Book book = new Book();
+                book = getBookById(rs.getInt("BookId"));
+                book.setAuthor(auDao.getAuthorById(rs.getInt("AuthorId")));
+                book.setPublisher(puDao.getPublisherById(rs.getInt("PublisherId")));
+                book.setCategory(cDao.getCategoryById(rs.getInt("CategoryId")));
+
+                return book;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public ArrayList<Book> getBookPaginate(int pageNumber, int recordsPerPage,
             BookBinding binding, int sortOption) {
         ArrayList<Book> list = new ArrayList<>();
@@ -244,12 +309,8 @@ public class BookDAO extends DBContext {
             sql += "  offset ? ROW\n"
                     + "  FETCH Next ? Rows only";
 
-            int maxPage = getTotalPage(recordsPerPage);
             if (pageNumber <= 0) {
                 pageNumber = 1;
-            }
-            if (pageNumber > maxPage) {
-                pageNumber = maxPage;
             }
             int offset = (pageNumber - 1) * recordsPerPage;
             setter.put(++count, offset);
@@ -282,26 +343,26 @@ public class BookDAO extends DBContext {
     public static void main(String[] args) {
         BookDAO bDao = new BookDAO();
         BookBinding binding = new BookBinding(1, 1, 1, 1, "", 1000000, 1);
-        Book book = new Book();
-        book.setPrice(1);
-        book.setPageCount(1);
-        book.setCategoryId(1);
-        book.setPublicationYear(1);
-        book.setDescription("");
-        book.setQuantity(100);
-        book.setBookId(31);
+//        Book book = new Book();
+//        book.setPrice(1);
+//        book.setPageCount(1);
+//        book.setCategoryId(1);
+//        book.setPublicationYear(1);
+//        book.setDescription("");
+//        book.setQuantity(100);
+//        book.setBookId(31);
 //        bDao.softDeleteBook(3);
 //        Book book = new Book("quangnv", 12343, 1234, 1, 1, 1, 1, 1, "abcd");
-        bDao.update(book);
+//        bDao.update(book);
 //        System.out.println(bDao.getBookById(3).toString());
 //        BookBinding test = new BookBinding();
 //        test.setAuthorId(1);
 //        System.out.println(test.toString());
 
-        System.out.println(bDao.getBookById(31));
-//        ArrayList<Book> books = bDao.getBookPaginate(1, 10, binding, -1);
-//        for (int i = 0; i < 5; i++) {
-//            System.out.println(books.get(i).toString());
-//        }
+        System.out.println(bDao.getTotalPage(binding));
+        ArrayList<Book> books = bDao.getBookPaginate(3, 10, binding, -1);
+        for (int i = 0; i < 10; i++) {
+            System.out.println(books.get(i).toString());
+        }
     }
 }

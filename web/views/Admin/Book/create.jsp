@@ -10,30 +10,21 @@
 </head>
 <%@include file="../../../layout/header.jsp" %>
 <body>
-    <!-- Nav bar ADMIN wrapper, DONOT COPY THIS, JUST INCLUDE -->
-    <section class="position-absolute d-flex flex-column flex-shrink-0 p-3 bg-light border-end"           
-             style="width: 280px; height: calc(92vh);">
-        <ul class="nav nav-pills flex-column mb-auto">
-            <li>
-                <a href="/admin-books" class="nav-link active">
-                    Products
-                </a>
-            </li>
-        </ul>
-        <footer class="position-absolute bottom-0 start-0 end-0 text-center p-3" style="background-color: #deded540">
-            � 2023 Copyright by Book Shop
-        </footer>
-    </section>
+    <%@include file="../../../layout/LeftAdminBar.jsp" %>
     <section style="margin-left: 280px; height: calc(92vh); overflow-y: auto;">
         <div class="card my-2 mx-2">
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h1 class="fs-2 fw-bold">
-                        CREATE PRODUCT
+                        ${requestScope.book != null ? "UPDATE PRODUCT" : "CREATE PRODUCT"}
                     </h1>
-                    <a type="button" class="btn btn-primary btn-lg" onclick="submitForm()">
-                        <i class="fa-solid fa-plus"></i>
-                        Save</a>
+                    <div>
+                        <a type="button" class="btn btn-secondary btn-lg" href="admin-books?bookId=${requestScope.book.bookId}">
+                            Cancel</a>
+                        <a type="button" class="btn btn-primary btn-lg" onclick="submitForm()">
+                            Save</a>
+                    </div>
+
                 </div>
             </div>
             <div class="card-body">

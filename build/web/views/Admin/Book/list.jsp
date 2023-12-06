@@ -10,20 +10,7 @@
 </head>
 <%@include file="../../../layout/header.jsp" %>
 <body>
-    <!-- Nav bar ADMIN wrapper, DONOT COPY THIS, JUST INCLUDE -->
-    <section class="position-absolute d-flex flex-column flex-shrink-0 p-3 bg-light border-end"           
-             style="width: 280px; height: calc(92vh);">
-        <ul class="nav nav-pills flex-column mb-auto">
-            <li>
-                <a href="/admin-books" class="nav-link active">
-                    Products
-                </a>
-            </li>
-        </ul>
-        <footer class="position-absolute bottom-0 start-0 end-0 text-center p-3" style="background-color: #deded540">
-            � 2023 Copyright by Book Shop
-        </footer>
-    </section>
+    <%@include file="../../../layout/LeftAdminBar.jsp" %>
     <section style="margin-left: 280px; height: calc(92vh); overflow-y: auto;">
         <div class="card my-2 mx-2">
             <div class="card-header">
@@ -106,9 +93,9 @@
                                             </div>
                                         </td>
                                         <td class="d-flex gap-2 align-items-center" style="width: 280px; height: 78px;">
-                                            <a href="manage-book?bookId=${item.bookId}" type="button" class="btn btn-outline-secondary me-2"
+                                            <a href="admin-books?bookId=${item.bookId}" type="button" class="btn btn-outline-secondary me-2"
                                                <i class="fa-solid fa-pen-to-square"></i>
-                                                Update</a>
+                                                Detail</a>
 
                                             <button type="button" class="btn btn-danger me-2 delete-btn" data-bs-toggle="modal"
                                                     data-bs-target="#deleteItem" data-id="${item.bookId}" data-price="${item.price}" data-name="${item.title}"
@@ -133,7 +120,6 @@
 
                     <div class="modal fade" id="deleteItem" tabindex="-1"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        Delete Confirm
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
