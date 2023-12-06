@@ -60,5 +60,10 @@ public class BookImage {
         this.BookId = BookId;
         this.Url = Url;
     }
+
+    @Override
+    public String toString() {
+        return "BookImage{" + "ImageId=" + ImageId + ", BookId=" + BookId + ", Url=" + Url + ", DeleteFlag=" + DeleteFlag + '}';
+    }
     
 }

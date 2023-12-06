@@ -38,7 +38,7 @@ public class PublisherDAO extends DBContext {
     public ArrayList<Publisher> getPublishers() {
         ArrayList<Publisher> list = new ArrayList<>();
         try {
-            String sql = "Select * From Categories";
+            String sql = "Select * From Publishers";
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 

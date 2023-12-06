@@ -22,7 +22,7 @@ public class BookImageDAO extends DBContext {
             String sql = "INSERT INTO [BookImages]\n"
                     + "           ([BookId]\n"
                     + "           ,[Url]\n"
-                    + "           ,[DeleteFlag]\n"
+                    + "           ,[DeleteFlag])\n"
                     + "     VALUES\n"
                     + "           (?\n"
                     + "           ,?\n"
@@ -32,7 +32,7 @@ public class BookImageDAO extends DBContext {
             stm.setNString(2, bi.getUrl());
             stm.executeUpdate();
         } catch (SQLException e) {
-            
+            System.out.println(e);
         }
     }
     
@@ -78,15 +78,21 @@ public class BookImageDAO extends DBContext {
                 BookImage image = new BookImage();
                 image.setBookId(rs.getInt("BookId"));
                 image.setImageId(rs.getInt("ImageId"));
-                image.setUrl(rs.getNString("Url"));
+                image.setUrl(rs.getString("Url"));
                 image.setDeleteFlag(rs.getBoolean("DeleteFlag"));
                 
                 return image;
             }
         } catch (SQLException e) {
-            
+            e.printStackTrace();
         }
         
         return null;
+    }
+    
+    public static void main(String[] args) {
+        BookImageDAO biDao = new BookImageDAO();
+        BookImage bi = new BookImage(3, "123");
+        System.out.println(biDao.getLatestImageByBookId(3));
     }
 }
