@@ -20,7 +20,7 @@ import java.time.LocalDate;
  *
  * @author Admin
  */
-public class registerController extends HttpServlet {
+public class RegisterController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

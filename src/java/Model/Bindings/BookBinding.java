@@ -13,8 +13,18 @@ public class BookBinding {
     int categoryID;
     int publisherID;
     String textSearch = "";
+    int status = 1;
     double minPrice; 
     double maxPrice = 5000000;
+    
+    
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public void setAuthorId(int authorId) {
         this.authorId = authorId;
@@ -74,6 +84,16 @@ public class BookBinding {
         this.textSearch = textSearch;
         this.minPrice = minPrice;
         this.maxPrice = maxPrice;
+    }
+
+    public BookBinding(int authorId, int categoryID, int publisherID, double minPrice, String textSearch, double maxPrice, int status) {
+        this.authorId = authorId;
+        this.categoryID = categoryID;
+        this.publisherID = publisherID;
+        this.minPrice = minPrice;
+        this.maxPrice = maxPrice;
+        this.status = status;
+        this.textSearch = textSearch;
     }
     
     

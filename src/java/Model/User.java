@@ -14,8 +14,8 @@ public class User {
 
     private int userID;
     private String fullName;
-    private String phone;
     private String email;
+    private String phone;
     private String password;
     private Date dob;
     private String address;
@@ -28,7 +28,7 @@ public class User {
     public User() {
     }
 
-    public User(int userID, String fullName, String phone, String email, Date dob, String address, String avatar, Role role, boolean status, String description, int gender) {
+    public User(int userID, String fullName, String email, String phone, Date dob, String address, String avatar, Role role, boolean status, String description, int gender) {
         this.userID = userID;
         this.fullName = fullName;
         this.phone = phone;
@@ -42,8 +42,7 @@ public class User {
         this.gender = gender;
     }
 
-    
-    public User(int customerId, String fullName, String phone, String email, Date dob, String address, String avatar, Role role, boolean status, String description) {
+    public User(int customerId, String fullName, String email, String phone, Date dob, String address, String avatar, Role role, boolean status, String description) {
         this.userID = customerId;
         this.fullName = fullName;
         this.phone = phone;
@@ -56,7 +55,7 @@ public class User {
         this.description = description;
     }
 
-    public User(int userID, String fullName, String email, String phone, Date dob, String address, String avatar,int gender, Role role, boolean status, String description) {
+    public User(int userID, String fullName, String email, String phone, Date dob, String address, String avatar, int gender, Role role, boolean status, String description) {
         this.userID = userID;
         this.fullName = fullName;
         this.phone = phone;
@@ -70,7 +69,7 @@ public class User {
         this.gender = gender;
     }
 
-    public User(int userID, String fullName, String phone, String email, String password, Date dob, String address, String avatar, Role role, boolean status, String description, int gender) {
+    public User(int userID, String fullName, String email, String phone, String password, Date dob, String address, String avatar, Role role, boolean status, String description, int gender) {
         this.userID = userID;
         this.fullName = fullName;
         this.phone = phone;

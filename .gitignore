@@ -22,15 +22,4 @@
 hs_err_pid*
 replay_pid*
 src/java/DAL/DBContext.java
-/dist/
 
-# NetBeans specific files and directories
-nbproject/private
-build
-nbbuild
-nbactions.xml
-nb-configuration.xml
-.nb-gradle
-.classpath
-.project
-.settings

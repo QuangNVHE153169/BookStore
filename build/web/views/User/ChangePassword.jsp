@@ -1,7 +1,13 @@
 <head>
     <title>Change Password</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="${pageContext.request.contextPath}/css/styles.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
 </head>
 <%@include file="../../layout/header.jsp" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <body>
     <div class="d-flex">
         <!-- <div data-include="left-side-profile-bar"></div> -->
@@ -57,40 +63,44 @@
     crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/8d39de38b8.js" crossorigin="anonymous"></script>-->
 </body>
-
+<!-- Script using  -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/8d39de38b8.js" crossorigin="anonymous"></script>
 <script>
-    function validatePassword(input) {
-        var value = input.value;
-        var regex = /^(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+                        function validatePassword(input) {
+                            var value = input.value;
+                            var regex = /^(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
 
-        if (!regex.test(value)) {
-            document.getElementById(input.getAttribute("data-error")).textContent = "Password must have at least one special character and its length is at least 8 characters";
-            document.getElementById(input.getAttribute("data-error")).style.display = "block";
-            checkPassword = false;
-        } else {
-            document.getElementById(input.getAttribute("data-error")).textContent = "";
-            document.getElementById(input.getAttribute("data-error")).style.display = "none";
-            checkPassword = true;
-        }
-    }
+                            if (!regex.test(value)) {
+                                document.getElementById(input.getAttribute("data-error")).textContent = "Password must have at least one special character and its length is at least 8 characters";
+                                document.getElementById(input.getAttribute("data-error")).style.display = "block";
+                                checkPassword = false;
+                            } else {
+                                document.getElementById(input.getAttribute("data-error")).textContent = "";
+                                document.getElementById(input.getAttribute("data-error")).style.display = "none";
+                                checkPassword = true;
+                            }
+                        }
 
-    function confirmPassword(input) {
-        var value = input.value
+                        function confirmPassword(input) {
+                            var value = input.value
 
-        if (value !== document.getElementById('newPwd').value) {
-            checkConfirmPassword = false;
-            document.getElementById('error-confirm-password').textContent = "Confirm password needs to be same with new password";
-            document.getElementById('error-confirm-password').style.display = "block";
-        } else {
-            checkConfirmPassword = true;
-            document.getElementById('error-confirm-password').textContent = "";
-            document.getElementById('error-confirm-password').style.display = "none";
-        }
-    }
+                            if (value !== document.getElementById('newPwd').value) {
+                                checkConfirmPassword = false;
+                                document.getElementById('error-confirm-password').textContent = "Confirm password needs to be same with new password";
+                                document.getElementById('error-confirm-password').style.display = "block";
+                            } else {
+                                checkConfirmPassword = true;
+                                document.getElementById('error-confirm-password').textContent = "";
+                                document.getElementById('error-confirm-password').style.display = "none";
+                            }
+                        }
 
-    function changePassword() {
-        if (checkConfirmPassword && checkPassword) {
-            document.getElementById("frm-changePassword").submit();
-        }
-    }
+                        function changePassword() {
+                            if (checkConfirmPassword && checkPassword) {
+                                document.getElementById("frm-changePassword").submit();
+                            }
+                        }
 </script>

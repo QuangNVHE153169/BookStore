@@ -57,4 +57,25 @@ public class CategoryDAO extends DBContext {
         }
         return list;
     }
+
+    public ArrayList<Category> getCategories() {
+        ArrayList<Category> list = new ArrayList<>();
+        try {
+            String sql = "Select * From Categories";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                list.add(new Category(rs.getInt("CategoryId"),
+                        rs.getString("CategoryName"),
+                        rs.getBoolean("Status"),
+                        rs.getBoolean("DeleteFlag")));
+            }
+        } catch (SQLException e) {
+
+        }
+
+        return list;
+    }
+
 }

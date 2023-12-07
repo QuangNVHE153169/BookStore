@@ -13,12 +13,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import Model.Constant;
 /**
  *
  * @author Admin
  */
-public class loginController extends HttpServlet {
+public class LoginController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -102,7 +102,11 @@ public class loginController extends HttpServlet {
         if (user != null) {
             request.getSession().setAttribute("msg", "Login successful!");
             request.getSession().setAttribute("account", user);
-            response.sendRedirect("home");
+            if (user.getRole().getId() == Constant.RoleAdmin) {
+                response.sendRedirect("admin-books");
+            } else {
+                response.sendRedirect("home");
+            }
         } else {
             request.getSession().setAttribute("msg", "Login fail! Please check your email and password again!");
             response.sendRedirect("home");

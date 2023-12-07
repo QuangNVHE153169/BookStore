@@ -3,6 +3,7 @@ package DAL;
 import Model.Constant;
 import Model.Role;
 import Model.User;
+import Utils.EncodeMD5;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -61,7 +62,6 @@ public class UserDAO extends DBContext {
             ResultSet rs = stm.executeQuery();
 
             if (rs.next()) {
-
                 return uDAO.getUserByID(rs.getInt("UserId"));
             }
         } catch (SQLException ex) {
@@ -216,7 +216,6 @@ public class UserDAO extends DBContext {
                         rs.getNString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -241,7 +240,7 @@ public class UserDAO extends DBContext {
                     + "SET Fullname = ?, \n"
                     + "DOB = ?, \n"
                     + "Gender = ?, \n"
-                    + "Email = ?, \n"
+                    + "Phone = ?, \n"
                     + "Address = ? \n"
                     + "WHERE UserID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -249,7 +248,7 @@ public class UserDAO extends DBContext {
             stm.setNString(1, user.getFullName());
             stm.setDate(2, user.getDob());
             stm.setInt(3, user.getGender());
-            stm.setString(4, user.getEmail());
+            stm.setString(4, user.getPhone());
             stm.setString(5, user.getAddress());
             stm.setInt(6, user.getUserID());
 
@@ -398,7 +397,6 @@ public class UserDAO extends DBContext {
                         rs.getNString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -465,7 +463,7 @@ public class UserDAO extends DBContext {
 
     public static void main(String[] args) {
         UserDAO uDao = new UserDAO();
-//        EncodeMD5 encode = new EncodeMD5();
+        EncodeMD5 encode = new EncodeMD5();
 //        User user = new User();
 //        user.setFullName("Quang NV");
 //        user.setPhone("0337498466");
@@ -474,5 +472,7 @@ public class UserDAO extends DBContext {
 //        user.setAddress("336, Kim Đồng");
 //        Date dob = Date.valueOf(LocalDate.now());
 //        user.setDob(dob);
+//        uDao.insert(user);
+        System.out.println(encode.EncoderMD5("onething4me@"));
     }
 }

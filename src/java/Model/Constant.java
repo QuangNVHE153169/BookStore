@@ -26,8 +26,12 @@ public class Constant {
     public static final int RecordPerPage = 12;
 
     //Actions
-    public static final char Create = 'C';
-    public static final char Update = 'U';
-    public static final char Delete = 'D';
+//    public static final char Create = 'C';
+//    public static final char Update = 'U';
+//    public static final char Delete = 'D';
 
+    public static final String Create = "C";
+    public static final String Update = "U";
+    public static final String Delete = "D";
+    
 }
