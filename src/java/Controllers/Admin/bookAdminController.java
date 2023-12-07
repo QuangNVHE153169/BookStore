@@ -64,11 +64,11 @@ public class BookAdminController extends BaseAuthenticationController {
         bCon.getAllBooks(request, response);
         CategoryDAO cDao = new CategoryDAO();
         request.setAttribute("categories", cDao.getCategories());
-        request.getRequestDispatcher("/views/Admin/Book/list.jsp").forward(request, response);
 
         if (request.getParameter("bookId") != null) {
+            //send id to get book details
+            request.setAttribute("bookId",request.getParameter("bookId"));
             bCon.getBook(request, response);
-            request.getRequestDispatcher("/views/Admin/Book/detail.jsp").forward(request, response);
         } else {
             bCon.getAllBooks(request, response);
             request.setAttribute("categories", cDao.getCategories());

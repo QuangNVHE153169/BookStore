@@ -133,12 +133,13 @@ public class BookController extends HttpServlet {
         request.setAttribute("currentPage", page);
     }
 
-    public void getBook(HttpServletRequest request, HttpServletResponse response) {
+    public void getBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("bookId") != null) {
             BookDAO bDao = new BookDAO();
             Book b = bDao.getBookDetailById(Integer.parseInt(request.getParameter("bookId")));
             if (b != null) {
                 request.setAttribute("book", b);
+                request.getRequestDispatcher("/views/Admin/Book/detail.jsp").forward(request, response);
             } else {
                 request.setAttribute("msg", "Book is not exist");
             }

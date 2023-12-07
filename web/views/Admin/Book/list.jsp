@@ -1,8 +1,3 @@
-<%-- 
-    Document   : list
-    Created on : Dec 5, 2023, 2:57:11 PM
-    Author     : Admin
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <head>
     <title>Admin Book List</title>
