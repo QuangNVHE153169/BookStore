@@ -1,7 +1,7 @@
 package Controllers.Admin;
 
 import Controllers.Authenticate.BaseAuthenticationController;
-import Controllers.BookController;
+import Controllers.Book.BookController;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,7 +29,7 @@ public class BookAdminController extends BaseAuthenticationController {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet bookAdminController</title>");            
+            out.println("<title>Servlet bookAdminController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet bookAdminController at " + request.getContextPath() + "</h1>");
@@ -65,11 +65,21 @@ public class BookAdminController extends BaseAuthenticationController {
         CategoryDAO cDao = new CategoryDAO();
         request.setAttribute("categories", cDao.getCategories());
         request.getRequestDispatcher("/views/Admin/Book/list.jsp").forward(request, response);
+
+        if (request.getParameter("bookId") != null) {
+            bCon.getBook(request, response);
+            request.getRequestDispatcher("/views/Admin/Book/detail.jsp").forward(request, response);
+        } else {
+            bCon.getAllBooks(request, response);
+            request.setAttribute("categories", cDao.getCategories());
+            request.getRequestDispatcher("/views/Admin/Book/list.jsp").forward(request, response);
+        }
+
     }
 
     @Override
     protected void processAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
     }
 
 }

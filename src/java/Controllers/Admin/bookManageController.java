@@ -65,8 +65,7 @@ public class BookManageController extends BaseAuthenticationController {
                 if (book != null) {
                     request.setAttribute("book", book);
                 } else {
-                    request.getSession().setAttribute("msg", "Book is not exist!");
-                    response.sendRedirect("admin-books");
+                    request.getSession().setAttribute("msg", "Book is not exist!");  
                 }
             }
             request.getRequestDispatcher("/views/Admin/Book/create.jsp").forward(request, response);
