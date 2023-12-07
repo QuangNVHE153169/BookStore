@@ -1,12 +1,17 @@
-<%-- 
-    Document   : list
-    Created on : Dec 5, 2023, 2:57:11 PM
-    Author     : Admin
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <head>
     <title>${requestScope.book != null ? "Update Product" : "Create Product"}</title>
-</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book-shop</title>
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css" />
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 </head>
 <%@include file="../../../layout/header.jsp" %>
 <body>
@@ -134,70 +139,75 @@
     </section>
 </body>
 
+<!-- Script using  -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/8d39de38b8.js" crossorigin="anonymous"></script>
 <script>
-    checkSelect = ${requestScope.book != null ? true : false};
-    checkInput = ${requestScope.book != null ? true : false};
-    function validateSelectBox(input) {
-        var val = input.value
-        if (val == "") {
-            document.getElementById(input.getAttribute("data-error")).textContent = "Select required";
-            document.getElementById(input.getAttribute("data-error")).style.display = "block";
-        } else {
-            document.getElementById(input.getAttribute("data-error")).textContent = "";
-            document.getElementById(input.getAttribute("data-error")).style.display = "none";
-            checkSelect = true;
-        }
-    }
+                                            checkSelect = ${requestScope.book != null ? true : false};
+                                            checkInput = ${requestScope.book != null ? true : false};
+                                            function validateSelectBox(input) {
+                                                var val = input.value
+                                                if (val == "") {
+                                                    document.getElementById(input.getAttribute("data-error")).textContent = "Select required";
+                                                    document.getElementById(input.getAttribute("data-error")).style.display = "block";
+                                                } else {
+                                                    document.getElementById(input.getAttribute("data-error")).textContent = "";
+                                                    document.getElementById(input.getAttribute("data-error")).style.display = "none";
+                                                    checkSelect = true;
+                                                }
+                                            }
 
-    function validateInputBox(input) {
-        var val = input.value
-        if (val == "") {
-            document.getElementById(input.getAttribute("data-error")).textContent = "Input required";
-            document.getElementById(input.getAttribute("data-error")).style.display = "block";
-        } else {
-            document.getElementById(input.getAttribute("data-error")).textContent = "";
-            document.getElementById(input.getAttribute("data-error")).style.display = "none";
-            checkInput = true;
-        }
-    }
+                                            function validateInputBox(input) {
+                                                var val = input.value
+                                                if (val == "") {
+                                                    document.getElementById(input.getAttribute("data-error")).textContent = "Input required";
+                                                    document.getElementById(input.getAttribute("data-error")).style.display = "block";
+                                                } else {
+                                                    document.getElementById(input.getAttribute("data-error")).textContent = "";
+                                                    document.getElementById(input.getAttribute("data-error")).style.display = "none";
+                                                    checkInput = true;
+                                                }
+                                            }
 
-    function checkNullSelectbox() {
-        var inputForm = document.getElementsByClassName("form-select")
-        for (var i = 0; i < inputForm.length; i++) {
-            validateSelectBox(inputForm[i])
-        }
-        for (var i = 0; i < inputForm.length; i++) {
-            if (inputForm[i].value == "") {
-                checkSelect = false;
-                break
-            }
-        }
-    }
+                                            function checkNullSelectbox() {
+                                                var inputForm = document.getElementsByClassName("form-select")
+                                                for (var i = 0; i < inputForm.length; i++) {
+                                                    validateSelectBox(inputForm[i])
+                                                }
+                                                for (var i = 0; i < inputForm.length; i++) {
+                                                    if (inputForm[i].value == "") {
+                                                        checkSelect = false;
+                                                        break
+                                                    }
+                                                }
+                                            }
 
-    function checkNullInputBox() {
-        var selectForm = document.getElementsByClassName("form-control")
-        for (var i = 0; i < selectForm.length; i++) {
-            validateInputBox(selectForm[i])
-        }
-        for (var i = 0; i < selectForm.length; i++) {
-            if (selectForm[i].value == "") {
-                checkInput = false;
-                break
-            }
-        }
-    }
+                                            function checkNullInputBox() {
+                                                var selectForm = document.getElementsByClassName("form-control")
+                                                for (var i = 0; i < selectForm.length; i++) {
+                                                    validateInputBox(selectForm[i])
+                                                }
+                                                for (var i = 0; i < selectForm.length; i++) {
+                                                    if (selectForm[i].value == "") {
+                                                        checkInput = false;
+                                                        break
+                                                    }
+                                                }
+                                            }
 
-    function submitForm() {
-        checkNullInputBox();
-        checkNullInputBox();
-        if (document.getElementById("file") != null) {
-            if (checkInput && checkSelect && document.getElementById("file").value != null) {
-                document.getElementById("submitForm").submit();
-            }
-        } else {
-            if (checkInput && checkSelect) {
-                document.getElementById("submitForm").submit();
-            }
-        }
-    }
+                                            function submitForm() {
+                                                checkNullInputBox();
+                                                checkNullInputBox();
+                                                if (document.getElementById("file") != null) {
+                                                    if (checkInput && checkSelect && document.getElementById("file").value != null) {
+                                                        document.getElementById("submitForm").submit();
+                                                    }
+                                                } else {
+                                                    if (checkInput && checkSelect) {
+                                                        document.getElementById("submitForm").submit();
+                                                    }
+                                                }
+                                            }
 </script>

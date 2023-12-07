@@ -25,10 +25,10 @@ public abstract class BaseAuthenticationController extends HttpServlet {
             throws ServletException, IOException {
         User acc = (User) request.getSession().getAttribute("account");
         if (acc != null) {
-            if (acc.getRole().getId() != Constant.RoleAdmin) {
-                processGet(request, response);
-            } else {
+            if (acc.getRole().getId() == Constant.RoleAdmin) {
                 processAdminGet(request, response);
+            } else {
+                processGet(request, response);
             }
         } else {
             request.getRequestDispatcher("error/403.jsp").forward(request, response);
@@ -48,10 +48,10 @@ public abstract class BaseAuthenticationController extends HttpServlet {
             throws ServletException, IOException {
         User acc = (User) request.getSession().getAttribute("account");
         if (acc != null) {
-            if (acc.getRole().getId() != Constant.RoleAdmin) {
-                processPost(request, response);
-            } else {
+            if (acc.getRole().getId() == Constant.RoleAdmin) {
                 processAdminPost(request, response);
+            } else {
+                processPost(request, response);
             }
         } else {
             request.getRequestDispatcher("error/403.jsp").forward(request, response);
