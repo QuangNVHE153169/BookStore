@@ -1,32 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAL;
 
 import Model.Constant;
 import Model.Enums.Action;
 import Model.Role;
 import Model.User;
-import Utils.EncodeMD5;
-import com.oracle.wls.shaded.org.apache.regexp.recompile;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.omg.CORBA.AnySeqHelper;
 
-/**
- *
- * @author dell
- */
 public class UserDAO extends DBContext {
 
     public void insertUser(User user) {
@@ -65,6 +51,7 @@ public class UserDAO extends DBContext {
     }
 
     public User doLogin(String email, String pwd) {
+        UserDAO uDAO = new UserDAO();
         try {
             String sql = "SELECT *\n"
                     + "  FROM [Users]\n"
@@ -73,8 +60,6 @@ public class UserDAO extends DBContext {
             stm.setString(1, email);
             stm.setString(2, pwd);
             ResultSet rs = stm.executeQuery();
-
-            RoleDAO rDao = new RoleDAO();
 
             if (rs.next()) {
 
@@ -113,8 +98,8 @@ public class UserDAO extends DBContext {
 
                 return new User(rs.getInt("UserID"),
                         rs.getString("FullName"),
-                        rs.getString("Phone"),
                         rs.getString("Email"),
+                        rs.getString("Phone"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -139,7 +124,7 @@ public class UserDAO extends DBContext {
                     + "           ,[DOB]\n"
                     + "           ,[Address]\n"
                     + "           ,[Avatar]\n"
-                    + "           ,[gender]\n"
+                    + "           ,[Gender]\n"
                     + "           ,[RoleId]\n"
                     + "           ,[Status]\n"
                     + "           ,[DeleteFlag])\n"
@@ -165,8 +150,8 @@ public class UserDAO extends DBContext {
             stm.setString(7, null);
             stm.setInt(8, user.getGender());
             stm.setInt(9, Constant.RoleCustomer);
-            stm.setBoolean(10, true);
-            stm.setBoolean(11, false);
+            stm.setBoolean(10, Constant.StatusActive);
+            stm.setBoolean(11, Constant.DeleteFalse);
             return stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -207,8 +192,8 @@ public class UserDAO extends DBContext {
 
                 return new User(rs.getInt("UserID"),
                         rs.getString("FullName"),
-                        rs.getString("Phone"),
                         rs.getString("Email"),
+                        rs.getString("Phone"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),

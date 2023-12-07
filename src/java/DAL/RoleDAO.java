@@ -27,7 +27,7 @@ public class RoleDAO extends DBContext {
             ResultSet rs = stm.executeQuery();
 
             if (rs.next()) {
-                return new Role(roleID, rs.getString("RoleName"), rs.getBoolean("deleteFlag"));
+                return new Role(roleID, rs.getString("RoleName"), rs.getBoolean("Status"),rs.getBoolean("DeleteFlag"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);

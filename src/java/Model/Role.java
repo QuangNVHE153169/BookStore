@@ -9,14 +9,31 @@ package Model;
  * @author dell
  */
 public class Role {
+
     private int id;
     private String name;
+    private boolean status;
     private boolean deleteFlag;
+
+    public Role(int id, String name, boolean status, boolean deleteFlag) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.deleteFlag = deleteFlag;
+    }
 
     public Role(int id, String name, boolean deleteFlag) {
         this.id = id;
         this.name = name;
         this.deleteFlag = deleteFlag;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public Role() {
@@ -45,5 +62,5 @@ public class Role {
     public void setDeleteFlag(boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
     }
-    
+
 }

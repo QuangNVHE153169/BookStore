@@ -5,12 +5,15 @@
 
 package Controllers;
 
+import DAL.CategoryDAO;
+import Model.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -27,11 +30,22 @@ public class HomeController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        
+        CategoryDAO cDao = new CategoryDAO();
+        
+        //get message from server
         String msg = (String) request.getSession().getAttribute("msg");
+        //check if there have message or not
         if (msg != null) {
             request.setAttribute("msg", msg);
             request.getSession().setAttribute("msg", null);
         }
+        
+        //get all categoreis of store
+        ArrayList<Category> categories = cDao.getAllCategories();
+        
+        request.setAttribute("categories", categories);
+        
         request.getRequestDispatcher("views/Homepage.jsp").forward(request, response);
     } 
 

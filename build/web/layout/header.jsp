@@ -109,7 +109,7 @@
             </a>
 
             <div class="d-flex align-items-center gap-3">
-                <!-- If DO NOT login, show this      -->
+                <!-- If DO NOT login, show this -->
                 <c:if test="${sessionScope.account == null}">
                     <button type="button" class="btn btn-outline-none" data-bs-toggle="modal" data-bs-target="#loginModal">
                         <i class="fa-solid fa-lock primary-color me-1"></i>

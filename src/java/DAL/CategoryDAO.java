@@ -34,32 +34,24 @@ public class CategoryDAO extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return null;
     }
-    
-    public ArrayList<Category> getCategories() {
+
+    public ArrayList<Category> getAllCategories() {
+        CategoryDAO cDao = new CategoryDAO();
         ArrayList<Category> list = new ArrayList<>();
         try {
-            String sql = "Select * From Categories";
+            String sql = "Select * From Categories Where DeleteFlag = 0";
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                list.add(new Category(rs.getInt("CategoryId"),
-                        rs.getString("CategoryName"),
-                        rs.getBoolean("Status"),
-                        rs.getBoolean("DeleteFlag")));
+                Category category = cDao.getCategoryById(rs.getInt("CategoryId"));
+                list.add(category);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (SQLException e) {
 
+        }
         return list;
-    }
-    
-    public static void main(String[] args) {
-        CategoryDAO cDao = new CategoryDAO();
-        System.out.println(cDao.getCategoryById(1).toString());
     }
 }

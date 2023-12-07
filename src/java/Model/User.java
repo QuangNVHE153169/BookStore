@@ -16,19 +16,33 @@ public class User {
     private String fullName;
     private String phone;
     private String email;
-    private String emailID;
     private String password;
     private Date dob;
     private String address;
     private String avatar;
+    private int gender;
     private Role role;
     private boolean status;
     private String description;
-    private int gender;
 
     public User() {
     }
 
+    public User(int userID, String fullName, String phone, String email, Date dob, String address, String avatar, Role role, boolean status, String description, int gender) {
+        this.userID = userID;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
+        this.dob = dob;
+        this.address = address;
+        this.avatar = avatar;
+        this.role = role;
+        this.status = status;
+        this.description = description;
+        this.gender = gender;
+    }
+
+    
     public User(int customerId, String fullName, String phone, String email, Date dob, String address, String avatar, Role role, boolean status, String description) {
         this.userID = customerId;
         this.fullName = fullName;
@@ -41,9 +55,9 @@ public class User {
         this.status = status;
         this.description = description;
     }
-    
-    public User(int customerId, String fullName, String phone, String email, Date dob, String address, String avatar, Role role, boolean status, String description, int gender) {
-        this.userID = customerId;
+
+    public User(int userID, String fullName, String email, String phone, Date dob, String address, String avatar,int gender, Role role, boolean status, String description) {
+        this.userID = userID;
         this.fullName = fullName;
         this.phone = phone;
         this.email = email;
@@ -55,12 +69,19 @@ public class User {
         this.description = description;
         this.gender = gender;
     }
-    
-    public int getGender() {
-        return gender;
-    }
 
-    public void setGender(int gender) {
+    public User(int userID, String fullName, String phone, String email, String password, Date dob, String address, String avatar, Role role, boolean status, String description, int gender) {
+        this.userID = userID;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.dob = dob;
+        this.address = address;
+        this.avatar = avatar;
+        this.role = role;
+        this.status = status;
+        this.description = description;
         this.gender = gender;
     }
 
@@ -94,14 +115,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getEmailID() {
-        return emailID;
-    }
-
-    public void setEmailID(String emailID) {
-        this.emailID = emailID;
     }
 
     public String getPassword() {
@@ -160,10 +173,17 @@ public class User {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "User{" + "userID=" + userID + ", fullName=" + fullName + ", phone=" + phone + ", email=" + email + ", emailID=" + emailID + ", password=" + password + ", dob=" + dob + ", address=" + address + ", avatar=" + avatar + ", role=" + role + ", status=" + status + ", description=" + description + ", gender=" + gender + '}';
+    public int getGender() {
+        return gender;
     }
 
-    
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "userID=" + userID + ", fullName=" + fullName + ", phone=" + phone + ", email=" + email + ", password=" + password + ", dob=" + dob + ", address=" + address + ", avatar=" + avatar + ", role=" + role + ", status=" + status + ", description=" + description + ", gender=" + gender + '}';
+    }
+
 }
