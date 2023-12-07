@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -91,7 +92,7 @@ public class registerController extends HttpServlet {
         //parse string to sql.date
         Date dob = Date.valueOf(request.getParameter("dob"));
         user.setDob(dob);
-        user.setGender(request.getParameter("gender"));
+        user.setGender(Integer.parseInt(request.getParameter("gender")));
 
         //check if email exist before or not
         boolean isExist = uDao.isUserExist(user.getEmail());
@@ -110,6 +111,25 @@ public class registerController extends HttpServlet {
                 response.sendRedirect("home");
             }
         }
+    }
+
+    public static void main(String[] args) {
+        UserDAO uDao = new UserDAO();
+        User user = new User();
+        user.setFullName("Hai");
+        user.setPhone("Hai");
+        user.setEmail("Hai");
+        EncodeMD5 encode = new EncodeMD5();
+
+        //encode password to MD5
+        String hashPwd = encode.EncoderMD5("Hai");
+        user.setPassword(hashPwd);
+        user.setAddress("address");
+        //parse string to sql.date
+        user.setDob(Date.valueOf(LocalDate.now()));
+        user.setGender(Integer.parseInt("1"));
+        System.out.println(uDao.insert(user));
+        
     }
 
     /**

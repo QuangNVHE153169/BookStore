@@ -13,15 +13,21 @@ public class Constant {
     public static final int RoleAdmin = 1;
     public static final int RoleCustomer = 2;
 
-    public static final boolean GenderMale = true;
-    public static final boolean GenderFeMale = false;
-    
+    public static final int GenderMale = 1;
+    public static final int GenderFemale = 0;
+
+    public static final boolean StatusActive = true;
+    public static final boolean StatusDeactive = false;
+
+    public static final boolean DeleteTrue = true;
+    public static final boolean DeleteFalse = false;
+
     //Paginator
     public static final int RecordPerPage = 12;
-    
+
     //Actions
     public static final char Create = 'C';
     public static final char Update = 'U';
     public static final char Delete = 'D';
-    
+
 }

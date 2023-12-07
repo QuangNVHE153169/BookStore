@@ -68,7 +68,7 @@ public class userProfileController extends BaseAuthenticationController {
         User account = (User) request.getSession().getAttribute("account");
         account.setAddress(request.getParameter("address"));
         account.setFullName(request.getParameter("fullname"));
-        account.setGender(request.getParameter("gender"));
+        account.setGender(Integer.parseInt(request.getParameter("gender")));
         account.setPhone(request.getParameter("phone"));
         
         UserDAO uDao = new UserDAO();

@@ -8,12 +8,18 @@ import Model.Category;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
  * @author Admin
  */
-class CategoryDAO extends DBContext {
+public class CategoryDAO extends DBContext {
+
+    public static void main(String[] args) {
+        CategoryDAO cDao = new CategoryDAO();
+        System.out.println(cDao.getCategoryById(1).toString());
+    }
 
     public Category getCategoryById(int id) {
         try {
@@ -31,12 +37,24 @@ class CategoryDAO extends DBContext {
         } catch (SQLException e) {
 
         }
-
         return null;
     }
-    
-    public static void main(String[] args) {
+
+    public ArrayList<Category> getAllCategories() {
         CategoryDAO cDao = new CategoryDAO();
-        System.out.println(cDao.getCategoryById(1).toString());
+        ArrayList<Category> list = new ArrayList<>();
+        try {
+            String sql = "Select * From Categories Where DeleteFlag = 0";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Category category = cDao.getCategoryById(rs.getInt("CategoryId"));
+                list.add(category);
+            }
+        } catch (SQLException e) {
+
+        }
+        return list;
     }
 }

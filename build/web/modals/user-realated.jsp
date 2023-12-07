@@ -67,8 +67,8 @@
                         <span id="error-password" style="color: red; display: none;"></span>
                         <div class="mb-2">
                             <h6>Gender <span class="text-danger">*</span></h6>
-                            <input class="form-check-input me-1" type="radio" name="gender" value="true" checked>Male
-                            <input class="form-check-input me-1 ms-2" type="radio" name="gender" value="false">Female
+                            <input class="form-check-input me-1" type="radio" name="gender" value="1" checked>Male
+                            <input class="form-check-input me-1 ms-2" type="radio" name="gender" value="0">Female
                         </div>                       
                         <h6>Address</h6>
                         <input type="text" name="address" value="${account.address}"

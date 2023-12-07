@@ -1,31 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAL;
 
 import Model.Constant;
 import Model.Role;
 import Model.User;
-import Utils.EncodeMD5;
-import com.oracle.wls.shaded.org.apache.regexp.recompile;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.omg.CORBA.AnySeqHelper;
 
-/**
- *
- * @author dell
- */
 public class UserDAO extends DBContext {
 
     public void insertUser(User user) {
@@ -55,7 +41,7 @@ public class UserDAO extends DBContext {
             stm.setString(4, user.getPhone());
             stm.setDate(5, user.getDob());
             stm.setString(6, user.getAddress());
-            stm.setNString(7, user.getGender());
+            stm.setInt(7, user.getGender());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -64,6 +50,7 @@ public class UserDAO extends DBContext {
     }
 
     public User doLogin(String email, String pwd) {
+        UserDAO uDAO = new UserDAO();
         try {
             String sql = "SELECT *\n"
                     + "  FROM [Users]\n"
@@ -73,23 +60,9 @@ public class UserDAO extends DBContext {
             stm.setString(2, pwd);
             ResultSet rs = stm.executeQuery();
 
-            RoleDAO rDao = new RoleDAO();
-
             if (rs.next()) {
 
-                Role role = rDao.getRoleByID(rs.getInt("RoleId"));
-
-                return new User(rs.getInt("UserID"),
-                        rs.getString("FullName"),
-                        rs.getString("Phone"),
-                        rs.getString("Email"),
-                        rs.getString("Email_Id"),
-                        rs.getDate("DOB"),
-                        rs.getString("Address"),
-                        rs.getString("Avatar"),
-                        role,
-                        rs.getBoolean("Status"),
-                        rs.getString("Description"));
+                return uDAO.getUserByID(rs.getInt("UserId"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -113,16 +86,15 @@ public class UserDAO extends DBContext {
 
                 return new User(rs.getInt("UserID"),
                         rs.getString("FullName"),
-                        rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("Email_Id"),
+                        rs.getString("Phone"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
                         role,
                         rs.getBoolean("Status"),
                         rs.getString("Description"),
-                        rs.getString("Gender"));
+                        rs.getInt("Gender"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -135,13 +107,12 @@ public class UserDAO extends DBContext {
             String sql = "INSERT INTO [Users]\n"
                     + "           ([FullName]\n"
                     + "           ,[Email]\n"
-                    + "           ,[Email_Id]\n"
                     + "           ,[Password]\n"
                     + "           ,[Phone]\n"
                     + "           ,[DOB]\n"
                     + "           ,[Address]\n"
                     + "           ,[Avatar]\n"
-                    + "           ,[gender]\n"
+                    + "           ,[Gender]\n"
                     + "           ,[RoleId]\n"
                     + "           ,[Status]\n"
                     + "           ,[DeleteFlag])\n"
@@ -156,21 +127,19 @@ public class UserDAO extends DBContext {
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
-                    + "           ,?\n"
                     + "		  ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, user.getFullName());
             stm.setString(2, user.getEmail());
-            stm.setString(3, user.getEmailID());
-            stm.setString(4, user.getPassword());
-            stm.setString(5, user.getPhone());
-            stm.setDate(6, user.getDob());
-            stm.setString(7, user.getAddress());
-            stm.setString(8, null);
-             stm.setString(9, user.getGender());
-            stm.setInt(10, Constant.RoleCustomer);
-            stm.setBoolean(11, true);
-            stm.setBoolean(12, false);
+            stm.setString(3, user.getPassword());
+            stm.setString(4, user.getPhone());
+            stm.setDate(5, user.getDob());
+            stm.setString(6, user.getAddress());
+            stm.setString(7, null);
+            stm.setInt(8, user.getGender());
+            stm.setInt(9, Constant.RoleCustomer);
+            stm.setBoolean(10, Constant.StatusActive);
+            stm.setBoolean(11, Constant.DeleteFalse);
             return stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -211,9 +180,8 @@ public class UserDAO extends DBContext {
 
                 return new User(rs.getInt("UserID"),
                         rs.getString("FullName"),
-                        rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("Email_Id"),
+                        rs.getString("Phone"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -255,7 +223,7 @@ public class UserDAO extends DBContext {
                         role,
                         rs.getBoolean("Status"),
                         rs.getString("Description"),
-                        rs.getString("gender"));
+                        rs.getInt("Gender"));
 
                 users.add(user);
             }
@@ -280,7 +248,7 @@ public class UserDAO extends DBContext {
 
             stm.setNString(1, user.getFullName());
             stm.setDate(2, user.getDob());
-            stm.setNString(3, user.getGender());
+            stm.setInt(3, user.getGender());
             stm.setString(4, user.getEmail());
             stm.setString(5, user.getAddress());
             stm.setInt(6, user.getUserID());
@@ -437,7 +405,7 @@ public class UserDAO extends DBContext {
                         role,
                         rs.getBoolean("Status"),
                         rs.getString("Description"),
-                        rs.getNString("gender")));
+                        rs.getInt("Gender")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -493,7 +461,7 @@ public class UserDAO extends DBContext {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    } 
+    }
 
     public static void main(String[] args) {
         UserDAO uDao = new UserDAO();

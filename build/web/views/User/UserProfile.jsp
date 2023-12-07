@@ -76,7 +76,7 @@
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="gender"
                                                    id="maleRadios" value="true"
-                                                   ${requestScope.account.getGender() == true ? "checked" : "" }>
+                                                   ${requestScope.account.getGender() == 1 ? "checked" : "" }>
                                             <label class="form-check-label" for="maleRadios">
                                                 Male
                                             </label>
@@ -84,7 +84,7 @@
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="gender"
                                                    id="femaleRadios" value="false"
-                                                   ${requestScope.account.getGender() == false ? "checked" : "" }>
+                                                   ${requestScope.account.getGender() == 0 ? "checked" : "" }>
                                             <label class="form-check-label" for="femaleRadios">
                                                 Female
                                             </label>
