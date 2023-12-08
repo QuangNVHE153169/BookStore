@@ -5,7 +5,7 @@
         <servlet-class>Controllers.Authenticate.RegisterController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>logoutController</servlet-name>
+        <servlet-name>LogoutController</servlet-name>
         <servlet-class>Controllers.Authenticate.LogoutController</servlet-class>
     </servlet>
     <servlet>
@@ -34,7 +34,7 @@
     </servlet>
     <servlet>
         <servlet-name>BookController</servlet-name>
-        <servlet-class>Controllers.Book.bookController</servlet-class>
+        <servlet-class>Controllers.Book.BookController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>BookAdminController</servlet-name>
