@@ -57,7 +57,7 @@ public class BookManageController extends BaseAuthenticationController {
             CategoryDAO cDao = new CategoryDAO();
             PublisherDAO puDao = new PublisherDAO();
             request.setAttribute("authorList", auDao.getAuthors());
-            request.setAttribute("categoryList", cDao.getCategories());
+            request.setAttribute("categoryList", cDao.getAllCategories());
             request.setAttribute("publisherList", puDao.getPublishers());
             if (request.getParameter("bookId") != null) {
                 BookDAO bDao = new BookDAO();

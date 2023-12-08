@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <head>
     <title>Admin Book List</title>
-</style>
 </head>
 <%@include file="../../../layout/header.jsp" %>
 <body>

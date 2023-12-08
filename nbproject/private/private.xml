@@ -3,21 +3,40 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/BookStore/web/WEB-INF/web.xml</file>
-            <file>file:/D:/BookStore/web/css/styles.css</file>
+            <file>file:/D:/BookStore/src/java/Controllers/Authenticate/LoginController.java</file>
+            <file>file:/D:/BookStore/src/java/Utils/EncodeMD5.java</file>
             <file>file:/D:/BookStore/src/java/DAL/CategoryDAO.java</file>
-            <file>file:/D:/BookStore/src/java/DAL/BookImageDAO.java</file>
-            <file>file:/D:/BookStore/web/META-INF/context.xml</file>
-            <file>file:/D:/BookStore/src/java/Controllers/Authenticate/loginController.java</file>
-            <file>file:/D:/BookStore/src/java/Controllers/Admin/bookManageController.java</file>
-            <file>file:/D:/BookStore/web/views/Admin/Book/list.jsp</file>
-            <file>file:/D:/BookStore/src/java/Controllers/Admin/bookAdminController.java</file>
-            <file>file:/D:/BookStore/src/java/DAL/BookDAO.java</file>
-            <file>file:/D:/BookStore/src/java/Model/BookImage.java</file>
-            <file>file:/D:/BookStore/src/java/Controllers/bookController.java</file>
+            <file>file:/D:/BookStore/web/layout/LeftSideBar.jsp</file>
+            <file>file:/D:/BookStore/src/java/DAL/RoleDAO.java</file>
+            <file>file:/D:/BookStore/src/java/Controllers/Authenticate/LogoutController.java</file>
+            <file>file:/D:/BookStore/web/layout/footer.jsp</file>
+            <file>file:/D:/BookStore/web/views/EnterOtp.jsp</file>
+            <file>file:/D:/BookStore/src/java/DAL/DBContext.java</file>
+            <file>file:/D:/BookStore/web/views/NewPassword.jsp</file>
+            <file>file:/D:/BookStore/src/java/DAL/UserDAO.java</file>
             <file>file:/D:/BookStore/web/layout/header.jsp</file>
-            <file>file:/D:/BookStore/web/views/Admin/Book/create.jsp</file>
-            <file>file:/D:/BookStore/src/java/Model/Book.java</file>
+            <file>file:/D:/BookStore/web/layout/ShopNavigation.jsp</file>
+            <file>file:/D:/BookStore/src/java/Controllers/Admin/BookManageController.java</file>
+            <file>file:/D:/BookStore/web/views/User/UserProfile.jsp</file>
+            <file>file:/D:/BookStore/src/java/Controllers/Authenticate/NewPassword.java</file>
+            <file>file:/D:/BookStore/src/java/Controllers/User/UserProfileController.java</file>
+            <file>file:/D:/BookStore/web/WEB-INF/web.xml</file>
+            <file>file:/D:/BookStore/src/java/Controllers/Authenticate/RegisterController.java</file>
+            <file>file:/D:/BookStore/web/css/styles.css</file>
+            <file>file:/D:/BookStore/src/java/Controllers/Authenticate/ForgotPasswordController.java</file>
+            <file>file:/D:/BookStore/src/java/Model/Role.java</file>
+            <file>file:/D:/BookStore/web/views/Homepage.jsp</file>
+            <file>file:/D:/BookStore/src/java/Controllers/NotFound.java</file>
+            <file>file:/D:/BookStore/web/META-INF/context.xml</file>
+            <file>file:/D:/BookStore/src/java/Controllers/HomeController.java</file>
+            <file>file:/D:/BookStore/src/java/Model/User.java</file>
+            <file>file:/D:/BookStore/src/java/Controllers/User/ChangePasswordController.java</file>
+            <file>file:/D:/BookStore/src/java/Controllers/Authenticate/ValidateOtp.java</file>
+            <file>file:/D:/BookStore/src/java/Model/Constant.java</file>
+            <file>file:/D:/BookStore/src/java/Utils/EmailService.java</file>
+            <file>file:/D:/BookStore/src/java/Controllers/Authenticate/BaseAuthenticationController.java</file>
+            <file>file:/D:/BookStore/web/modals/user-realated.jsp</file>
+            <file>file:/D:/BookStore/src/java/Controllers/Admin/BookAdminController.java</file>
         </group>
     </open-files>
 </project-private>

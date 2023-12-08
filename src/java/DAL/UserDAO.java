@@ -4,6 +4,7 @@ import Model.Constant;
 import Model.Enums.Action;
 import Model.Role;
 import Model.User;
+import Utils.EncodeMD5;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -60,6 +61,7 @@ public class UserDAO extends DBContext {
             stm.setString(1, email);
             stm.setString(2, pwd);
             ResultSet rs = stm.executeQuery();
+            RoleDAO rDao = new RoleDAO();
 
             if (rs.next()) {
 

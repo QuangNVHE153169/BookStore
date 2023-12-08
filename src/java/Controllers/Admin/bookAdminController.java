@@ -76,7 +76,7 @@ public class BookAdminController extends BaseAuthenticationController {
         } else {
             bCon.getAllBooks(request, response);
             CategoryDAO cDao = new CategoryDAO();
-            request.setAttribute("categories", cDao.getCategories());
+            request.setAttribute("categories", cDao.getAllCategories());
             request.getRequestDispatcher("/views/Admin/Book/list.jsp").forward(request, response);
         }
     }
