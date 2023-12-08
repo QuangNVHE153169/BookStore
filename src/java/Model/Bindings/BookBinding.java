@@ -13,9 +13,9 @@ public class BookBinding {
     int categoryID;
     int publisherID;
     String textSearch = "";
-    int status = 1;
+    int status;
     double minPrice; 
-    double maxPrice = 5000000;
+    double maxPrice = Double.MAX_VALUE;
     
     
     public int getStatus() {

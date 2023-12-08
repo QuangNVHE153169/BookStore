@@ -3,15 +3,9 @@
     <title>Admin Book List</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Book-shop</title>
-    <link rel="stylesheet" href="styles.css" type="text/css" />
+    <link href="${pageContext.request.contextPath}/css/styles.css" rel="stylesheet" type="text/css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
-    <link rel="stylesheet" type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.css" />
-    <link rel="stylesheet" type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 </head>
 <%@include file="../../../layout/header.jsp" %>
 <body>
@@ -30,7 +24,7 @@
             </div>
             <div class="card-body">
                 <div class="p-4">                   
-                    <form action="/admin-books" method="get" class="row align-items-center mt-3" >
+                    <form action="admin-books" method="get" class="row align-items-center mt-3" >
                         <div class="col-8">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Search by title" name="textSearch" value="${requestScope.textSearch}"/>
@@ -41,6 +35,7 @@
                         </div>
                         <div class="col-2">
                             <select class="form-select" name="categoryId">
+                                <option value="-1" ${requestScope.categoryId == -1 ? "selected" : ""}>All Categories</option>
                                 <c:forEach var="item" items="${categories}">
                                     <option value="${item.categoryId}" ${requestScope.categoryId == item.categoryId ? "selected" : ""} >${item.categoryName}</option>                           
                                 </c:forEach>
@@ -48,6 +43,7 @@
                         </div>
                         <div class="col-2">
                             <select class="form-select" name="status">
+                                <option value="-1" ${requestScope.status == -1 ? "selected" : ""}>All Status</option>
                                 <option value="1" ${requestScope.status == 1 ? "selected" : ""}>Active</option>
                                 <option value="0" ${requestScope.status == 0 ? "selected" : ""}>De-active</option>
                             </select>
@@ -163,7 +159,7 @@
                                     <%--For displaying Previous link except for the 1st page --%>
                                     <c:if test="${currentPage != 1}">
                                         <li class="page-item">
-                                            <a class="page-link" href="admin-books?page=${currentPage - 1}" aria-label="Previous">
+                                            <a class="page-link" href="admin-books?${queryString}page=${currentPage - 1}" aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
@@ -174,10 +170,10 @@
                                     <c:forEach begin="1" end="${totalPage}" var="i">
                                         <c:choose>
                                             <c:when test="${currentPage eq i}"> 
-                                                <li class="page-item"><a class="page-link bg-light" href="#">${i}</a></li>
+                                                <li class="page-item"><a class="page-link bg-light">${i}</a></li>
                                                 </c:when>
                                                 <c:otherwise>
-                                                <li class="page-item"><a class="page-link" href="admin-books?page=${i}">${i}</a></li>
+                                                <li class="page-item"><a class="page-link" href="admin-books?${queryString}page=${i}">${i}</a></li>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach>
@@ -185,7 +181,7 @@
                                     <%--For displaying Next link --%>
                                     <c:if test="${currentPage lt totalPage}">
                                         <li class="page-item">
-                                            <a class="page-link" href="admin-books?page=${currentPage + 1}" aria-label="Next">
+                                            <a class="page-link" href="admin-books?${queryString}page=${currentPage + 1}" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>

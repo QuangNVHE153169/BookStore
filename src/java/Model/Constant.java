@@ -23,7 +23,7 @@ public class Constant {
     public static final boolean DeleteFalse = false;
 
     //Paginator
-    public static final int RecordPerPage = 12;
+    public static final int RecordPerPage = 2;
 
     //Actions
 //    public static final char Create = 'C';

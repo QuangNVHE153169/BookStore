@@ -47,8 +47,7 @@ public class BookDAO extends DBContext {
         try {
             HashMap<Integer, Object> setter = new HashMap<>();
             int count = 0;
-            String sql = "Where Status = ? and DeleteFlag = 0";
-            setter.put(++count, binding.getStatus());
+            String sql = "Where DeleteFlag = 0";
 
             if (binding.getAuthorId() > 0) {
                 sql += "  and AuthorId = ?";
@@ -67,7 +66,10 @@ public class BookDAO extends DBContext {
                 sql += " and Title like ?";
                 setter.put(++count, textSearch);
             }
-
+            if (binding.getStatus() > 0) {
+                sql += " and Status = ?";
+                setter.put(++count, binding.getStatus());
+            }
             sql = "Select * from Books " + sql;
             PreparedStatement stm = connection.prepareStatement(sql);
             for (Map.Entry<Integer, Object> entry : setter.entrySet()) {
@@ -244,21 +246,9 @@ public class BookDAO extends DBContext {
         try {
             HashMap<Integer, Object> setter = new HashMap<>();
             int count = 0;
-//            String sql = "SELECT Distinct b.Title\n"
-//                    + "FROM [Books] b\n"
-//                    + "left join Authors au\n"
-//                    + "on au.AuthorId = b.AuthorId\n"
-//                    + "left join Categories c\n"
-//                    + "on c.CategoryId = b.CategoryId\n"
-//                    + "left join Publishers pu\n"
-//                    + "on b.PublisherId = pu.PublisherId\n"
-//                    + "left join BookImages bi\n"
-//                    + "on b.BookId = bi.BookId\n"
-//                    + "Where b.Price >= ? and b.Price <= ? and b.DeleteFlag = 0\n";
-            String sql = "Where Price >= ? and Price <= ? and Status = ? and DeleteFlag = 0";
+            String sql = "Where Price >= ? and Price <= ? and DeleteFlag = 0";
             setter.put(++count, binding.getMinPrice());
             setter.put(++count, binding.getMaxPrice());
-            setter.put(++count, binding.getStatus());
 
             if (binding.getAuthorId() > 0) {
                 sql += "  and AuthorId = ?";
@@ -272,18 +262,16 @@ public class BookDAO extends DBContext {
                 sql += " and PublisherId = ?";
                 setter.put(++count, binding.getPublisherID());
             }
+            if (binding.getStatus() > 0) {
+                sql += " and Status = ?";
+                setter.put(++count, binding.getStatus());
+            }
             if (!binding.getTextSearch().isEmpty() && !binding.getTextSearch().equalsIgnoreCase("")) {
                 String textSearch = "%" + binding.getTextSearch() + "%";
                 sql += " and Title like ?";
                 setter.put(++count, textSearch);
             }
 
-//            sql = "Select Books.* from Books\n"
-//                    + "right join\n"
-//                    + "(" + sql;
-//
-//            sql += ") as pro\n"
-//                    + "on pro.Title = Books.Title\n";
             sql = "Select * from Books " + sql;
 
             switch (sortOption) {

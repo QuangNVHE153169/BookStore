@@ -7,8 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import DAL.CategoryDAO;
-import jakarta.servlet.jsp.PageContext;
 
 public class BookAdminController extends BaseAuthenticationController {
 
@@ -61,20 +59,11 @@ public class BookAdminController extends BaseAuthenticationController {
     @Override
     protected void processAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BookController bCon = new BookController();
-        bCon.getAllBooks(request, response);
-        CategoryDAO cDao = new CategoryDAO();
-        request.setAttribute("categories", cDao.getCategories());
-
         if (request.getParameter("bookId") != null) {
-            //send id to get book details
-            request.setAttribute("bookId",request.getParameter("bookId"));
             bCon.getBook(request, response);
         } else {
             bCon.getAllBooks(request, response);
-            request.setAttribute("categories", cDao.getCategories());
-            request.getRequestDispatcher("/views/Admin/Book/list.jsp").forward(request, response);
         }
-
     }
 
     @Override

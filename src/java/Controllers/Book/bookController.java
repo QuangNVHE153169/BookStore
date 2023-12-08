@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controllers.Book;
 
 import DAL.BookDAO;
+import DAL.CategoryDAO;
 import Model.Bindings.BookBinding;
 import Model.Book;
 import jakarta.servlet.ServletException;
@@ -15,13 +12,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import Model.Constant;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-/**
- *
- * @author Admin
- */
 public class BookController extends HttpServlet {
 
     /**
@@ -78,23 +72,20 @@ public class BookController extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    public void getAllBooks(HttpServletRequest request, HttpServletResponse response) {
+    public void getAllBooks(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        CategoryDAO cDao = new CategoryDAO();
+
+        //start at page 1
         int page = 1;
+        //declare sort option
         int sortBy = 0;
+
+        //initial bookbinding model
         BookBinding bookBinding = new BookBinding();
-        request.setAttribute("authorId", request.getParameter("authorId"));
-        request.setAttribute("categoryId", request.getParameter("categoryId"));
-        request.setAttribute("publisherId", request.getParameter("publisherId"));
-        request.setAttribute("textSearch", request.getParameter("textSearch"));
-        request.setAttribute("minPrice", request.getParameter("minPrice"));
-        request.setAttribute("maxPrice", request.getParameter("maxPrice"));
-        request.setAttribute("status", request.getParameter("status"));
-        request.setAttribute("sortBy", request.getParameter("sortBy"));
+        bookBinding.setStatus(-1);
+        
         try {
             if (request.getParameter("authorId") != null) {
                 bookBinding.setAuthorId(Integer.parseInt(request.getParameter("authorId")));
@@ -128,9 +119,26 @@ public class BookController extends HttpServlet {
         }
         BookDAO bDao = new BookDAO();
         ArrayList<Book> books = bDao.getBookPaginate(page, Constant.RecordPerPage, bookBinding, sortBy);
+
         request.setAttribute("items", books);
+
         request.setAttribute("totalPage", bDao.getTotalPage(bookBinding));
         request.setAttribute("currentPage", page);
+
+        request.setAttribute("categories", cDao.getCategories());
+
+        //save value search of client
+        request.setAttribute("authorId", request.getParameter("authorId"));
+        request.setAttribute("categoryId", request.getParameter("categoryId"));
+        request.setAttribute("publisherId", request.getParameter("publisherId"));
+        request.setAttribute("textSearch", request.getParameter("textSearch"));
+        request.setAttribute("minPrice", request.getParameter("minPrice"));
+        request.setAttribute("maxPrice", request.getParameter("maxPrice"));
+        request.setAttribute("status", request.getParameter("status"));
+        request.setAttribute("sortBy", request.getParameter("sortBy"));
+
+        request.getRequestDispatcher("/views/Admin/Book/list.jsp").forward(request, response);
+
     }
 
     public void getBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -142,6 +150,7 @@ public class BookController extends HttpServlet {
                 request.getRequestDispatcher("/views/Admin/Book/detail.jsp").forward(request, response);
             } else {
                 request.setAttribute("msg", "Book is not exist");
+                response.sendRedirect("admin-books");
             }
         }
     }

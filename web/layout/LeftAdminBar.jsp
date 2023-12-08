@@ -8,7 +8,7 @@
          style="width: 280px; height: calc(92vh);">
     <ul class="nav nav-pills flex-column mb-auto">
         <li>
-            <a href="/admin-books" class="nav-link active">
+            <a href="${pageContext.request.contextPath}/admin-books" class="nav-link active">
                 Products
             </a>
         </li>
