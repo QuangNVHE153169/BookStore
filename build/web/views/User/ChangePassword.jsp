@@ -49,7 +49,7 @@
                     <span id="error-confirm-password" class="mb-2" style="color: red; display: none;"></span>
                 </div>
                 <div class="d-flex justify-content-end mt-3">
-                    <button class="btn btn-primary btn-lg" onclick="changePassword()">
+                    <button type="button" class="btn btn-primary btn-lg" onclick="changePassword()">
                         Save password
                     </button>
                 </div>
@@ -69,6 +69,8 @@
 crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/8d39de38b8.js" crossorigin="anonymous"></script>
 <script>
+                        var checkPassword = false;
+                        var checkConfirmPassword = false;
                         function validatePassword(input) {
                             var value = input.value;
                             var regex = /^(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
@@ -101,6 +103,8 @@ crossorigin="anonymous"></script>
                         function changePassword() {
                             if (checkConfirmPassword && checkPassword) {
                                 document.getElementById("frm-changePassword").submit();
+                            }else{
+                                alert("Please check your information again!");
                             }
                         }
 </script>
