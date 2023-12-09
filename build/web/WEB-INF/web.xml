@@ -2,35 +2,47 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>RegisterController</servlet-name>
-        <servlet-class>Controllers.Authenticate.registerController</servlet-class>
+        <servlet-class>Controllers.Authenticate.RegisterController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>logoutController</servlet-name>
-        <servlet-class>Controllers.Authenticate.logoutController</servlet-class>
+        <servlet-class>Controllers.Authenticate.LogoutController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginController</servlet-name>
-        <servlet-class>Controllers.Authenticate.loginController</servlet-class>
+        <servlet-class>Controllers.Authenticate.LoginController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>logoutController</servlet-name>
-        <servlet-class>Controllers.Authenticate.logoutController</servlet-class>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>Controllers.Authenticate.LogoutController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>HomeController</servlet-name>
         <servlet-class>Controllers.HomeController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>changePasswordController</servlet-name>
-        <servlet-class>Controllers.Authenticate.changePasswordController</servlet-class>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <servlet-class>Controllers.User.ChangePasswordController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>userProfile</servlet-name>
-        <servlet-class>Controllers.User.userProfileController</servlet-class>
+        <servlet-name>UserProfile</servlet-name>
+        <servlet-class>Controllers.User.UserProfileController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ForgotPasswordController</servlet-name>
         <servlet-class>Controllers.Authenticate.ForgotPasswordController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BookController</servlet-name>
+        <servlet-class>Controllers.Book.bookController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BookAdminController</servlet-name>
+        <servlet-class>Controllers.Admin.BookAdminController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BookManageController</servlet-name>
+        <servlet-class>Controllers.Admin.BookManageController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
@@ -41,7 +53,7 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>logoutController</servlet-name>
+        <servlet-name>LogoutController</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
@@ -49,16 +61,28 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>changePasswordController</servlet-name>
+        <servlet-name>ChangePasswordController</servlet-name>
         <url-pattern>/change-password</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>userProfile</servlet-name>
+        <servlet-name>UserProfile</servlet-name>
         <url-pattern>/user-profile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ForgotPasswordController</servlet-name>
         <url-pattern>/forgotPassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookController</servlet-name>
+        <url-pattern>/books</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookAdminController</servlet-name>
+        <url-pattern>/admin-books</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookManageController</servlet-name>
+        <url-pattern>/manage-book</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -69,8 +93,8 @@
         <error-code>404</error-code>
         <location>/error/404.jsp</location>
     </error-page>
-    <error-page>
+    <!--    <error-page>
         <error-code>500</error-code>
         <location>/error/500.jsp</location>
-    </error-page>
+    </error-page>-->
 </web-app>

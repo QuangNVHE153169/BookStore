@@ -5,6 +5,7 @@
 package DAL;
 
 import Model.Constant;
+import Model.Enums.Action;
 import Model.Role;
 import Model.User;
 import Utils.EncodeMD5;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,7 +56,7 @@ public class UserDAO extends DBContext {
             stm.setString(4, user.getPhone());
             stm.setDate(5, user.getDob());
             stm.setString(6, user.getAddress());
-            stm.setNString(7, user.getGender());
+            stm.setInt(7, user.getGender());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,7 +84,6 @@ public class UserDAO extends DBContext {
                         rs.getString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -114,14 +115,13 @@ public class UserDAO extends DBContext {
                         rs.getString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
                         role,
                         rs.getBoolean("Status"),
                         rs.getString("Description"),
-                        rs.getString("Gender"));
+                        rs.getInt("Gender"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -134,7 +134,6 @@ public class UserDAO extends DBContext {
             String sql = "INSERT INTO [Users]\n"
                     + "           ([FullName]\n"
                     + "           ,[Email]\n"
-                    + "           ,[Email_Id]\n"
                     + "           ,[Password]\n"
                     + "           ,[Phone]\n"
                     + "           ,[DOB]\n"
@@ -155,21 +154,19 @@ public class UserDAO extends DBContext {
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?\n"
-                    + "           ,?\n"
                     + "		  ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, user.getFullName());
             stm.setString(2, user.getEmail());
-            stm.setString(3, user.getEmailID());
-            stm.setString(4, user.getPassword());
-            stm.setString(5, user.getPhone());
-            stm.setDate(6, user.getDob());
-            stm.setString(7, user.getAddress());
-            stm.setString(8, null);
-             stm.setString(9, user.getGender());
-            stm.setInt(10, Constant.RoleCustomer);
-            stm.setBoolean(11, true);
-            stm.setBoolean(12, false);
+            stm.setString(3, user.getPassword());
+            stm.setString(4, user.getPhone());
+            stm.setDate(5, user.getDob());
+            stm.setString(6, user.getAddress());
+            stm.setString(7, null);
+            stm.setInt(8, user.getGender());
+            stm.setInt(9, Constant.RoleCustomer);
+            stm.setBoolean(10, true);
+            stm.setBoolean(11, false);
             return stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -212,7 +209,6 @@ public class UserDAO extends DBContext {
                         rs.getString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -247,14 +243,13 @@ public class UserDAO extends DBContext {
                         rs.getNString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
                         role,
                         rs.getBoolean("Status"),
                         rs.getString("Description"),
-                        rs.getString("gender"));
+                        rs.getInt("gender"));
 
                 users.add(user);
             }
@@ -272,15 +267,15 @@ public class UserDAO extends DBContext {
                     + "SET Fullname = ?, \n"
                     + "DOB = ?, \n"
                     + "Gender = ?, \n"
-                    + "Email = ?, \n"
+                    + "Phone = ?, \n"
                     + "Address = ? \n"
                     + "WHERE UserID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
 
             stm.setNString(1, user.getFullName());
             stm.setDate(2, user.getDob());
-            stm.setNString(3, user.getGender());
-            stm.setString(4, user.getEmail());
+            stm.setInt(3, user.getGender());
+            stm.setString(4, user.getPhone());
             stm.setString(5, user.getAddress());
             stm.setInt(6, user.getUserID());
 
@@ -429,14 +424,13 @@ public class UserDAO extends DBContext {
                         rs.getNString("FullName"),
                         rs.getString("Phone"),
                         rs.getString("Email"),
-                        rs.getString("Email_Id"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
                         role,
                         rs.getBoolean("Status"),
                         rs.getString("Description"),
-                        rs.getNString("gender")));
+                        rs.getInt("gender")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -497,16 +491,19 @@ public class UserDAO extends DBContext {
     public static void main(String[] args) {
         UserDAO uDao = new UserDAO();
         EncodeMD5 encode = new EncodeMD5();
-        User user = new User();
-        user.setFullName("Quang NV");
-        user.setPhone("0337498466");
-        user.setEmail("quangnvhe153169@fpt.edu.vn");
-        user.setPassword(encode.EncoderMD5("123456"));
-        user.setAddress("336, Kim Đồng");
-        Date dob = Date.valueOf(LocalDate.now());
-        user.setDob(dob);
-
-        uDao.insert(user);
-        System.out.println(uDao.doLogin("email", encode.EncoderMD5("123456")));
+        for (Action action : Action.values()) {
+            System.out.println(action.getValue());
+        }
+        
+//        User user = new User();
+//        user.setFullName("Quang NV");
+//        user.setPhone("0337498466");
+//        user.setEmail("quangnvhe153169@fpt.edu.vn");
+//        user.setPassword(encode.EncoderMD5("123456"));
+//        user.setAddress("336, Kim Đồng");
+//        Date dob = Date.valueOf(LocalDate.now());
+//        user.setDob(dob);
+//        uDao.insert(user);
+        System.out.println(uDao.getUserByID(3));
     }
 }

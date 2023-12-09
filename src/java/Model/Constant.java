@@ -15,4 +15,13 @@ public class Constant {
 
     public static final boolean GenderMale = true;
     public static final boolean GenderFeMale = false;
+    
+    //Paginator
+    public static final int RecordPerPage = 12;
+    
+    //Actions
+    public static final String Create = "C";
+    public static final String Update = "U";
+    public static final String Delete = "D";
+    
 }

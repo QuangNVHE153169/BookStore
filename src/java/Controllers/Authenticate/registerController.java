@@ -19,7 +19,7 @@ import java.sql.Date;
  *
  * @author Admin
  */
-public class registerController extends HttpServlet {
+public class RegisterController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -91,7 +91,7 @@ public class registerController extends HttpServlet {
         //parse string to sql.date
         Date dob = Date.valueOf(request.getParameter("dob"));
         user.setDob(dob);
-        user.setGender(request.getParameter("gender"));
+        user.setGender(Integer.parseInt(request.getParameter("gender")));
 
         //check if email exist before or not
         boolean isExist = uDao.isUserExist(user.getEmail());
