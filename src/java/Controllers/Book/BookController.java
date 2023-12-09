@@ -119,8 +119,8 @@ public class BookController extends HttpServlet {
             request.getSession().setAttribute("msg", "Error while input querying, return to default result.");
         }
         BookDAO bDao = new BookDAO();
-        ArrayList<Book> books = bDao.getBookPaginate(page, Constant.RecordPerPage, bookBinding, sortBy);
-
+        String queryString = getQueryString(request, response);
+        ArrayList<Book> books = bDao.getBookPaginate(page, 2, bookBinding, sortBy);
         request.setAttribute("items", books);
 
         request.setAttribute("totalPage", bDao.getTotalPage(bookBinding));
