@@ -26,7 +26,7 @@
             </a>
         </li>
         <li>
-            <a href="${pageContext.request.contextPath}/admin-books" class="nav-link
+            <a href="${pageContext.request.contextPath}/listPublisher" class="nav-link
                ${pageContext.request.servletPath.equals("/views/Admin/Publisher/list.jsp")? "active" : ""}">
                 Manage Publisher
             </a>

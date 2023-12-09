@@ -154,7 +154,6 @@ public class BookController extends HttpServlet {
                 request.setAttribute("book", b);
             } else {
                 request.setAttribute("msg", "Book is not exist");
-                response.sendRedirect("admin-books");
             }
         }
     }

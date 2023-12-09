@@ -60,6 +60,14 @@
         <servlet-name>CreateAuthorController</servlet-name>
         <servlet-class>Controllers.Admin.CreateAuthorController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListPublisherController</servlet-name>
+        <servlet-class>Controllers.Admin.ListPublisherController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreatePublisherController</servlet-name>
+        <servlet-class>Controllers.Admin.CreatePublisherController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -115,6 +123,14 @@
     <servlet-mapping>
         <servlet-name>CreateAuthorController</servlet-name>
         <url-pattern>/createAuthor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListPublisherController</servlet-name>
+        <url-pattern>/listPublisher</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreatePublisherController</servlet-name>
+        <url-pattern>/createPublisher</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
