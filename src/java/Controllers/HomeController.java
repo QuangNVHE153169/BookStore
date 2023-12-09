@@ -76,7 +76,7 @@ public class HomeController extends HttpServlet {
         //get random 5 book and set to top 5 feature book
         session.setAttribute("featurebook", BookService.GetRandomBook(listBook, 5));
 
-        request.getRequestDispatcher("views/homepage.jsp").forward(request, response);
+        request.getRequestDispatcher("views/Homepage.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

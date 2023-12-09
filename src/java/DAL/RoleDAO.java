@@ -9,6 +9,7 @@ import Model.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,8 +31,30 @@ public class RoleDAO extends DBContext {
                 return new Role(roleID, rs.getString("RoleName"), rs.getBoolean("Status"),rs.getBoolean("DeleteFlag"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    public ArrayList<Role> getRoles() {
+        ArrayList<Role> list = new ArrayList<>();
+        try {
+            String sql = "SELECT *\n"
+                    + "  FROM [Roles] where RoleId != 1";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            
+            while (rs.next()) {
+                list.add(getRoleByID(rs.getInt("RoleId")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public static void main(String[] args) {
+        RoleDAO rDao = new RoleDAO();
+        System.out.println(rDao.getRoles());
     }
 }

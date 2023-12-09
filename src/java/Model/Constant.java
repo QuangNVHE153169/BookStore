@@ -11,7 +11,8 @@ package Model;
 public class Constant {
 
     public static final int RoleAdmin = 1;
-    public static final int RoleCustomer = 2;
+    public static final int RoleSaleAdmin = 2;
+    public static final int RoleCustomer = 3;
 
     public static final int GenderMale = 1;
     public static final int GenderFemale = 0;

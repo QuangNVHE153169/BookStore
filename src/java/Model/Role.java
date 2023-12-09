@@ -63,4 +63,9 @@ public class Role {
         this.deleteFlag = deleteFlag;
     }
 
+    @Override
+    public String toString() {
+        return "Role{" + "id=" + id + ", name=" + name + ", status=" + status + ", deleteFlag=" + deleteFlag + '}';
+    }
+
 }

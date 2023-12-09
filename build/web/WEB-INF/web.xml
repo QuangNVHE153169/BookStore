@@ -80,6 +80,10 @@
         <servlet-name>ListStaffController</servlet-name>
         <servlet-class>Controllers.Admin.ListStaffController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageStaffController</servlet-name>
+        <servlet-class>Controllers.Admin.ManageStaffController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -155,6 +159,10 @@
     <servlet-mapping>
         <servlet-name>ListStaffController</servlet-name>
         <url-pattern>/admin-staff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageStaffController</servlet-name>
+        <url-pattern>/manage-staff</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

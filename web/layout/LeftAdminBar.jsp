@@ -32,8 +32,8 @@
             </a>
         </li>
         <li>
-            <a href="${pageContext.request.contextPath}/admin-books" class="nav-link
-               ${pageContext.request.servletPath.equals("/views/Admin/User/list.jsp")? "active" : ""}">
+            <a href="${pageContext.request.contextPath}/admin-staff" class="nav-link
+               ${pageContext.request.servletPath.equals("/views/Admin/Staff/list.jsp")? "active" : ""}">
                 Manage User
             </a>
         </li>

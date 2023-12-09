@@ -48,4 +48,33 @@ public class EmailService {
             throw new RuntimeException(e);
         }
     }
+    
+    public static void sendEmailPassword(String email, String password) {
+        String to = email;
+        // Get the session object
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                //user name and password of web server here
+                return new PasswordAuthentication("homieshop.website@gmail.com", "qsxnvihkzmnbakrt");
+            }
+        });
+        // compose message
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(email));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.setSubject("Staff Password");
+            message.setText("Your Staff Password is: " + password);
+            // send message
+            Transport.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

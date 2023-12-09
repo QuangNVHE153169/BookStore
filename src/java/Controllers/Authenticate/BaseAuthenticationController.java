@@ -25,10 +25,16 @@ public abstract class BaseAuthenticationController extends HttpServlet {
             throws ServletException, IOException {
         User acc = (User) request.getSession().getAttribute("account");
         if (acc != null) {
-            if (acc.getRole().getId() == Constant.RoleAdmin) {
-                processAdminGet(request, response);
-            } else {
-                processGet(request, response);
+            switch (acc.getRole().getId()) {
+                case Constant.RoleAdmin:
+                    processAdminGet(request, response);
+                    break;
+                case Constant.RoleSaleAdmin:
+                    processSaleAdminGet(request, response);
+                    break;
+                default:
+                    processGet(request, response);
+                    break;
             }
         } else {
             request.getRequestDispatcher("error/403.jsp").forward(request, response);
@@ -48,10 +54,16 @@ public abstract class BaseAuthenticationController extends HttpServlet {
             throws ServletException, IOException {
         User acc = (User) request.getSession().getAttribute("account");
         if (acc != null) {
-            if (acc.getRole().getId() == Constant.RoleAdmin) {
-                processAdminPost(request, response);
-            } else {
-                processPost(request, response);
+            switch (acc.getRole().getId()) {
+                case Constant.RoleAdmin:
+                    processAdminPost(request, response);
+                    break;
+                case Constant.RoleSaleAdmin:
+                    processSaleAdminPost(request, response);
+                    break;
+                default:
+                    processPost(request, response);
+                    break;
             }
         } else {
             request.getRequestDispatcher("error/403.jsp").forward(request, response);
@@ -65,6 +77,10 @@ public abstract class BaseAuthenticationController extends HttpServlet {
     protected abstract void processAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
     protected abstract void processAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+
+    protected abstract void processSaleAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+
+    protected abstract void processSaleAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
     /**
      * Returns a short description of the servlet.

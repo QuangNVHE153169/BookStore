@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -35,7 +37,7 @@ public class PublisherDAO extends DBContext {
                         rs.getBoolean("DeleteFlag"));
             }
         } catch (SQLException e) {
-
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return null;
     }
@@ -83,8 +85,7 @@ public class PublisherDAO extends DBContext {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Publisher publisher = pDao.getPublisherById(rs.getInt("PublisherId"));
-                list.add(publisher);
+                list.add(pDao.getPublisherById(rs.getInt("PublisherId")));
             }
         } catch (SQLException e) {
 
@@ -114,7 +115,7 @@ public class PublisherDAO extends DBContext {
 
     public static void main(String[] args) {
         PublisherDAO pDao = new PublisherDAO();
-        System.out.println(pDao.getAllPublishersPagnition(0, 3).size());
+        System.out.println(pDao.getPublisherById(1));
     }
 
     public void insertPublisher(Publisher publisher) {
