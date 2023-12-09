@@ -24,8 +24,11 @@
                         ${requestScope.book != null ? "UPDATE PRODUCT" : "CREATE PRODUCT"}
                     </h1>
                     <div>
-                        <a type="button" class="btn btn-secondary btn-lg" href="admin-books?bookId=${requestScope.book.bookId}">
-                            Cancel</a>
+                        <c:if test="${requestScope.book != null}">
+                            <a type="button" class="btn btn-secondary btn-lg" href="admin-books?bookId=${requestScope.book.bookId}">
+                                Cancel</a>
+                        </c:if>
+
                         <a type="button" class="btn btn-primary btn-lg" onclick="submitForm()">
                             Save</a>
                     </div>
@@ -95,6 +98,7 @@
                                 <label for="exampleFormControlFile1" class="col-form-label">Image</label>
                                 <input type="file" class="form-control-file mt-2" name="file" id="file" accept="image/*" multiple
                                        required>
+                                <span id="file" class="mt-2" style="color: red; display: none;"></span>
                             </div>  
                         </c:if>
                         <c:if test="${requestScope.book.images != null}">

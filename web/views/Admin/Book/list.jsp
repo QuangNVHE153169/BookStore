@@ -47,7 +47,7 @@
                                 <option value="0" ${requestScope.status == 0 ? "selected" : ""}>De-active</option>
                             </select>
                         </div>
-                    </form>
+                    </form>                          
                     <div class="mt-3 container bg-white border rounded-1">                 
                         <table class="table mt-3">
                             <thead>
