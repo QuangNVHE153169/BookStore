@@ -14,11 +14,11 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h1 class="fs-2 fw-bold">
-                        List Author
+                        List Category
                     </h1>
-                    <a type="button" class="btn btn-primary btn-lg" href="createAuthor">
+                    <a type="button" class="btn btn-primary btn-lg" href="admin-manage-category">
                         <i class="fa-solid fa-plus"></i>
-                        Add Author</a>
+                        Add Category</a>
                 </div>
             </div>
             <div class="card-body">
@@ -28,8 +28,7 @@
                             <thead>
                                 <tr style="background-color: #00000010;">
                                     <th scope="col">ID</th>
-                                    <th scope="col">Author Name</th>
-                                    <th scope="col">DOB</th>
+                                    <th scope="col">Category Name</th>
                                     <th scope="col">Status</th>
                                     <th scope="col" style="width: 280px;">Action</th>
                                 </tr>
@@ -37,15 +36,10 @@
                             <tbody>
                                 <c:forEach var="item" items="${items}">
                                     <tr>
-                                        <th class="d-flex align-items-center" style="height: 78px;" scope="row">${item.authorId}</th>
+                                        <th class="d-flex align-items-center" style="height: 78px;" scope="row">${item.categoryId}</th>
                                         <td style="height: 78px;">
                                             <div class="d-flex align-items-center h-100">
-                                                ${item.authorName}
-                                            </div>
-                                        </td>
-                                        <td style="height: 78px;">
-                                            <div class="d-flex align-items-center h-100">
-                                                ${item.dob}
+                                                ${item.categoryName}
                                             </div>
                                         </td>
                                         <td style="height: 78px;">
@@ -54,8 +48,8 @@
                                             </div>
                                         </td>
                                         <td class="d-flex gap-2 align-items-center" style="width: 280px; height: 78px;">
-                                            <a href="authorManage?authorId=${item.authorId}" type="button" class="btn btn-outline-secondary me-2">
-                                               <i class="fa-solid fa-pen-to-square"></i>
+                                            <a href="admin-category?categoryId=${item.categoryId}" type="button" class="btn btn-outline-secondary me-2">
+                                                <i class="fa-solid fa-pen-to-square"></i>
                                                 Detail</a>                              
                                         </td>
                                     </tr>
@@ -81,7 +75,7 @@
                                     <%--For displaying Previous link except for the 1st page --%>
                                     <c:if test="${currentPage != 1}">
                                         <li class="page-item">
-                                            <a class="page-link" href="authorManage?${queryString}page=${currentPage - 1}" aria-label="Previous">
+                                            <a class="page-link" href="admin-category?${queryString}page=${currentPage - 1}" aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
@@ -94,7 +88,7 @@
                                                 <li class="page-item"><a class="page-link bg-light">${i}</a></li>
                                                 </c:when>
                                                 <c:otherwise>
-                                                <li class="page-item"><a class="page-link" href="authorManage?${queryString}page=${i}">${i}</a></li>
+                                                <li class="page-item"><a class="page-link" href="admin-category?${queryString}page=${i}">${i}</a></li>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach>
@@ -102,7 +96,7 @@
                                     <%--For displaying Next link --%>
                                     <c:if test="${currentPage lt totalPage}">
                                         <li class="page-item">
-                                            <a class="page-link" href="authorManage?${queryString}page=${currentPage + 1}" aria-label="Next">
+                                            <a class="page-link" href="admin-category?${queryString}page=${currentPage + 1}" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>

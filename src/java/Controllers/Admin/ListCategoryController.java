@@ -4,8 +4,8 @@
  */
 package Controllers.Admin;
 
-import DAL.AuthorDAO;
-import Model.Author;
+import DAL.CategoryDAO;
+import Model.Category;
 import Model.Constant;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,13 +13,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
  * @author dell
  */
-public class CreateAuthorController extends HttpServlet {
+public class ListCategoryController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +38,10 @@ public class CreateAuthorController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateAuthorController</title>");
+            out.println("<title>Servlet ListCategoryController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateAuthorController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ListCategoryController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,7 +59,29 @@ public class CreateAuthorController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("views/Admin/Author/create.jsp").forward(request, response);
+        CategoryDAO aDao = new CategoryDAO();
+
+        if (request.getParameter("categoryId") != null && !request.getParameter("categoryId").isEmpty()) {
+            Category category = aDao.getCategoryById(Integer.parseInt(request.getParameter("categoryId")));
+            request.setAttribute("category", category);
+            request.getRequestDispatcher("/views/Admin/Category/details.jsp").forward(request, response);
+        } else {
+            int page = 1;
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+
+            ArrayList<Category> categories = aDao.getAllCategoriesPagnition((page - 1) * Constant.RecordPerPage, Constant.RecordPerPage);
+            int totalCategories = aDao.getTotalCategories();
+            int totalPage = (int) Math.ceil((double) totalCategories / Constant.RecordPerPage);
+
+            request.setAttribute("items", categories);
+
+            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("currentPage", page);
+
+            request.getRequestDispatcher("/views/Admin/Category/list.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -73,39 +95,7 @@ public class CreateAuthorController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-        AuthorDAO aDao = new AuthorDAO();
-        Author author = new Author();
-        int authorId;
-        String name;
-        Date dob;
-        switch (action) {
-            case Constant.Create:
-                //get value is send from client
-                name = request.getParameter("name");
-                dob = Date.valueOf(request.getParameter("dob"));
-
-                author.setAuthorName(name);
-                author.setDob(dob);
-                author.setStatus(Constant.StatusActive);
-                author.setDeleteFlag(Constant.DeleteFalse);
-
-                aDao.insertAuthor(author);
-                break;
-            case Constant.Update:
-                //get value is send from client
-                authorId = Integer.parseInt(request.getParameter("authorId"));
-                name = request.getParameter("name");
-                dob = Date.valueOf(request.getParameter("dob"));
-
-                author.setAuthorId(authorId);
-                author.setAuthorName(name);
-                author.setDob(dob);
-
-                aDao.updateAuthor(author);
-                break;
-        }
-        response.sendRedirect("authorManage");
+        processRequest(request, response);
     }
 
     /**

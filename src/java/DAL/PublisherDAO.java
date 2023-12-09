@@ -111,9 +111,55 @@ public class PublisherDAO extends DBContext {
         }
         return 0;
     }
-    
+
     public static void main(String[] args) {
         PublisherDAO pDao = new PublisherDAO();
         System.out.println(pDao.getAllPublishersPagnition(0, 3).size());
+    }
+
+    public void insertPublisher(Publisher publisher) {
+        try {
+            String sql = "INSERT INTO [dbo].[Publishers]\n"
+                    + "           ([PublisherName]\n"
+                    + "           ,[Country]\n"
+                    + "           ,[FoundedYear]\n"
+                    + "           ,[Status]\n"
+                    + "           ,[DeleteFlag])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?)";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, publisher.getPublisherName());
+            ps.setString(2, publisher.getCountry());
+            ps.setInt(3, publisher.getFoundedYear());
+            ps.setBoolean(4, publisher.isStatus());
+            ps.setBoolean(5, publisher.getDeleteFlag());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+
+        }
+    }
+
+    public void updatePublisher(Publisher publisher) {
+        try {
+            String sql = "UPDATE [dbo].[Publishers]\n"
+                    + "   SET [PublisherName] = ?\n"
+                    + "      ,[Country] = ?\n"
+                    + "      ,[FoundedYear] = ?\n"
+                    + " WHERE PublisherId = ?";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, publisher.getPublisherName());
+            ps.setString(2, publisher.getCountry());
+            ps.setInt(3, publisher.getFoundedYear());
+            ps.setInt(4, publisher.getPublisherId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+
+        }
     }
 }

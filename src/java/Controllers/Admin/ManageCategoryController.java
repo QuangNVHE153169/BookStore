@@ -4,8 +4,8 @@
  */
 package Controllers.Admin;
 
-import DAL.AuthorDAO;
-import Model.Author;
+import DAL.CategoryDAO;
+import Model.Category;
 import Model.Constant;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,9 +13,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 
-public class ListAuthorAdminController extends HttpServlet {
+/**
+ *
+ * @author dell
+ */
+public class ManageCategoryController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,10 +37,10 @@ public class ListAuthorAdminController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AuthorManageController</title>");
+            out.println("<title>Servlet ManageCategoryController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AuthorManageController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManageCategoryController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,29 +58,12 @@ public class ListAuthorAdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AuthorDAO aDao = new AuthorDAO();
-
-        if (request.getParameter("authorId") != null && !request.getParameter("authorId").isEmpty()) {
-            Author author = aDao.getAuthorById(Integer.parseInt(request.getParameter("authorId")));
-            request.setAttribute("author", author);
-            request.getRequestDispatcher("/views/Admin/Author/details.jsp").forward(request, response);
-        } else {
-            int page = 1;
-            if (request.getParameter("page") != null) {
-                page = Integer.parseInt(request.getParameter("page"));
-            }
-
-            ArrayList<Author> authors = aDao.getAllAuthorsPagnition((page - 1) * Constant.RecordPerPage, Constant.RecordPerPage);
-            int totalAuthors = aDao.getTotalAuthor();
-            int totalPage = (int) Math.ceil((double) totalAuthors / Constant.RecordPerPage);
-
-            request.setAttribute("items", authors);
-
-            request.setAttribute("totalPage", totalPage);
-            request.setAttribute("currentPage", page);
-
-            request.getRequestDispatcher("/views/Admin/Author/list.jsp").forward(request, response);
+        CategoryDAO cDao = new CategoryDAO();
+        if (request.getParameter("categoryId") != null) {
+            Category category = cDao.getCategoryById(Integer.parseInt(request.getParameter("categoryId")));
+            request.setAttribute("category", category);
         }
+        request.getRequestDispatcher("views/Admin/Category/create.jsp").forward(request, response);
     }
 
     /**
@@ -91,7 +77,34 @@ public class ListAuthorAdminController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = request.getParameter("action");
+        CategoryDAO cDao = new CategoryDAO();
+        Category category = new Category();
+        int categoryId;
+        String name;
+        switch (action) {
+            case Constant.Create:
+                //get value is send from client
+                name = request.getParameter("name");
+
+                category.setCategoryName(name);
+                category.setStatus(Constant.StatusActive);
+                category.setDeleteFlag(Constant.DeleteFalse);
+
+                cDao.insertCategory(category);
+                break;
+            case Constant.Update:
+                //get value is send from client
+                categoryId = Integer.parseInt(request.getParameter("categoryId"));
+                name = request.getParameter("name");
+
+                category.setCategoryId(categoryId);
+                category.setCategoryName(name);
+
+                cDao.updateCategory(category);
+                break;
+        }
+        response.sendRedirect("admin-category");
     }
 
     /**

@@ -57,10 +57,10 @@
                         <div class="row">
                             <div class="col-6">
                                 <label for="category-film" class="col-form-label">Date of birth</label>
-                                <input type="date" class="form-control" data-error="dob" 
+                                <input type="date" class="form-control" data-error="input-dob"
                                        oninput="validateInputBox(this)" name="dob"
                                        value="${requestScope.author.dob}" required>
-                                <span id="dob" class="mt-2" style="color: red; display: none;"></span>
+                                <span id="input-dob" class="mt-2" style="color: red; display: none;"></span>
                             </div>
                         </div>
                     </div>
@@ -79,8 +79,8 @@ crossorigin="anonymous"></script>
                             checkInput = ${requestScope.book != null ? true : false};
 
                             function validateInputBox(input) {
-                                var val = input.value
-                                if (val == "") {
+                                var val = input.value;
+                                if (val === "") {
                                     document.getElementById(input.getAttribute("data-error")).textContent = "Input required";
                                     document.getElementById(input.getAttribute("data-error")).style.display = "block";
                                 } else {
@@ -96,7 +96,7 @@ crossorigin="anonymous"></script>
                                     validateInputBox(selectForm[i]);
                                 }
                                 for (var i = 0; i < selectForm.length; i++) {
-                                    if (selectForm[i].value == "") {
+                                    if (selectForm[i].value === "") {
                                         checkInput = false;
                                         break
                                     }
@@ -104,7 +104,6 @@ crossorigin="anonymous"></script>
                             }
 
                             function submitForm() {
-                                checkNullInputBox();
                                 checkNullInputBox();
                                 if (checkInput) {
                                     document.getElementById("form-create").submit();

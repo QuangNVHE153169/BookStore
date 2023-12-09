@@ -14,7 +14,7 @@
             </a>
         </li>
         <li>
-            <a href="${pageContext.request.contextPath}/authorManage" class="nav-link
+            <a href="${pageContext.request.contextPath}/admin-category" class="nav-link
                ${pageContext.request.servletPath.equals("/views/Admin/Category/list.jsp")? "active" : ""}">
                 Manage Category
             </a>

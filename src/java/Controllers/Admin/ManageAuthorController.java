@@ -13,9 +13,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+import java.sql.Date;
 
-public class ListAuthorAdminController extends HttpServlet {
+/**
+ *
+ * @author dell
+ */
+public class ManageAuthorController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,10 +38,10 @@ public class ListAuthorAdminController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AuthorManageController</title>");
+            out.println("<title>Servlet CreateAuthorController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AuthorManageController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CreateAuthorController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,28 +60,11 @@ public class ListAuthorAdminController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AuthorDAO aDao = new AuthorDAO();
-
-        if (request.getParameter("authorId") != null && !request.getParameter("authorId").isEmpty()) {
+        if (request.getParameter("authorId") != null) {
             Author author = aDao.getAuthorById(Integer.parseInt(request.getParameter("authorId")));
             request.setAttribute("author", author);
-            request.getRequestDispatcher("/views/Admin/Author/details.jsp").forward(request, response);
-        } else {
-            int page = 1;
-            if (request.getParameter("page") != null) {
-                page = Integer.parseInt(request.getParameter("page"));
-            }
-
-            ArrayList<Author> authors = aDao.getAllAuthorsPagnition((page - 1) * Constant.RecordPerPage, Constant.RecordPerPage);
-            int totalAuthors = aDao.getTotalAuthor();
-            int totalPage = (int) Math.ceil((double) totalAuthors / Constant.RecordPerPage);
-
-            request.setAttribute("items", authors);
-
-            request.setAttribute("totalPage", totalPage);
-            request.setAttribute("currentPage", page);
-
-            request.getRequestDispatcher("/views/Admin/Author/list.jsp").forward(request, response);
         }
+        request.getRequestDispatcher("views/Admin/Author/create.jsp").forward(request, response);
     }
 
     /**
@@ -91,7 +78,39 @@ public class ListAuthorAdminController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = request.getParameter("action");
+        AuthorDAO aDao = new AuthorDAO();
+        Author author = new Author();
+        int authorId;
+        String name;
+        Date dob;
+        switch (action) {
+            case Constant.Create:
+                //get value is send from client
+                name = request.getParameter("name");
+                dob = Date.valueOf(request.getParameter("dob"));
+
+                author.setAuthorName(name);
+                author.setDob(dob);
+                author.setStatus(Constant.StatusActive);
+                author.setDeleteFlag(Constant.DeleteFalse);
+
+                aDao.insertAuthor(author);
+                break;
+            case Constant.Update:
+                //get value is send from client
+                authorId = Integer.parseInt(request.getParameter("authorId"));
+                name = request.getParameter("name");
+                dob = Date.valueOf(request.getParameter("dob"));
+
+                author.setAuthorId(authorId);
+                author.setAuthorName(name);
+                author.setDob(dob);
+
+                aDao.updateAuthor(author);
+                break;
+        }
+        response.sendRedirect("authorManage");
     }
 
     /**

@@ -58,7 +58,7 @@
     </servlet>
     <servlet>
         <servlet-name>CreateAuthorController</servlet-name>
-        <servlet-class>Controllers.Admin.CreateAuthorController</servlet-class>
+        <servlet-class>Controllers.Admin.ManageAuthorController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListPublisherController</servlet-name>
@@ -66,7 +66,19 @@
     </servlet>
     <servlet>
         <servlet-name>CreatePublisherController</servlet-name>
-        <servlet-class>Controllers.Admin.CreatePublisherController</servlet-class>
+        <servlet-class>Controllers.Admin.ManagePublisherController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListCategoryController</servlet-name>
+        <servlet-class>Controllers.Admin.ListCategoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageCategoryController</servlet-name>
+        <servlet-class>Controllers.Admin.ManageCategoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListStaffController</servlet-name>
+        <servlet-class>Controllers.Admin.ListStaffController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
@@ -131,6 +143,18 @@
     <servlet-mapping>
         <servlet-name>CreatePublisherController</servlet-name>
         <url-pattern>/createPublisher</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListCategoryController</servlet-name>
+        <url-pattern>/admin-category</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageCategoryController</servlet-name>
+        <url-pattern>/admin-manage-category</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListStaffController</servlet-name>
+        <url-pattern>/admin-staff</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

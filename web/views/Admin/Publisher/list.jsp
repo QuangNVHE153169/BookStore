@@ -31,6 +31,7 @@
                                     <th scope="col">Author Name</th>
                                     <th scope="col">Country</th>
                                     <th scope="col">Founded Year</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col" style="width: 280px;">Action</th>
                                 </tr>
                             </thead>
@@ -53,8 +54,13 @@
                                                 ${item.foundedYear}
                                             </div>
                                         </td>
+                                        <td style="height: 78px;">
+                                            <div class="d-flex align-items-center h-100">
+                                                ${item.status == true ? "Active" : "Deactive"}
+                                            </div>
+                                        </td>
                                         <td class="d-flex gap-2 align-items-center" style="width: 280px; height: 78px;">
-                                            <a href="authorManage?publisherId=${item.publisherId}" type="button" class="btn btn-outline-secondary me-2">
+                                            <a href="listPublisher?publisherId=${item.publisherId}" type="button" class="btn btn-outline-secondary me-2">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                                 Detail</a>                              
                                         </td>
@@ -81,7 +87,7 @@
                                     <%--For displaying Previous link except for the 1st page --%>
                                     <c:if test="${currentPage != 1}">
                                         <li class="page-item">
-                                            <a class="page-link" href="authorManage?${queryString}page=${currentPage - 1}" aria-label="Previous">
+                                            <a class="page-link" href="listPublisher?${queryString}page=${currentPage - 1}" aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
@@ -94,7 +100,7 @@
                                                 <li class="page-item"><a class="page-link bg-light">${i}</a></li>
                                                 </c:when>
                                                 <c:otherwise>
-                                                <li class="page-item"><a class="page-link" href="authorManage?${queryString}page=${i}">${i}</a></li>
+                                                <li class="page-item"><a class="page-link" href="listPublisher?${queryString}page=${i}">${i}</a></li>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach>
@@ -102,7 +108,7 @@
                                     <%--For displaying Next link --%>
                                     <c:if test="${currentPage lt totalPage}">
                                         <li class="page-item">
-                                            <a class="page-link" href="authorManage?${queryString}page=${currentPage + 1}" aria-label="Next">
+                                            <a class="page-link" href="listPublisher?${queryString}page=${currentPage + 1}" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>

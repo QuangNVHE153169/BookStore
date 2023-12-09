@@ -24,7 +24,7 @@
                         ${requestScope.publisher != null ? "UPDATE PUBLISHER" : "CREATE PUBLISHER"}
                     </h1>
                     <div>
-                        <a type="button" class="btn btn-secondary btn-lg" href="authorManage?publisherId=${requestScope.publisher.publisherId}">
+                        <a type="button" class="btn btn-secondary btn-lg" href="listPublisher?publisherId=${requestScope.publisher.publisherId}">
                             Cancel</a>
                         <a type="button" class="btn btn-primary btn-lg" onclick="submitForm()">
                             Save</a>
@@ -33,6 +33,8 @@
             </div>
             <div class="card-body">
                 <form method="POST" action="createPublisher" id="form-create">
+                    <input type="hidden" name="action"
+                           value="${requestScope.publisher != null ? "U" : "C"}">
                     <div class="col">
                         <c:if test="${requestScope.publisher != null}">
                             <div class="row">
@@ -44,23 +46,30 @@
                             </div>
                         </c:if>
                         <div class="row">
-                            <input type="hidden" name="action"
-                                   value="${requestScope.publisher != null ? "U" : "C"}">
                             <div class="col-6">
                                 <label for="category-film" class="col-form-label">Publisher Name:</label>
-                                <input type="text" class="form-control" data-error="title" 
+                                <input type="text" class="form-control" data-error="name" 
                                        oninput="validateInputBox(this)" name="name"
                                        value="${requestScope.publisher.publisherName}" required>
-                                <span id="title" class="mt-2" style="color: red; display: none;"></span>
+                                <span id="name" class="mt-2" style="color: red; display: none;"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <label for="category-film" class="col-form-label">Date of birth</label>
-                                <input type="date" class="form-control" data-error="dob" 
-                                       oninput="validateInputBox(this)" name="dob"
-                                       value="${requestScope.publisher.dob}" required>
-                                <span id="dob" class="mt-2" style="color: red; display: none;"></span>
+                                <label for="category-film" class="col-form-label">Publisher Nationality:</label>
+                                <input type="text" class="form-control" data-error="nation" 
+                                       oninput="validateInputBox(this)" name="country"
+                                       value="${requestScope.publisher.country}" required>
+                                <span id="nation" class="mt-2" style="color: red; display: none;"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="category-film" class="col-form-label">Founded Year:</label>
+                                <input type="number" min="0" class="form-control" data-error="year" 
+                                       oninput="validateInputBox(this)" name="year"
+                                       value="${requestScope.publisher.foundedYear}" required>
+                                <span id="year" class="mt-2" style="color: red; display: none;"></span>
                             </div>
                         </div>
                     </div>

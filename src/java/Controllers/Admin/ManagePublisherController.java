@@ -4,18 +4,21 @@
  */
 package Controllers.Admin;
 
-import DAL.AuthorDAO;
-import Model.Author;
+import DAL.PublisherDAO;
 import Model.Constant;
+import Model.Publisher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 
-public class ListAuthorAdminController extends HttpServlet {
+/**
+ *
+ * @author dell
+ */
+public class ManagePublisherController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,10 +37,10 @@ public class ListAuthorAdminController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AuthorManageController</title>");
+            out.println("<title>Servlet CreatePublisherController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AuthorManageController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CreatePublisherController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,29 +58,13 @@ public class ListAuthorAdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AuthorDAO aDao = new AuthorDAO();
+        PublisherDAO pDao = new PublisherDAO();
 
-        if (request.getParameter("authorId") != null && !request.getParameter("authorId").isEmpty()) {
-            Author author = aDao.getAuthorById(Integer.parseInt(request.getParameter("authorId")));
-            request.setAttribute("author", author);
-            request.getRequestDispatcher("/views/Admin/Author/details.jsp").forward(request, response);
-        } else {
-            int page = 1;
-            if (request.getParameter("page") != null) {
-                page = Integer.parseInt(request.getParameter("page"));
-            }
-
-            ArrayList<Author> authors = aDao.getAllAuthorsPagnition((page - 1) * Constant.RecordPerPage, Constant.RecordPerPage);
-            int totalAuthors = aDao.getTotalAuthor();
-            int totalPage = (int) Math.ceil((double) totalAuthors / Constant.RecordPerPage);
-
-            request.setAttribute("items", authors);
-
-            request.setAttribute("totalPage", totalPage);
-            request.setAttribute("currentPage", page);
-
-            request.getRequestDispatcher("/views/Admin/Author/list.jsp").forward(request, response);
+        if (request.getParameter("publisherId") != null) {
+            Publisher publisher = pDao.getPublisherById(Integer.parseInt(request.getParameter("publisherId")));
+            request.setAttribute("publisher", publisher);
         }
+        request.getRequestDispatcher("views/Admin/Publisher/create.jsp").forward(request, response);
     }
 
     /**
@@ -91,7 +78,48 @@ public class ListAuthorAdminController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = request.getParameter("action");
+        PublisherDAO bDao = new PublisherDAO();
+        Publisher publisher = new Publisher();
+        int publisherId;
+        String name;
+        String country = request.getParameter("country");
+        int year = Integer.parseInt(request.getParameter("year"));
+
+        switch (action) {
+            case Constant.Create:
+                //get value is send from client
+                name = request.getParameter("name");
+                country = request.getParameter("country");
+                year = Integer.parseInt(request.getParameter("year"));
+
+                publisher.setPublisherName(name);
+                publisher.setCountry(country);
+                publisher.setFoundedYear(year);
+                publisher.setStatus(Constant.StatusActive);
+                publisher.setDeleteFlag(Constant.DeleteFalse);
+
+                bDao.insertPublisher(publisher);
+
+                request.getSession().setAttribute("msg", "Create publisher successful!");
+                break;
+            case Constant.Update:
+                //get value is send from client
+                publisherId = Integer.parseInt(request.getParameter("publisherId"));
+                name = request.getParameter("name");
+                country = request.getParameter("country");
+                year = Integer.parseInt(request.getParameter("year"));
+
+                publisher.setPublisherId(publisherId);
+                publisher.setPublisherName(name);
+                publisher.setCountry(country);
+                publisher.setFoundedYear(year);
+
+                bDao.updatePublisher(publisher);
+                request.getSession().setAttribute("msg", "Update publisher successful!");
+                break;
+        }
+        response.sendRedirect("listPublisher");
     }
 
     /**
