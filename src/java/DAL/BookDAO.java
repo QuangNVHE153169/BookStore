@@ -188,11 +188,15 @@ public class BookDAO extends DBContext {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
+
+            AuthorDAO auDao = new AuthorDAO();
+            PublisherDAO puDao = new PublisherDAO();
+            CategoryDAO cDao = new CategoryDAO();
             BookImageDAO biDao = new BookImageDAO();
 
             if (rs.next()) {
 
-                return new Book(rs.getInt("BookId"),
+                Book book = new Book(rs.getInt("BookId"),
                         rs.getString("Title"),
                         rs.getInt("Price"),
                         rs.getInt("PageCount"),
@@ -204,8 +208,15 @@ public class BookDAO extends DBContext {
                         rs.getInt("PublicationYear"),
                         rs.getString("Description"),
                         rs.getBoolean("DeleteFlag"),
-                        biDao.getLatestImageByBookId(rs.getInt("BookId"))
-                );
+                        biDao.getLatestImageByBookId(rs.getInt("BookId")));
+
+                //get book image
+                book.setImages(biDao.getImagesByBookId(book.getBookId()));
+                book.setAuthor(auDao.getAuthorById(rs.getInt("AuthorId")));
+                book.setPublisher(puDao.getPublisherById(rs.getInt("PublisherId")));
+                book.setCategory(cDao.getCategoryById(rs.getInt("CategoryId")));
+
+                return book;
             }
         } catch (SQLException ex) {
             Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -352,5 +363,24 @@ public class BookDAO extends DBContext {
         for (int i = 0; i < 10; i++) {
             System.out.println(books.get(i).toString());
         }
+    }
+
+    public ArrayList<Book> getAllBook() {
+        BookDAO bDao = new BookDAO();
+        ArrayList<Book> list = new ArrayList<>();
+        try {
+            String sql = "SELECT *\n"
+                    + "  FROM [dbo].[Books] Where Status = 1 and DeleteFlag = 0";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {                
+                Book book = new Book();
+                book = bDao.getBookById(rs.getInt("BookId"));
+                list.add(book);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 }

@@ -143,116 +143,42 @@
             <!-- FEATURED PRODUCTS -->
             <section>
                 <div class="fs-3 text-center">
-                    FEATURED PRODUCTS
+                    FEATURED BOOKS
                 </div>
                 <div class="mt-3">
                     <div class="main">
                         <div class="slider slider-nav">
-                            <div class="product-grid slick-slide">
-                                <div class="product-image">
-                                    <a href="#" class="image">
-                                        <img
-                                            src="https://theme133-books.myshopify.com/cdn/shop/products/an_army_at_dawn_the_war_in_north_africa_19421943_volume_one_of_the_liberation_trilogy_by_rick_atkinson_1_large.png?v=1422032906">
-                                    </a>
-                                    <span class="product-prop-label shadow">New</span>
-                                    <span class="product-sale-label shadow">Sale</span>
-                                    <a href="" class="add-to-cart">Add to Cart</a>
+                            <c:forEach items="${sessionScope.featurebook}" var="b">
+                                <div class="product-grid slick-slide">
+                                    <div class="product-image">
+                                        <a class="h5 text-decoration-none text-dark" style="font-weight: 600;"
+                                           href="listAllBook?bookId=${b.bookId}">
+                                            <img src="${b.images.get(0).url}" style="width: 350px;height: 350px">
+                                        </a>
+                                        <a href="" class="add-to-cart">Add to Cart</a>
+                                    </div>
+                                    <div class="product-content">
+                                        <h3 class="title"><a class="h5 text-decoration-none text-dark" style="font-weight: 600;"
+                                                             href="listAllBook?bookId=${b.bookId}">
+                                                <c:if test="${b.title.trim().length() > 25}">
+                                                    ${b.title.trim().substring(0,25)}...
+                                                </c:if>
+                                                <c:if test="${b.title.trim().length() <= 25}">
+                                                    ${b.title.trim()}
+                                                </c:if>
+                                            </a></h3>
+                                        <h6 class="text-secondary text-truncate">
+                                            <c:if test="${b.description.trim().length() > 40}">
+                                                ${b.description.trim().substring(0,50)}...
+                                            </c:if>
+                                            <c:if test="${b.description.trim().length() <= 40}">
+                                                ${b.description.trim()}
+                                            </c:if>
+                                        </h6>
+                                        <div class="price">${b.price}$</div>
+                                    </div>
                                 </div>
-                                <div class="product-content">
-                                    <h3 class="title"><a class="h5 text-decoration-none text-dark"
-                                                         style="font-weight: 600;" href="#">Women's
-                                            Blouse Top</a></h3>
-                                    <h6 class="text-secondary text-truncate">
-                                        Description here lalalalal trung duc allalalla trung duc allalalla trung duc
-                                        allalalla
-                                    </h6>
-                                    <div class="price">$53.55 <span>$68.88</span></div>
-                                </div>
-                            </div>
-                            <div class="product-grid slick-slide">
-                                <div class="product-image">
-                                    <a href="#" class="image">
-                                        <img
-                                            src="https://theme133-books.myshopify.com/cdn/shop/products/elder_scrolls_v_skyrim_legendary_standard_edition_prima_official_game_guide_prima_official_game_guides_by_david_hodgson_1_large.png?v=1422032925">
-                                    </a>
-                                    <span class="product-prop-label shadow">New</span>
-                                    <span class="product-sale-label shadow">Sale</span>
-                                    <a href="" class="add-to-cart">Add to Cart</a>
-                                </div>
-                                <div class="product-content">
-                                    <h3 class="title"><a class="h5 text-decoration-none text-dark"
-                                                         style="font-weight: 600;" href="#">Women's
-                                            Blouse Top</a></h3>
-                                    <h6 class="text-secondary text-truncate">
-                                        Description here lalalalal trung duc allalalla trung duc allalalla trung duc
-                                        allalalla
-                                    </h6>
-                                    <div class="price">$53.55 <span>$68.88</span></div>
-                                </div>
-                            </div>
-                            <div class="product-grid slick-slide">
-                                <div class="product-image">
-                                    <a href="#" class="image">
-                                        <img
-                                            src="https://theme133-books.myshopify.com/cdn/shop/products/an_army_at_dawn_the_war_in_north_africa_19421943_volume_one_of_the_liberation_trilogy_by_rick_atkinson_1_large.png?v=1422032906">
-                                    </a>
-                                    <span class="product-prop-label shadow">New</span>
-                                    <span class="product-sale-label shadow">Sale</span>
-                                    <a href="" class="add-to-cart">Add to Cart</a>
-                                </div>
-                                <div class="product-content">
-                                    <h3 class="title"><a class="h5 text-decoration-none text-dark"
-                                                         style="font-weight: 600;" href="#">Women's
-                                            Blouse Top</a></h3>
-                                    <h6 class="text-secondary text-truncate">
-                                        Description here lalalalal trung duc allalalla trung duc allalalla trung duc
-                                        allalalla
-                                    </h6>
-                                    <div class="price">$53.55 <span>$68.88</span></div>
-                                </div>
-                            </div>
-                            <div class="product-grid slick-slide">
-                                <div class="product-image">
-                                    <a href="#" class="image">
-                                        <img
-                                            src="https://theme133-books.myshopify.com/cdn/shop/products/elder_scrolls_v_skyrim_legendary_standard_edition_prima_official_game_guide_prima_official_game_guides_by_david_hodgson_1_large.png?v=1422032925">
-                                    </a>
-                                    <span class="product-prop-label shadow">New</span>
-                                    <span class="product-sale-label shadow">Sale</span>
-                                    <a href="" class="add-to-cart">Add to Cart</a>
-                                </div>
-                                <div class="product-content">
-                                    <h3 class="title"><a class="h5 text-decoration-none text-dark"
-                                                         style="font-weight: 600;" href="#">Women's
-                                            Blouse Top</a></h3>
-                                    <h6 class="text-secondary text-truncate">
-                                        Description here lalalalal trung duc allalalla trung duc allalalla trung duc
-                                        allalalla
-                                    </h6>
-                                    <div class="price">$53.55 <span>$68.88</span></div>
-                                </div>
-                            </div>
-                            <div class="product-grid slick-slide">
-                                <div class="product-image">
-                                    <a href="#" class="image">
-                                        <img
-                                            src="https://theme133-books.myshopify.com/cdn/shop/products/an_army_at_dawn_the_war_in_north_africa_19421943_volume_one_of_the_liberation_trilogy_by_rick_atkinson_1_large.png?v=1422032906">
-                                    </a>
-                                    <span class="product-prop-label shadow">New</span>
-                                    <span class="product-sale-label shadow">Sale</span>
-                                    <a href="" class="add-to-cart">Add to Cart</a>
-                                </div>
-                                <div class="product-content">
-                                    <h3 class="title"><a class="h5 text-decoration-none text-dark"
-                                                         style="font-weight: 600;" href="#">Women's
-                                            Blouse Top</a></h3>
-                                    <h6 class="text-secondary text-truncate">
-                                        Description here lalalalal trung duc allalalla trung duc allalalla trung duc
-                                        allalalla
-                                    </h6>
-                                    <div class="price">$53.55 <span>$68.88</span></div>
-                                </div>
-                            </div>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>

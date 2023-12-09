@@ -2,31 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controllers;
+package Controllers.Admin;
 
 import DAL.AuthorDAO;
-import DAL.BookDAO;
-import DAL.CategoryDAO;
-import DAL.PublisherDAO;
 import Model.Author;
-import Model.Book;
-import Model.Category;
-import Model.Publisher;
-import Utils.BookService;
+import Model.Constant;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 
-/**
- *
- * @author dell
- */
-public class HomeController extends HttpServlet {
+public class ListAuthorAdminController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,44 +28,19 @@ public class HomeController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-
-        CategoryDAO cDao = new CategoryDAO();
-        AuthorDAO auDao = new AuthorDAO();
-        PublisherDAO pDao = new PublisherDAO();
-        BookDAO bDao = new BookDAO();
-
-        //get message from server
-        String msg = (String) request.getSession().getAttribute("msg");
-        //check if there have message or not
-        if (msg != null) {
-            request.setAttribute("msg", msg);
-            request.getSession().setAttribute("msg", null);
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AuthorManageController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AuthorManageController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-
-        //get all categoreis of store
-        ArrayList<Category> categories = cDao.getAllCategories();
-
-        //get all authors of store
-        ArrayList<Author> authors = auDao.getAllAuthorsActive();
-
-        //get all authors of store
-        ArrayList<Publisher> publishers = pDao.getPublishers();
-        
-        //get all book in list
-        ArrayList<Book> listBook = bDao.getAllBook();
-        
-        session.setAttribute("categories", categories);
-        session.setAttribute("authors", authors);
-        session.setAttribute("publishers", publishers);
-        
-        //get random 3 book and set to top 3 best book
-        session.setAttribute("top3book", BookService.GetRandomBook(listBook, 3));
-        
-        //get random 5 book and set to top 5 feature book
-        session.setAttribute("featurebook", BookService.GetRandomBook(listBook, 5));
-
-        request.getRequestDispatcher("views/homepage.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -91,7 +55,29 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        AuthorDAO aDao = new AuthorDAO();
+
+        if (request.getParameter("authorId") != null) {
+            Author author = aDao.getAuthorById(Integer.parseInt(request.getParameter("authorId")));
+            request.setAttribute("author", author);
+            request.getRequestDispatcher("/views/Admin/Author/create.jsp").forward(request, response);
+        } else {
+            int page = 1;
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
+
+            ArrayList<Author> authors = aDao.getAllAuthorsPagnition((page - 1) * Constant.RecordPerPage, Constant.RecordPerPage);
+            int totalAuthors = aDao.getTotalAuthor();
+            int totalPage = (int) Math.ceil((double) totalAuthors / Constant.RecordPerPage);
+
+            request.setAttribute("items", authors);
+
+            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("currentPage", page);
+
+            request.getRequestDispatcher("/views/Admin/Author/list.jsp").forward(request, response);
+        }
     }
 
     /**

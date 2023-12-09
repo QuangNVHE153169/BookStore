@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import Model.Constant;
+import Utils.BookService;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
@@ -76,7 +78,6 @@ public class BookController extends HttpServlet {
             throws ServletException, IOException {
 
         CategoryDAO cDao = new CategoryDAO();
-
         //start at page 1
         int page = 1;
         //declare sort option
@@ -85,7 +86,7 @@ public class BookController extends HttpServlet {
         //initial bookbinding model
         BookBinding bookBinding = new BookBinding();
         bookBinding.setStatus(-1);
-        
+
         try {
             if (request.getParameter("authorId") != null) {
                 bookBinding.setAuthorId(Integer.parseInt(request.getParameter("authorId")));
@@ -137,8 +138,6 @@ public class BookController extends HttpServlet {
         request.setAttribute("status", request.getParameter("status"));
         request.setAttribute("sortBy", request.getParameter("sortBy"));
 
-        request.getRequestDispatcher("/views/Admin/Book/list.jsp").forward(request, response);
-
     }
 
     public void getBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -146,13 +145,42 @@ public class BookController extends HttpServlet {
             BookDAO bDao = new BookDAO();
             Book b = bDao.getBookDetailById(Integer.parseInt(request.getParameter("bookId")));
             if (b != null) {
+                //get all book in list
+                ArrayList<Book> listBook = bDao.getAllBook();
+                
+                //get random 5 book and set to top 5 feature book
+                request.setAttribute("featurebook", BookService.GetRandomBook(listBook, 4));
+
                 request.setAttribute("book", b);
-                request.getRequestDispatcher("/views/Admin/Book/detail.jsp").forward(request, response);
             } else {
                 request.setAttribute("msg", "Book is not exist");
                 response.sendRedirect("admin-books");
             }
         }
+    }
+
+    public String getQueryString(HttpServletRequest request, HttpServletResponse response) {
+        //get query string in url
+        String queryString = request.getQueryString() != null ? request.getQueryString() : "";
+
+        //parse query string to array
+        Map<String, String> params = Arrays.stream(queryString.split("&"))
+                .map(s -> s.split("="))
+                .collect(Collectors.toMap(
+                        arr -> arr[0],
+                        arr -> arr.length > 1 ? arr[1] : ""
+                ));
+
+        //remove atribute with paramatter name = 'page'
+        params.entrySet().removeIf(entry -> entry.getKey().startsWith("page"));
+
+        String newQueryString = params.entrySet().stream()
+                .map(entry -> entry.getKey() + "=" + entry.getValue())
+                .collect(Collectors.joining("&"));
+        if (newQueryString.isEmpty()) {
+            return newQueryString;
+        }
+        return newQueryString + "&";
     }
 
     @Override

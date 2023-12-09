@@ -34,8 +34,13 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-2">
-                        <img src="images/${requestScope.book.latestImage.url}" width="200px" height="200px"/>
-                        <label class="mt-3">Image Product</label>
+                        <img src="${requestScope.book.images.get(0).url}" width="200px" height="200px"/>
+                        <c:forEach items="${book.images}" var="img">
+                            <img style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;"
+                                 src="${img.url}"
+                                 alt="book-shop">
+                        </c:forEach>
+                        <label class="mt-3">Book's Image</label>
                     </div>
                     <div class="col-10">                       
                         <div class="row">

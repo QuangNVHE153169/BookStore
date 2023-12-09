@@ -4,29 +4,33 @@
  */
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Admin
  */
 public class Book {
-    int bookId;
-    String title;
-    double price;
-    int pageCount;
-    boolean status;
-    int quantity;
-    int categoryId;
-    int authorId;
-    int publisherId;
-    int publicationYear;
-    String description;
-    boolean deleteFlag;
-    BookImage[] bookImages;
-    BookImage latestImage;
-    Author author;
-    Publisher publisher;
-    Category category;
-    
+
+    private int bookId;
+    private String title;
+    private double price;
+    private int pageCount;
+    private boolean status;
+    private int quantity;
+    private int categoryId;
+    private int authorId;
+    private int publisherId;
+    private int publicationYear;
+    private String description;
+    private boolean deleteFlag;
+    private BookImage[] bookImages;
+    private ArrayList<BookImage> images;
+    private BookImage latestImage;
+    private Author author;
+    private Publisher publisher;
+    private Category category;
+
     public Book() {
     }
 
@@ -183,6 +187,28 @@ public class Book {
         this.latestImage = latestImage;
     }
 
+    public Book(int bookId, String title, double price, int pageCount, boolean status, int quantity, int categoryId, int authorId, int publisherId, int publicationYear, String description, boolean deleteFlag, BookImage[] bookImages, ArrayList<BookImage> images, BookImage latestImage, Author author, Publisher publisher, Category category) {
+        this.bookId = bookId;
+        this.title = title;
+        this.price = price;
+        this.pageCount = pageCount;
+        this.status = status;
+        this.quantity = quantity;
+        this.categoryId = categoryId;
+        this.authorId = authorId;
+        this.publisherId = publisherId;
+        this.publicationYear = publicationYear;
+        this.description = description;
+        this.deleteFlag = deleteFlag;
+        this.bookImages = bookImages;
+        this.images = images;
+        this.latestImage = latestImage;
+        this.author = author;
+        this.publisher = publisher;
+        this.category = category;
+    }
+
+    
     public BookImage[] getBookImages() {
         return bookImages;
     }
@@ -251,5 +277,12 @@ public class Book {
     public void setCategory(Category category) {
         this.category = category;
     }
-    
+
+    public ArrayList<BookImage> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<BookImage> images) {
+        this.images = images;
+    }
 }

@@ -8,7 +8,7 @@
                 <div class="col-sm-12 col-md-4 col-lg-3 mobile-center">
                     <!-- LOGO -->
                     <div id="logo">
-                        <a href="/" class="href-unstyled">
+                        <a href="home" class="href-unstyled">
                             <b class="hover-color-primary">BOOKS</b>
                             <div>Online store</div>
                         </a>

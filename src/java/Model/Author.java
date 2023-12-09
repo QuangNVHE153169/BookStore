@@ -11,12 +11,12 @@ import java.sql.Date;
  * @author Admin
  */
 public class Author {
-    int authorId;
-    String authorName;
-    Date dob;
-    Boolean status;
-    Boolean deleteFlag;
-    Book[] books;
+    private int authorId;
+    private String authorName;
+    private Date dob;
+    private Boolean status;
+    private Boolean deleteFlag;
+    private Book[] books;
 
     public Author() {
     }

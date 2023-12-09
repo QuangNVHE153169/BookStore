@@ -9,61 +9,56 @@ package Model;
  * @author Admin
  */
 public class BookImage {
-    int ImageId;
-    int BookId;
-    String Url;
-    Boolean DeleteFlag;
+    private int imageId;
+    private int bookId;
+    private String url;
+    private Boolean deleteFlag;
 
-    public BookImage(int ImageId, int BookId, String Url, Boolean DeleteFlag) {
-        this.ImageId = ImageId;
-        this.BookId = BookId;
-        this.Url = Url;
-        this.DeleteFlag = DeleteFlag;
+    public BookImage(int bookId, String url) {
+        this.bookId = bookId;
+        this.url = url;
+    }
+
+    public BookImage(int imageId, int bookId, String url, Boolean deleteFlag) {
+        this.imageId = imageId;
+        this.bookId = bookId;
+        this.url = url;
+        this.deleteFlag = deleteFlag;
     }
 
     public BookImage() {
     }
 
     public int getImageId() {
-        return ImageId;
+        return imageId;
     }
 
-    public void setImageId(int ImageId) {
-        this.ImageId = ImageId;
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
     }
 
     public int getBookId() {
-        return BookId;
+        return bookId;
     }
 
-    public void setBookId(int BookId) {
-        this.BookId = BookId;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
     public String getUrl() {
-        return Url;
+        return url;
     }
 
-    public void setUrl(String Url) {
-        this.Url = Url;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Boolean getDeleteFlag() {
-        return DeleteFlag;
+        return deleteFlag;
     }
 
-    public void setDeleteFlag(Boolean DeleteFlag) {
-        this.DeleteFlag = DeleteFlag;
-    }
-
-    public BookImage(int BookId, String Url) {
-        this.BookId = BookId;
-        this.Url = Url;
-    }
-
-    @Override
-    public String toString() {
-        return "BookImage{" + "ImageId=" + ImageId + ", BookId=" + BookId + ", Url=" + Url + ", DeleteFlag=" + DeleteFlag + '}';
+    public void setDeleteFlag(Boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
     
 }

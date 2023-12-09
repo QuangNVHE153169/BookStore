@@ -62,13 +62,13 @@
                                 <label for="category-film" class="col-form-label">Price</label>
                                 <input type="number" class="form-control" oninput="validateInputBox(this)"
                                        value="${requestScope.book.price}"
-                                       name="price" data-error="price" required>
+                                       name="price" data-error="price" min="0" required>
                                 <span id="price" class="mt-2" style="color: red; display: none;"></span>
                             </div>
                             <div class="col-6">
                                 <label for="category-film" class="col-form-label">Page Count</label>
                                 <input type="number" class="form-control" 
-                                       value="${requestScope.book.pageCount}"
+                                       value="${requestScope.book.pageCount}" min="0"
                                        oninput="validateInputBox(this)" name="pageCount" data-error="pageCount" required>
                                 <span id="pageCount" class="mt-2" style="color: red; display: none;"></span>
                             </div>
@@ -79,22 +79,34 @@
                                 <label for="category-film" class="col-form-label">Quantity</label>
                                 <input type="number" class="form-control" oninput="validateInputBox(this)"
                                        value="${requestScope.book.quantity}"
-                                       name="quantity" data-error="quantity" required>
+                                       name="quantity" data-error="quantity" required min="0">
                                 <span id="quantity" class="mt-2" style="color: red; display: none;"></span>
                             </div>
                             <div class="col-6">
                                 <label for="category-film" class="col-form-label">Publication Year</label>
                                 <input type="number" class="form-control" 
-                                       value="${requestScope.book.publicationYear}"
+                                       value="${requestScope.book.publicationYear}" min="0"
                                        oninput="validateInputBox(this)" name="publicationYear" data-error="publicationYear" required>
                                 <span id="publicationYear" class="mt-2" style="color: red; display: none;"></span>
                             </div>
                         </div>
-                        <c:if test="${requestScope.book == null}">
+                        <c:if test="${requestScope.book.images == null}">
                             <div class="mt-3">
                                 <label for="exampleFormControlFile1" class="col-form-label">Image</label>
-                                <input type="file" class="form-control-file mt-2" name="file" id="file" accept="image/*"
+                                <input type="file" class="form-control-file mt-2" name="file" id="file" accept="image/*" multiple
                                        required>
+                            </div>  
+                        </c:if>
+                        <c:if test="${requestScope.book.images != null}">
+                            <div class="mt-3">
+                                <label for="exampleFormControlFile1" class="col-form-label">Update Image</label>
+                                <input type="file" class="form-control-file mt-2" name="file" id="file" accept="image/*" multiple
+                                       required>
+                                <c:forEach items="${book.images}" var="img">
+                                    <img style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;"
+                                         src="${img.url}"
+                                         alt="book-shop">
+                                </c:forEach>
                             </div>  
                         </c:if>
                         <div class="row mt-3">
@@ -125,7 +137,7 @@
                             <label for="category-film" class="col-form-label">Description</label>
                             <textarea class="form-control" oninput="validateInputBox(this)"
                                       value="${requestScope.book.description}"
-                                      cols="30" data-error="description" rows="5" name="description">${requestScope.book.description}</textarea>
+                                      cols="30" data-error="description" rows="5" name="description" minlength="40">${requestScope.book.description}</textarea>
                             <span id="description" class="mt-2" style="color: red; display: none;"></span>
                         </div>                       
                         <c:if test="${requestScope.book != null}">
@@ -172,7 +184,7 @@ crossorigin="anonymous"></script>
                                             }
 
                                             function checkNullSelectbox() {
-                                                var inputForm = document.getElementsByClassName("form-select")
+                                                var inputForm = document.getElementsByClassName("form-select");
                                                 for (var i = 0; i < inputForm.length; i++) {
                                                     validateSelectBox(inputForm[i])
                                                 }

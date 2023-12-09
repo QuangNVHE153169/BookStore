@@ -61,8 +61,10 @@ public class BookAdminController extends BaseAuthenticationController {
         BookController bCon = new BookController();
         if (request.getParameter("bookId") != null) {
             bCon.getBook(request, response);
+            request.getRequestDispatcher("/views/Admin/Book/detail.jsp").forward(request, response);
         } else {
             bCon.getAllBooks(request, response);
+            request.getRequestDispatcher("/views/Admin/Book/list.jsp").forward(request, response);
         }
     }
 

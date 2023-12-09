@@ -10,10 +10,10 @@ package Model;
  */
 public class Category {
 
-    int categoryId;
-    String categoryName;
-    Boolean status;
-    Boolean deleteFlag;
+    private int categoryId;
+   private  String categoryName;
+    private Boolean status;
+    private Boolean deleteFlag;
 
     public Category(int categoryId, String categoryName, Boolean status, Boolean deleteFlag) {
         this.categoryId = categoryId;

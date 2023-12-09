@@ -4,10 +4,6 @@
  */
 package Model.Bindings;
 
-/**
- *
- * @author Admin
- */
 public class BookBinding {
     int authorId;
     int categoryID;

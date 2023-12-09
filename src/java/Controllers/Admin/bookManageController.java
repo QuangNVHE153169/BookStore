@@ -23,6 +23,10 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -56,7 +60,7 @@ public class BookManageController extends BaseAuthenticationController {
             AuthorDAO auDao = new AuthorDAO();
             CategoryDAO cDao = new CategoryDAO();
             PublisherDAO puDao = new PublisherDAO();
-            request.setAttribute("authorList", auDao.getAuthors());
+            request.setAttribute("authorList", auDao.getAllAuthorsActive());
             request.setAttribute("categoryList", cDao.getCategories());
             request.setAttribute("publisherList", puDao.getPublishers());
             if (request.getParameter("bookId") != null) {
@@ -65,7 +69,7 @@ public class BookManageController extends BaseAuthenticationController {
                 if (book != null) {
                     request.setAttribute("book", book);
                 } else {
-                    request.getSession().setAttribute("msg", "Book is not exist!");  
+                    request.getSession().setAttribute("msg", "Book is not exist!");
                 }
             }
             request.getRequestDispatcher("/views/Admin/Book/create.jsp").forward(request, response);
@@ -79,11 +83,10 @@ public class BookManageController extends BaseAuthenticationController {
     protected void processAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             BookDAO bDao = new BookDAO();
+            BookImageDAO biDao = new BookImageDAO();
             Book b = new Book();
             switch (request.getParameter("action")) {
                 case Constant.Create: {
-                    BookImageDAO biDao = new BookImageDAO();
-
                     b.setTitle(request.getParameter("title"));
                     b.setAuthorId(Integer.parseInt(request.getParameter("authorId")));
                     b.setCategoryId(Integer.parseInt(request.getParameter("categoryId")));
@@ -93,21 +96,37 @@ public class BookManageController extends BaseAuthenticationController {
                     b.setDescription(request.getParameter("description"));
                     b.setPublicationYear(Integer.parseInt(request.getParameter("publicationYear")));
                     b.setQuantity(Integer.parseInt(request.getParameter("quantity")));
-                    bDao.insert(b);
-                    
-                    int newId = bDao.getLatestBook();
-                    Part file = request.getPart("file");                   
-                    
-                    String realPath = getServletContext().getRealPath("") + "images";
 
-                    String fileName = Paths.get(file.getSubmittedFileName()).getFileName().toString();
-                    if (!Files.exists(Paths.get(realPath))) {
-                        Files.createDirectories(Paths.get(realPath));
+                    //insert book to db
+                    bDao.insert(b);
+                    //get id of book already added
+                    int newId = bDao.getLatestBook();
+
+                    //get image send from client
+                    List<Part> fileParts = request.getParts().stream().filter(part -> "file".equals(part.getName())).collect(Collectors.toList());
+
+                    //get path folder to save image
+                    String realPath = getServletContext().getRealPath("") + File.separator + "images";
+
+                    for (Part part : fileParts) {
+                        //random image name to avoid duplicate name
+                        UUID uuid = UUID.randomUUID();
+                        String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                        String fileExtension = FilenameUtils.getExtension(filename);
+
+                        if (!Files.exists(Paths.get(realPath))) {
+                            Files.createDirectory(Paths.get(realPath));
+                        }
+                        filename = uuid + "." + fileExtension;
+                        part.write(realPath + File.separator + filename);
+
+                        response.getWriter().print("oke");
+                        String pathImage = "images" + "/" + filename;
+                        //add image to database
+                        BookImage bi = new BookImage(newId, pathImage);
+                        biDao.insert(bi);
                     }
-                    file.write(realPath+ File.separator +fileName);
-                    BookImage bi = new BookImage(newId, fileName);
-                    biDao.insert(bi);
-                    
+
                     request.getSession().setAttribute("msg", "Create Succesfully!");
                     break;
                 }
@@ -121,6 +140,39 @@ public class BookManageController extends BaseAuthenticationController {
                     b.setDescription(request.getParameter("description"));
                     b.setPublicationYear(LocalDate.now().getYear());
                     bDao.update(b);
+
+                    //get image send from client
+                    List<Part> fileParts = request.getParts().stream()
+                            .filter(part -> "file".equals(part.getName()) && part.getSize() > 0 && !part.getSubmittedFileName().isEmpty())
+                            .collect(Collectors.toList());
+
+                    //check if there is have file or not
+                    if (!fileParts.isEmpty()) {
+                        //delete exist image
+                        biDao.deleteImageByBookId(b.getBookId());
+                        //get path folder to save image
+                        String realPath = getServletContext().getRealPath("") + File.separator + "images";
+                        for (Part part : fileParts) {
+                            //random image name to avoid duplicate name
+                            UUID uuid = UUID.randomUUID();
+                            String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                            String fileExtension = FilenameUtils.getExtension(filename);
+
+                            //check if path folder exist or not
+                            if (!Files.exists(Paths.get(realPath))) {
+                                Files.createDirectory(Paths.get(realPath));
+                            }
+
+                            filename = uuid + "." + fileExtension;
+                            part.write(realPath + File.separator + filename);
+
+                            String pathImage = "images" + "/" + filename;
+
+                            //add image to database
+                            BookImage bi = new BookImage(b.getBookId(), pathImage);
+                            biDao.insert(bi);
+                        }
+                    }
                     request.getSession().setAttribute("msg", "Update Succesfully!");
                     break;
                 }

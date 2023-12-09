@@ -2,31 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controllers;
+package Controllers.Admin;
 
 import DAL.AuthorDAO;
-import DAL.BookDAO;
-import DAL.CategoryDAO;
-import DAL.PublisherDAO;
 import Model.Author;
-import Model.Book;
-import Model.Category;
-import Model.Publisher;
-import Utils.BookService;
+import Model.Constant;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
+import java.sql.Date;
 
 /**
  *
  * @author dell
  */
-public class HomeController extends HttpServlet {
+public class CreateAuthorController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,44 +32,19 @@ public class HomeController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-
-        CategoryDAO cDao = new CategoryDAO();
-        AuthorDAO auDao = new AuthorDAO();
-        PublisherDAO pDao = new PublisherDAO();
-        BookDAO bDao = new BookDAO();
-
-        //get message from server
-        String msg = (String) request.getSession().getAttribute("msg");
-        //check if there have message or not
-        if (msg != null) {
-            request.setAttribute("msg", msg);
-            request.getSession().setAttribute("msg", null);
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet CreateAuthorController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet CreateAuthorController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-
-        //get all categoreis of store
-        ArrayList<Category> categories = cDao.getAllCategories();
-
-        //get all authors of store
-        ArrayList<Author> authors = auDao.getAllAuthorsActive();
-
-        //get all authors of store
-        ArrayList<Publisher> publishers = pDao.getPublishers();
-        
-        //get all book in list
-        ArrayList<Book> listBook = bDao.getAllBook();
-        
-        session.setAttribute("categories", categories);
-        session.setAttribute("authors", authors);
-        session.setAttribute("publishers", publishers);
-        
-        //get random 3 book and set to top 3 best book
-        session.setAttribute("top3book", BookService.GetRandomBook(listBook, 3));
-        
-        //get random 5 book and set to top 5 feature book
-        session.setAttribute("featurebook", BookService.GetRandomBook(listBook, 5));
-
-        request.getRequestDispatcher("views/homepage.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -91,7 +59,7 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("views/Admin/Author/create.jsp").forward(request, response);
     }
 
     /**
@@ -105,7 +73,39 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = request.getParameter("action");
+        AuthorDAO aDao = new AuthorDAO();
+        Author author = new Author();
+        int authorId;
+        String name;
+        Date dob;
+        switch (action) {
+            case Constant.Create:
+                //get value is send from client
+                name = request.getParameter("name");
+                dob = Date.valueOf(request.getParameter("dob"));
+
+                author.setAuthorName(name);
+                author.setDob(dob);
+                author.setStatus(Constant.StatusActive);
+                author.setDeleteFlag(Constant.DeleteFalse);
+
+                aDao.insertAuthor(author);
+                break;
+            case Constant.Update:
+                //get value is send from client
+                authorId = Integer.parseInt(request.getParameter("authorId"));
+                name = request.getParameter("name");
+                dob = Date.valueOf(request.getParameter("dob"));
+
+                author.setAuthorId(authorId);
+                author.setAuthorName(name);
+                author.setDob(dob);
+
+                aDao.updateAuthor(author);
+                break;
+        }
+        response.sendRedirect("authorManage");
     }
 
     /**

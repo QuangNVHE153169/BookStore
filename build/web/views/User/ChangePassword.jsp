@@ -87,7 +87,7 @@ crossorigin="anonymous"></script>
                         }
 
                         function confirmPassword(input) {
-                            var value = input.value
+                            var value = input.value;
 
                             if (value !== document.getElementById('newPwd').value) {
                                 checkConfirmPassword = false;

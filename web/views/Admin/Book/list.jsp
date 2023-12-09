@@ -2,7 +2,6 @@
 <head>
     <title>Admin Book List</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Book-shop</title>
     <link href="${pageContext.request.contextPath}/css/styles.css" rel="stylesheet" type="text/css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
@@ -68,7 +67,7 @@
                                         <th class="d-flex align-items-center" style="height: 78px;" scope="row">${item.bookId}</th>
                                         <td style="width: 25%; height: 78px;">
                                             <div class="d-flex gap-2 align-items-center">
-                                                <img src="/images/${item.latestImage.url}"
+                                                <img src="${item.images.get(0).url}"
                                                      class="rounded-2" style="width: 60px; height: 60px; object-fit: contain;" />
                                                 <h6 class="truncate-2-line">${item.title}</h6>
                                             </div>
@@ -150,9 +149,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <!--Pagination of item (10 item each page)--> 
-                    <c:if test="${items.size() > 1}">
+                    <!--Pagination of item (6 item each page)--> 
+                    <c:if test="${items.size() > 0}">
                         <div class="d-flex justify-content-center mt-1">
                             <nav aria-label="Page navigation example col-12">
                                 <ul class="pagination">

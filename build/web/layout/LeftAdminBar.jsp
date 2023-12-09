@@ -8,8 +8,33 @@
          style="width: 280px; height: calc(92vh);">
     <ul class="nav nav-pills flex-column mb-auto">
         <li>
-            <a href="${pageContext.request.contextPath}/admin-books" class="nav-link active">
-                Products
+            <a href="${pageContext.request.contextPath}/admin-books" class="nav-link
+               ${pageContext.request.servletPath.equals("/views/Admin/Book/list.jsp")? "active" : ""}">
+                Manage Product
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/authorManage" class="nav-link
+               ${pageContext.request.servletPath.equals("/views/Admin/Category/list.jsp")? "active" : ""}">
+                Manage Category
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/authorManage" class="nav-link
+               ${pageContext.request.servletPath.equals("/views/Admin/Author/list.jsp")? "active" : ""}">
+                Manage Author
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/admin-books" class="nav-link
+               ${pageContext.request.servletPath.equals("/views/Admin/Publisher/list.jsp")? "active" : ""}">
+                Manage Publisher
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/admin-books" class="nav-link
+               ${pageContext.request.servletPath.equals("/views/Admin/User/list.jsp")? "active" : ""}">
+                Manage User
             </a>
         </li>
     </ul>

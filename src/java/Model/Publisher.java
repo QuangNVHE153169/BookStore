@@ -10,11 +10,11 @@ package Model;
  */
 public class Publisher {
 
-    int publisherId;
-    String publisherName;
-    String country;
-    int foundedYear;
-    Boolean deleteFlag;
+    private int publisherId;
+    private String publisherName;
+    private String country;
+    private int foundedYear;
+    private Boolean deleteFlag;
 
     public Boolean getDeleteFlag() {
         return deleteFlag;
