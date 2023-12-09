@@ -21,10 +21,10 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h1 class="fs-2 fw-bold">
-                        ${requestScope.author != null ? "UPDATE AUTHOR" : "CREATE AUTHOR"}
+                        ${requestScope.publisher != null ? "UPDATE PUBLISHER" : "CREATE PUBLISHER"}
                     </h1>
                     <div>
-                        <a type="button" class="btn btn-secondary btn-lg" href="authorManage?authorId=${requestScope.author.authorId}">
+                        <a type="button" class="btn btn-secondary btn-lg" href="authorManage?publisherId=${requestScope.publisher.publisherId}">
                             Cancel</a>
                         <a type="button" class="btn btn-primary btn-lg" onclick="submitForm()">
                             Save</a>
@@ -32,25 +32,25 @@
                 </div>
             </div>
             <div class="card-body">
-                <form method="POST" action="createAuthor" id="form-create">
+                <form method="POST" action="createPublisher" id="form-create">
                     <div class="col">
-                        <c:if test="${requestScope.author != null}">
+                        <c:if test="${requestScope.publisher != null}">
                             <div class="row">
                                 <div class="col-6">
-                                    <label for="category-film" class="col-form-label">AuthorID:</label> ${requestScope.author.authorId}
-                                    <input type="hidden" name="authorId"
-                                           value="${requestScope.author.authorId}">
+                                    <label for="category-film" class="col-form-label">PublisherID:</label> ${requestScope.publisher.publisherId}
+                                    <input type="hidden" name="publisherId"
+                                           value="${requestScope.publisher.publisherId}">
                                 </div>
                             </div>
                         </c:if>
                         <div class="row">
                             <input type="hidden" name="action"
-                                   value="${requestScope.author != null ? "U" : "C"}">
+                                   value="${requestScope.publisher != null ? "U" : "C"}">
                             <div class="col-6">
-                                <label for="category-film" class="col-form-label">Author Name:</label>
+                                <label for="category-film" class="col-form-label">Publisher Name:</label>
                                 <input type="text" class="form-control" data-error="title" 
                                        oninput="validateInputBox(this)" name="name"
-                                       value="${requestScope.author.authorName}" required>
+                                       value="${requestScope.publisher.publisherName}" required>
                                 <span id="title" class="mt-2" style="color: red; display: none;"></span>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                                 <label for="category-film" class="col-form-label">Date of birth</label>
                                 <input type="date" class="form-control" data-error="dob" 
                                        oninput="validateInputBox(this)" name="dob"
-                                       value="${requestScope.author.dob}" required>
+                                       value="${requestScope.publisher.dob}" required>
                                 <span id="dob" class="mt-2" style="color: red; display: none;"></span>
                             </div>
                         </div>

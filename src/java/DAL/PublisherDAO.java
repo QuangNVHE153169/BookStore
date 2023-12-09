@@ -31,6 +31,7 @@ public class PublisherDAO extends DBContext {
                         rs.getString("PublisherName"),
                         rs.getString("Country"),
                         rs.getInt("FoundedYear"),
+                        rs.getBoolean("Status"),
                         rs.getBoolean("DeleteFlag"));
             }
         } catch (SQLException e) {

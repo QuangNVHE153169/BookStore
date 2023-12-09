@@ -14,6 +14,7 @@ public class Publisher {
     private String publisherName;
     private String country;
     private int foundedYear;
+    private boolean status;
     private Boolean deleteFlag;
 
     public Boolean getDeleteFlag() {
@@ -21,6 +22,15 @@ public class Publisher {
     }
 
     public void setDeleteFlag(Boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
+    }
+
+    public Publisher(int publisherId, String publisherName, String country, int foundedYear, boolean status, Boolean deleteFlag) {
+        this.publisherId = publisherId;
+        this.publisherName = publisherName;
+        this.country = country;
+        this.foundedYear = foundedYear;
+        this.status = status;
         this.deleteFlag = deleteFlag;
     }
 
@@ -64,6 +74,14 @@ public class Publisher {
     }
 
     public Publisher() {
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public Publisher(int publisherId, String publisherName, String country, int foundedYear, Boolean deleteFlag) {
