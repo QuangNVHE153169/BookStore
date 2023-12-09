@@ -19,8 +19,11 @@
                         ${requestScope.book != null ? "UPDATE PRODUCT" : "CREATE PRODUCT"}
                     </h1>
                     <div>
-                        <a type="button" class="btn btn-secondary btn-lg" href="admin-books?bookId=${requestScope.book.bookId}">
-                            Cancel</a>
+                        <c:if test="${requestScope.book != null}">
+                            <a type="button" class="btn btn-secondary btn-lg" href="admin-books?bookId=${requestScope.book.bookId}">
+                                Cancel</a>
+                        </c:if>
+
                         <a type="button" class="btn btn-primary btn-lg" onclick="submitForm()">
                             Save</a>
                     </div>
@@ -88,8 +91,9 @@
                         <c:if test="${requestScope.book == null}">
                             <div class="mt-3">
                                 <label for="exampleFormControlFile1" class="col-form-label">Image</label>
-                                <input type="file" class="form-control-file mt-2" name="file" id="file" accept="image/*"
+                                <input type="file" class="form-control-file mt-2" name="file" accept="image/*" data-error="file" id="image"
                                        required>
+                                <span id="file" class="mt-2" style="color: red; display: none;"></span>
                             </div>  
                         </c:if>
                         <div class="row mt-3">
@@ -190,14 +194,12 @@
     function submitForm() {
         checkNullInputBox();
         checkNullInputBox();
-        if (document.getElementById("file") != null) {
-            if (checkInput && checkSelect && document.getElementById("file").value != null) {
-                document.getElementById("submitForm").submit();
-            }
-        } else {
+        if (document.getElementById("image").value != "") {
             if (checkInput && checkSelect) {
                 document.getElementById("submitForm").submit();
             }
+        } else {
+            validateInputBox(document.getElementById("image"))
         }
     }
 </script>

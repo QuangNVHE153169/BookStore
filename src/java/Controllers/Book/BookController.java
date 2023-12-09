@@ -130,11 +130,12 @@ public class BookController extends HttpServlet {
             request.getSession().setAttribute("msg", "Error while input querying, return to default result.");
         }
         BookDAO bDao = new BookDAO();
-        ArrayList<Book> books = bDao.getBookPaginate(page, Constant.RecordPerPage, bookBinding, sortBy);
+        String queryString = getQueryString(request, response);
+        ArrayList<Book> books = bDao.getBookPaginate(page, 2, bookBinding, sortBy);
         request.setAttribute("items", books);
         request.setAttribute("totalPage", bDao.getTotalPage(bookBinding));
         request.setAttribute("currentPage", page);
-        request.setAttribute("queryString", getQueryString(request, response));
+        request.setAttribute("queryString", queryString);
     }
 
     public void getBook(HttpServletRequest request, HttpServletResponse response, String dispatcherPage, String redirectPage) throws IOException, ServletException {
@@ -149,47 +150,32 @@ public class BookController extends HttpServlet {
         }
     }
 
-    public void getBookUpdate(HttpServletRequest request, HttpServletResponse response, String redirectPage) throws IOException, ServletException {
-        BookDAO bDao = new BookDAO();
-        if (request.getParameter("bookId") != null) {
-            Book b = bDao.getBookDetailById(Integer.parseInt(request.getParameter("bookId")));
-            if (b != null) {
-                request.setAttribute("book", b);
-                request.getRequestDispatcher("/views/Admin/Book/create.jsp").forward(request, response);
-
-            } else {
-                request.getSession().setAttribute("msg", "Book is not Exist.");
-                response.sendRedirect(redirectPage);
-            }
-        }
-    }
-
     public String getQueryString(HttpServletRequest request, HttpServletResponse response) {
         String queryString = request.getQueryString() != null ? request.getQueryString() : "";
+        if (!queryString.isEmpty()) {
+            Map<String, String> params = Arrays.stream(queryString.split("&"))
+                    .map(s -> s.split("="))
+                    .collect(Collectors.toMap(
+                            arr -> arr[0],
+                            arr -> arr.length > 1 ? arr[1] : ""
+                    ));
 
-        Map<String, String> params = Arrays.stream(queryString.split("&"))
-                .map(s -> s.split("="))
-                .collect(Collectors.toMap(
-                        arr -> arr[0],
-                        arr -> arr.length > 1 ? arr[1] : ""
-                ));
+            params.entrySet().removeIf(entry -> entry.getKey().startsWith("page"));
 
-        params.entrySet().removeIf(entry -> entry.getKey().startsWith("page"));
+            String newQueryString = params.entrySet().stream()
+                    .map(entry -> entry.getKey() + "=" + entry.getValue())
+                    .collect(Collectors.joining("&"));
 
-        String newQueryString = params.entrySet().stream()
-                .map(entry -> entry.getKey() + "=" + entry.getValue())
-                .collect(Collectors.joining("&"));
-        if (newQueryString.isEmpty()) {
-            return newQueryString;
+            return !newQueryString.isEmpty() ? newQueryString + "&" : "";
         }
-        return newQueryString + "&";
+
+        return "";
     }
 
     public static void main(String[] args) {
 
-        String queryString = "name=John&page=about&age=25";
+        String queryString = "page=2&";
 
-        // Phân tách query string thành các cặp key-value
         Map<String, String> params = Arrays.stream(queryString.split("&"))
                 .map(s -> s.split("="))
                 .collect(Collectors.toMap(
@@ -197,18 +183,14 @@ public class BookController extends HttpServlet {
                         arr -> arr.length > 1 ? arr[1] : ""
                 ));
 
-        System.out.println(params.get("page"));
-
-        // Loại bỏ tham số bắt đầu từ "page="
         params.entrySet().removeIf(entry -> entry.getKey().startsWith("page"));
 
-        // Tạo lại query string mới từ Map đã được chỉnh sửa
         String newQueryString = params.entrySet().stream()
                 .map(entry -> entry.getKey() + "=" + entry.getValue())
                 .collect(Collectors.joining("&"));
-
-        System.out.println("New query string: " + newQueryString);
-
+        if (!newQueryString.isEmpty()) {
+            System.out.println(newQueryString+"&");
+        }
     }
 
     @Override

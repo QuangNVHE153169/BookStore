@@ -54,16 +54,20 @@ public class BookManageController extends BaseAuthenticationController {
     @Override
     protected void processAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            BookController bCon = new BookController();
             AuthorDAO auDao = new AuthorDAO();
             CategoryDAO cDao = new CategoryDAO();
             PublisherDAO puDao = new PublisherDAO();
             request.setAttribute("authorList", auDao.getAuthors());
             request.setAttribute("categoryList", cDao.getCategories());
             request.setAttribute("publisherList", puDao.getPublishers());
-            BookController bCon = new BookController();
-            bCon.getBookUpdate(request, response, "admin-books");
+            if (request.getParameter("bookId") != null) {
+                bCon.getBook(request, response, "/views/Admin/Book/create.jsp", "admin-books");
+            } else {
+                request.getRequestDispatcher("/views/Admin/Book/create.jsp").forward(request, response);
+            }
         } catch (Exception e) {
-            request.getSession().setAttribute("msg", e.getMessage());
+            request.getSession().setAttribute("msg", "System Error. Please Try Again");
             response.sendRedirect("admin-books");
         }
     }
