@@ -33,7 +33,7 @@ import org.apache.commons.io.FilenameUtils;
  * @author Admin
  */
 @MultipartConfig
-public class BookManageController extends BaseAuthenticationController {
+public class ManageBookController extends BaseAuthenticationController {
 
     /**
      * Returns a short description of the servlet.
@@ -191,5 +191,15 @@ public class BookManageController extends BaseAuthenticationController {
             request.getSession().setAttribute("msg", e.getMessage());
         }
         response.sendRedirect("admin-books");
+    }
+
+    @Override
+    protected void processSaleAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    protected void processSaleAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

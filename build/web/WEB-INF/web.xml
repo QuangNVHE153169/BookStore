@@ -38,23 +38,15 @@
     </servlet>
     <servlet>
         <servlet-name>BookAdminController</servlet-name>
-        <servlet-class>Controllers.Admin.BookAdminController</servlet-class>
+        <servlet-class>Controllers.Admin.ListBookAdminController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>BookManageController</servlet-name>
-        <servlet-class>Controllers.Admin.BookManageController</servlet-class>
+        <servlet-class>Controllers.Admin.ManageBookController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListAllBookController</servlet-name>
         <servlet-class>Controllers.ListAllBookController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ListAuthorAdminController</servlet-name>
-        <servlet-class>Controllers.Admin.ListAuthorAdminController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AuthorDetailsController</servlet-name>
-        <servlet-class>Controllers.Admin.AuthorDetailsController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateAuthorController</servlet-name>
@@ -79,6 +71,14 @@
     <servlet>
         <servlet-name>ListStaffController</servlet-name>
         <servlet-class>Controllers.Admin.ListStaffController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageStaffController</servlet-name>
+        <servlet-class>Controllers.Admin.ManageStaffController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListAuthorAdminController</servlet-name>
+        <servlet-class>Controllers.Admin.ListAuthorAdminController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
@@ -125,14 +125,6 @@
         <url-pattern>/listAllBook</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ListAuthorAdminController</servlet-name>
-        <url-pattern>/authorManage</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AuthorDetailsController</servlet-name>
-        <url-pattern>/authorDetails</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>CreateAuthorController</servlet-name>
         <url-pattern>/createAuthor</url-pattern>
     </servlet-mapping>
@@ -155,6 +147,14 @@
     <servlet-mapping>
         <servlet-name>ListStaffController</servlet-name>
         <url-pattern>/admin-staff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageStaffController</servlet-name>
+        <url-pattern>/admin-manage-staff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListAuthorAdminController</servlet-name>
+        <url-pattern>/authorManage</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -61,7 +61,7 @@ public class UserProfileController extends BaseAuthenticationController {
         User account = (User) request.getSession().getAttribute("account");
         UserDAO uDao = new UserDAO();
         request.setAttribute("account", uDao.getUserByID(account.getUserID()));
-        request.getRequestDispatcher("/views/User/UserProfile.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/User/userProfile.jsp").forward(request, response);
     }
 
     @Override
@@ -93,6 +93,16 @@ public class UserProfileController extends BaseAuthenticationController {
 
     @Override
     protected void processAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    protected void processSaleAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    protected void processSaleAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

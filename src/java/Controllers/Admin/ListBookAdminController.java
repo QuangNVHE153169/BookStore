@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class BookAdminController extends BaseAuthenticationController {
+public class ListBookAdminController extends BaseAuthenticationController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -59,7 +59,7 @@ public class BookAdminController extends BaseAuthenticationController {
     @Override
     protected void processAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BookController bCon = new BookController();
-        if (request.getParameter("bookId") != null) {
+        if (request.getParameter("bookId") != null && !request.getParameter("bookId").equals("")) {
             bCon.getBook(request, response);
             request.getRequestDispatcher("/views/Admin/Book/detail.jsp").forward(request, response);
         } else {
@@ -71,6 +71,16 @@ public class BookAdminController extends BaseAuthenticationController {
     @Override
     protected void processAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    }
+
+    @Override
+    protected void processSaleAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    protected void processSaleAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

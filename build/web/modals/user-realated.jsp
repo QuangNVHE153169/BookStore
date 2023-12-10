@@ -109,7 +109,7 @@
                         <form action="forgotPassword" method="post">
                             <input type="email" class="form-control mb-3" placeholder="Enter user email"
                                    aria-label="Useremail" required name="email">
-                            <button type="submit" class="btn btn-primary w-100 mb-2">RESET PASSWORD</button>
+                            <button type="submit" class="btn btn-primary w-100 mb-2" onsubmit="simulateLoading()">RESET PASSWORD</button>
                         </form>
                         <div class="d-flex justify-content-center align-items-center">
                             <p class="mb-0">Already have an account</p>

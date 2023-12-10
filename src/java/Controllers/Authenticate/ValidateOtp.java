@@ -33,17 +33,17 @@ public class ValidateOtp extends HttpServlet {
             if (value == otp) {
                 request.setAttribute("email", request.getParameter("email"));
                 request.setAttribute("status", "success");
-                dispatcher = request.getRequestDispatcher("/views/NewPassword.jsp");
+                dispatcher = request.getRequestDispatcher("/views/newPassword.jsp");
                 dispatcher.forward(request, response);
             } else {
                 request.setAttribute("message", "Wrong OTP! Try again");
-                dispatcher = request.getRequestDispatcher("/views/EnterOtp.jsp");
+                dispatcher = request.getRequestDispatcher("/views/enterOtp.jsp");
                 dispatcher.forward(request, response);
             }
         } catch (Exception ex) {
             //if otp is not number send message
             request.setAttribute("message", "Wrong OTP! Try again");
-            dispatcher = request.getRequestDispatcher("/views/EnterOtp.jsp");
+            dispatcher = request.getRequestDispatcher("/views/enterOtp.jsp");
             dispatcher.forward(request, response);
         }
 

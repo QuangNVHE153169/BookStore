@@ -359,10 +359,8 @@ public class BookDAO extends DBContext {
 //        System.out.println(test.toString());
 
         System.out.println(bDao.getTotalPage(binding));
-        ArrayList<Book> books = bDao.getBookPaginate(3, 10, binding, -1);
-        for (int i = 0; i < 10; i++) {
-            System.out.println(books.get(i).toString());
-        }
+        ArrayList<Book> books = bDao.getBookPaginate(1, 10, binding, -1);
+        System.out.println(books);
     }
 
     public ArrayList<Book> getAllBook() {

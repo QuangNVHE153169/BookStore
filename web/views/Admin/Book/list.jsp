@@ -67,7 +67,7 @@
                                         <th class="d-flex align-items-center" style="height: 78px;" scope="row">${item.bookId}</th>
                                         <td style="width: 25%; height: 78px;">
                                             <div class="d-flex gap-2 align-items-center">
-                                                <img src="${item.images.get(0).url}"
+                                                <img src="${item.latestImage.url}"
                                                      class="rounded-2" style="width: 60px; height: 60px; object-fit: contain;" />
                                                 <h6 class="truncate-2-line">${item.title}</h6>
                                             </div>
@@ -150,7 +150,7 @@
                         </div>
                     </div>
                     <!--Pagination of item (6 item each page)--> 
-                    <c:if test="${items.size() > 0}">
+                    <c:if test="${totalPage > 0}">
                         <div class="d-flex justify-content-center mt-1">
                             <nav aria-label="Page navigation example col-12">
                                 <ul class="pagination">

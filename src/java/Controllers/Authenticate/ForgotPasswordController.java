@@ -110,7 +110,7 @@ public class ForgotPasswordController extends HttpServlet {
                 
                 
                 //after send email redirect to enter otp page
-                dispatcher = request.getRequestDispatcher("/views/EnterOtp.jsp");
+                dispatcher = request.getRequestDispatcher("/views/enterOtp.jsp");
                 mySession.setAttribute("message", "OTP is sent to your email");
                 dispatcher.forward(request, response);
                 

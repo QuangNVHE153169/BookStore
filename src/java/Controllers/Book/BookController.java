@@ -137,7 +137,7 @@ public class BookController extends HttpServlet {
         request.setAttribute("maxPrice", request.getParameter("maxPrice"));
         request.setAttribute("status", request.getParameter("status"));
         request.setAttribute("sortBy", request.getParameter("sortBy"));
-
+        request.setAttribute("queryString", getQueryString(request, response));
     }
 
     public void getBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -147,7 +147,7 @@ public class BookController extends HttpServlet {
             if (b != null) {
                 //get all book in list
                 ArrayList<Book> listBook = bDao.getAllBook();
-                
+
                 //get random 5 book and set to top 5 feature book
                 request.setAttribute("featurebook", BookService.GetRandomBook(listBook, 4));
 
@@ -159,31 +159,38 @@ public class BookController extends HttpServlet {
     }
 
     public String getQueryString(HttpServletRequest request, HttpServletResponse response) {
-        //get query string in url
-        String queryString = request.getQueryString() != null ? request.getQueryString() : "";
+        String queryString = getTrueQueryString(request, response);
+        if (!queryString.isEmpty()) {
+            Map<String, String> params = Arrays.stream(queryString.split("&"))
+                    .map(s -> s.split("="))
+                    .collect(Collectors.toMap(
+                            arr -> arr[0],
+                            arr -> arr.length > 1 ? arr[1] : ""
+                    ));
 
-        //parse query string to array
-        Map<String, String> params = Arrays.stream(queryString.split("&"))
-                .map(s -> s.split("="))
-                .collect(Collectors.toMap(
-                        arr -> arr[0],
-                        arr -> arr.length > 1 ? arr[1] : ""
-                ));
+            params.entrySet().removeIf(entry -> entry.getKey().startsWith("page"));
 
-        //remove atribute with paramatter name = 'page'
-        params.entrySet().removeIf(entry -> entry.getKey().startsWith("page"));
+            String newQueryString = params.entrySet().stream()
+                    .map(entry -> entry.getKey() + "=" + entry.getValue())
+                    .collect(Collectors.joining("&"));
 
-        String newQueryString = params.entrySet().stream()
-                .map(entry -> entry.getKey() + "=" + entry.getValue())
-                .collect(Collectors.joining("&"));
-        if (newQueryString.isEmpty()) {
-            return newQueryString;
+            return !newQueryString.isEmpty() ? newQueryString + "&" : "";
         }
-        return newQueryString + "&";
+
+        return "";
     }
 
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    public String getStringParameter(HttpServletRequest request, HttpServletResponse response, String parameter) {
+        if (request.getParameter(parameter) != null && !request.getParameter(parameter).isEmpty()) {
+            return request.getParameter(parameter);
+        }
+        return "";
+    }
+
+    public String getTrueQueryString(HttpServletRequest request, HttpServletResponse response) {
+        if (request.getQueryString() != null && !request.getQueryString().isEmpty()) {
+            return request.getQueryString();
+        }
+        return "";
+    }
 }

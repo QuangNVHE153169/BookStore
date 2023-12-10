@@ -4,9 +4,11 @@ import Model.Constant;
 import Model.Role;
 import Model.User;
 import Utils.EncodeMD5;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +52,65 @@ public class UserDAO extends DBContext {
 
     }
 
+    public boolean insertStaff(User user) {
+        try {
+            String sql = "INSERT INTO [Users]\n"
+                    + "           ([FullName]\n"
+                    + "           ,[Email]\n"
+                    + "           ,[Password]\n"
+                    + "           ,[Phone]\n"
+                    + "           ,[DOB]\n"
+                    + "           ,[Gender]\n"
+                    + "           ,[Status]\n"
+                    + "           ,[RoleID])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,1\n"
+                    + "           ,2)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, user.getFullName());
+            stm.setString(2, user.getEmail());
+            stm.setString(3, user.getPassword());
+            stm.setString(4, user.getPhone());
+            stm.setDate(5, user.getDob());
+            stm.setInt(6, user.getGender());
+            stm.executeUpdate();
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean updateStaff(User user) {
+        try {
+            String sql = "UPDATE [Users] \n"
+                    + "SET Fullname = ?, \n"
+                    + "DOB = ?, \n"
+                    + "Gender = ?, \n"
+                    + "Phone = ? \n"
+                    + "WHERE UserID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, user.getFullName());
+            stm.setDate(2, user.getDob());
+            stm.setInt(3, user.getGender());
+            stm.setString(4, user.getPhone());
+            stm.setInt(5, user.getUserID());
+            stm.executeUpdate();
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
     public User doLogin(String email, String pwd) {
         UserDAO uDAO = new UserDAO();
         try {
@@ -73,7 +134,7 @@ public class UserDAO extends DBContext {
     public User getUserByID(int userID) {
         try {
             String sql = "SELECT *\n"
-                    + "  FROM [Users] where UserID like ?";
+                    + "  FROM [Users] where UserID = ? ";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, userID);
             ResultSet rs = stm.executeQuery();
@@ -140,6 +201,54 @@ public class UserDAO extends DBContext {
             stm.setInt(9, Constant.RoleCustomer);
             stm.setBoolean(10, Constant.StatusActive);
             stm.setBoolean(11, Constant.DeleteFalse);
+            return stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int insertNewUser(User user) {
+        try {
+            String sql = "INSERT INTO [Users]\n"
+                    + "           ([FullName]\n"
+                    + "           ,[Email]\n"
+                    + "           ,[Password]\n"
+                    + "           ,[Phone]\n"
+                    + "           ,[DOB]\n"
+                    + "           ,[Address]\n"
+                    + "           ,[Avatar]\n"
+                    + "           ,[Gender]\n"
+                    + "           ,[RoleId]\n"
+                    + "           ,[Status]\n"
+                    + "           ,[Description]"
+                    + "           ,[DeleteFlag])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "		  ,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, user.getFullName());
+            stm.setString(2, user.getEmail());
+            stm.setString(3, user.getPassword());
+            stm.setString(4, user.getPhone());
+            stm.setDate(5, user.getDob());
+            stm.setString(6, user.getAddress());
+            stm.setString(7, user.getAvatar());
+            stm.setInt(8, user.getGender());
+            stm.setInt(9, user.getRole().getId());
+            stm.setBoolean(10, user.isStatus());
+            stm.setString(11, user.getDescription());
+            stm.setBoolean(12, Constant.DeleteFalse);
             return stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -366,8 +475,23 @@ public class UserDAO extends DBContext {
             int count = 0;
             String sql = "SELECT *\n"
                     + "  FROM [Users]\n"
-                    + "  Where RoleID = ?\n";
-            setter.put(++count, roleID);
+                    + "  Where RoleID ";
+            if (roleID == -1) {
+                ArrayList<Role> roles = rDao.getRoles();
+                StringBuilder roleAppend = new StringBuilder(sql + "IN (");
+                for (int i = 0; i < roles.size(); i++) {
+                    roleAppend.append(roles.get(i).getId());
+                    if (i < roles.size() - 1) {
+                        roleAppend.append(",");
+                    }
+                }
+                roleAppend.append(")");
+                sql = roleAppend.toString();
+            } else {
+                sql += "= ?";
+                setter.put(++count, roleID);
+            }
+
             if (!textSearch.isEmpty() && !textSearch.equalsIgnoreCase("")) {
                 sql += " and (FullName like ? or Email like ? or Phone like ? or Address like ?)\n";
                 textSearch = "%" + textSearch + "%";
@@ -380,11 +504,12 @@ public class UserDAO extends DBContext {
                 sql += " and Status = ?\n";
                 setter.put(++count, status);
             }
-            sql += "Order by UserID\n"
+            sql += " Order by UserID\n"
                     + "  Offset ? row\n"
                     + "  fetch next ? rows only";
             setter.put(++count, offset);
             setter.put(++count, recordsPerPage);
+            System.out.println(sql);
             PreparedStatement stm = connection.prepareStatement(sql);
             for (Map.Entry<Integer, Object> entry : setter.entrySet()) {
                 stm.setObject(entry.getKey(), entry.getValue());
@@ -395,8 +520,8 @@ public class UserDAO extends DBContext {
 
                 list.add(new User(rs.getInt("UserID"),
                         rs.getNString("FullName"),
-                        rs.getString("Phone"),
                         rs.getString("Email"),
+                        rs.getString("Phone"),
                         rs.getDate("DOB"),
                         rs.getString("Address"),
                         rs.getString("Avatar"),
@@ -439,9 +564,11 @@ public class UserDAO extends DBContext {
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 return rs.getInt("total");
+
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
     }
@@ -455,8 +582,10 @@ public class UserDAO extends DBContext {
             stm.setBoolean(1, status);
             stm.setInt(2, userID);
             stm.executeUpdate();
+
         } catch (SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -473,6 +602,64 @@ public class UserDAO extends DBContext {
 //        Date dob = Date.valueOf(LocalDate.now());
 //        user.setDob(dob);
 //        uDao.insert(user);
+        ArrayList<User> list = uDao.getAllUserByRolePagnition(0, 2, 3);
+        System.out.println(uDao.getTotalUserByRole(3));
         System.out.println(encode.EncoderMD5("onething4me@"));
+    }
+
+    public ArrayList<User> getAllUserByRolePagnition(int offset, int RecordPerPage, int roleId) {
+        UserDAO uDao = new UserDAO();
+        ArrayList<User> list = new ArrayList<>();
+        int count = 0;
+        try {
+            String sql = "SELECT *\n"
+                    + "  FROM [dbo].[Users]\n"
+                    + "  Where DeleteFlag = 0 and RoleId = ?";
+            HashMap<Integer, Object> setter = new HashMap<>();
+            setter.put(++count, roleId);
+
+            sql += "    Order by UserId\n";
+            sql += "    offset ? rows\n"
+                    + " fetch next ? rows only";
+
+            setter.put(++count, offset);
+            setter.put(++count, RecordPerPage);
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            for (Map.Entry<Integer, Object> entry : setter.entrySet()) {
+                ps.setObject(entry.getKey(), entry.getValue());
+            }
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                User user = uDao.getUserByID(rs.getInt("UserId"));
+                list.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public int getTotalUserByRole(int roleId) {
+        int count = 0;
+        try {
+            String sql = "Select count(*) From Users Where DeleteFlag = 0 and RoleId = ?\n";
+            HashMap<Integer, Object> setter = new HashMap<>();
+            setter.put(++count, roleId);
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            for (Map.Entry<Integer, Object> entry : setter.entrySet()) {
+                ps.setObject(entry.getKey(), entry.getValue());
+            }
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+
+        }
+        return 0;
     }
 }

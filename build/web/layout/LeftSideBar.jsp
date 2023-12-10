@@ -46,7 +46,7 @@
                         <div class="d-flex gap-2">
                             <a class="h5 text-decoration-none text-dark" style="font-weight: 600;"
                                href="listAllBook?bookId=${b.bookId}">
-                                <img src="${b.images.get(0).url}"
+                                <img src="${b.latestImage.url}"
                                      alt="book-img" style="height: 150px;width: 110px; object-fit: cover;">
                             </a>
                             <div class="flex flex-column gap-3">

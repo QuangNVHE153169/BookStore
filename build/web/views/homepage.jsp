@@ -153,7 +153,7 @@
                                     <div class="product-image">
                                         <a class="h5 text-decoration-none text-dark" style="font-weight: 600;"
                                            href="listAllBook?bookId=${b.bookId}">
-                                            <img src="${b.images.get(0).url}" style="width: 350px;height: 350px">
+                                            <img src="${b.latestImage.url}" style="width: 350px;height: 350px">
                                         </a>
                                         <a href="" class="add-to-cart">Add to Cart</a>
                                     </div>

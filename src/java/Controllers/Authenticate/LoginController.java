@@ -108,7 +108,7 @@ public class LoginController extends HttpServlet {
                 response.sendRedirect("home");
             }
         } else {
-            request.getSession().setAttribute("msg", "Login fail! Please check your email and password again!");
+            request.getSession().setAttribute("msg", "Login fail! Wrong email or password or you not have permission to login!");
             response.sendRedirect("home");
         }
     }

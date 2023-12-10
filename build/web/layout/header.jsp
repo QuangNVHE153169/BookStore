@@ -131,5 +131,14 @@
                 </c:if>
             </div>
         </header>
+        <div id="overlay">
+            <div id="loader"></div>
+        </div>
     </body>
 </html>
+<script>
+    function simulateLoading() {
+        var overlay = document.getElementById("overlay");
+        overlay.style.display = "block"; // Show the loading overlay
+    }
+</script>
