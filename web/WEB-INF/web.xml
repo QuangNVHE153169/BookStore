@@ -25,7 +25,7 @@
         <servlet-class>Controllers.Authenticate.ChangePasswordController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UserProfile</servlet-name>
+        <servlet-name>UserProfileController</servlet-name>
         <servlet-class>Controllers.User.UserProfileController</servlet-class>
     </servlet>
     <servlet>
@@ -101,7 +101,7 @@
         <url-pattern>/change-password</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UserProfile</servlet-name>
+        <servlet-name>UserProfileController</servlet-name>
         <url-pattern>/user-profile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>

@@ -120,7 +120,7 @@ public class BookController extends HttpServlet {
         }
         BookDAO bDao = new BookDAO();
         String queryString = getQueryString(request, response);
-        ArrayList<Book> books = bDao.getBookPaginate(page, 2, bookBinding, sortBy);
+        ArrayList<Book> books = bDao.getBookPaginate(page, Constant.RecordPerPage, bookBinding, sortBy);
         request.setAttribute("items", books);
 
         request.setAttribute("totalPage", bDao.getTotalPage(bookBinding));
