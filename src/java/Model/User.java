@@ -5,6 +5,7 @@
 package Model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -24,6 +25,25 @@ public class User {
     private Role role;
     private boolean status;
     private String description;
+    private ArrayList<Order> oders;
+    private ArrayList<RateBook> comments;
+
+    public ArrayList<RateBook> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<RateBook> comments) {
+        this.comments = comments;
+    }
+    
+
+    public ArrayList<Order> getOders() {
+        return oders;
+    }
+
+    public void setOders(ArrayList<Order> oders) {
+        this.oders = oders;
+    }
 
     public User() {
     }
