@@ -55,4 +55,11 @@ public class PaymentMethod {
     public void setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
     }
+
+    @Override
+    public String toString() {
+        return "PaymentMethod{" + "paymentMethodId=" + paymentMethodId + ", paymentMethodName=" + paymentMethodName + ", status=" + status + ", deleteFlag=" + deleteFlag + '}';
+    }
+    
+    
 }

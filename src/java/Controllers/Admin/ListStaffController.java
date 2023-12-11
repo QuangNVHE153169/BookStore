@@ -31,7 +31,7 @@ public class ListStaffController extends BaseAuthenticationController {
         UserDAO uDao = new UserDAO();
 
         if (request.getParameter("userId") != null && !request.getParameter("userId").isEmpty()) {
-            User user = uDao.getUserByID(Integer.parseInt(request.getParameter("userId")));
+            User user = uDao.getUserByIdAndRole(Integer.parseInt(request.getParameter("userId")), Constant.RoleAdminSale);
             request.setAttribute("staff", user);
             request.getRequestDispatcher("/views/Admin/Staff/details.jsp").forward(request, response);
         } else {

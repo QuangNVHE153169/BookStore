@@ -118,6 +118,10 @@ public class RateBook {
     public void setUser(User user) {
         this.user = user;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "RateBook{" + "rateID=" + rateID + ", rate=" + rate + ", comment=" + comment + ", customerId=" + customerId + ", bookId=" + bookId + ", date=" + date + ", deleteFlag=" + deleteFlag + ", status=" + status + ", book=" + book + ", user=" + user + '}';
+    }
+        
 }

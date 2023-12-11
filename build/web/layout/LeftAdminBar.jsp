@@ -37,6 +37,12 @@
                 Manage Staff
             </a>
         </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/admin-customer" class="nav-link
+               ${pageContext.request.servletPath.equals("/views/Admin/Customer/list.jsp")? "active" : ""}">
+                Manage Customer
+            </a>
+        </li>
     </ul>
     <footer class="position-absolute bottom-0 start-0 end-0 text-center p-3" style="background-color: #deded540">
         @ 2023 Copyright by Book Shop

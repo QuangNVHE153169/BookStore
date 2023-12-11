@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Model.Constant;
+import Model.Enums.OrderStatus;
 import Model.Publisher;
 
 /**
@@ -371,7 +372,7 @@ public class BookDAO extends DBContext {
                     + "  FROM [dbo].[Books] Where Status = 1 and DeleteFlag = 0";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {
                 Book book = new Book();
                 book = bDao.getBookById(rs.getInt("BookId"));
                 list.add(book);
@@ -380,5 +381,33 @@ public class BookDAO extends DBContext {
             Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+    public Boolean updateQuantity(int bookId, int quantity, int status) {
+        try {
+            String sql = "UPDATE Books SET Quantity = ? WHERE BookId = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            Book b = getBookById(bookId);
+            int quantityAfter = b.getQuantity();
+            if (status == OrderStatus.CANCELED.getStatusValue()) {
+                quantityAfter += quantity;
+            }
+            if (status == OrderStatus.PENDING.getStatusValue()) {
+                quantityAfter -= quantity;
+            }
+            if (quantityAfter > 0) {
+                ps.setInt(1, quantityAfter);
+                ps.setInt(2, bookId);
+                
+                ps.executeUpdate();
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
     }
 }

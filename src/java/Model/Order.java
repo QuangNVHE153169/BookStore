@@ -20,10 +20,27 @@ public class Order {
     private String customerPhone;
     private String customerAddress;
     private Date orderDate;
-    private Boolean status;
+    private int status;
     private int paymentMethodId;
+    private PaymentMethod paymentMethod;
+  
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
 
     private ArrayList<OrderDetail> orderDetails;
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 
     public Order() {
     }
@@ -37,7 +54,7 @@ public class Order {
     }
     
     
-    public Order(int orderId, int customerId, String customerName, String customerEmail, String customerPhone, String customerAddress, Date orderDate, Boolean status, int paymentMethodId, ArrayList<OrderDetail> orderDetails) {
+    public Order(int orderId, int customerId, String customerName, String customerEmail, String customerPhone, String customerAddress, Date orderDate, int status, int paymentMethodId, ArrayList<OrderDetail> orderDetails) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.customerName = customerName;
@@ -98,11 +115,11 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public Boolean getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -113,4 +130,11 @@ public class Order {
     public void setPaymentMethodId(int paymentMethodId) {
         this.paymentMethodId = paymentMethodId;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" + "orderId=" + orderId + ", customerId=" + customerId + ", customerName=" + customerName + ", customerEmail=" + customerEmail + ", customerPhone=" + customerPhone + ", customerAddress=" + customerAddress + ", orderDate=" + orderDate + ", status=" + status + ", paymentMethodId=" + paymentMethodId + ", paymentMethod=" + paymentMethod + ", orderDetails=" + orderDetails + '}';
+    }
+    
+    
 }

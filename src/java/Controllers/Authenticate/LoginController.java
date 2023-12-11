@@ -102,10 +102,16 @@ public class LoginController extends HttpServlet {
         if (user != null) {
             request.getSession().setAttribute("msg", "Login successful!");
             request.getSession().setAttribute("account", user);
-            if (user.getRole().getId() == Constant.RoleAdmin) {
-                response.sendRedirect("admin-books");
-            } else {
-                response.sendRedirect("home");
+            switch (user.getRole().getId()) {
+                case Constant.RoleAdmin:
+                    response.sendRedirect("admin-books");
+                    break;
+                case Constant.RoleAdminSale:
+                    response.sendRedirect("admin-sale-orders");
+                    break;
+                default:
+                    response.sendRedirect("home");
+                    break;
             }
         } else {
             request.getSession().setAttribute("msg", "Login fail! Wrong email or password or you not have permission to login!");
