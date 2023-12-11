@@ -162,6 +162,39 @@ public class UserDAO extends DBContext {
         }
         return null;
     }
+    
+    public User getUserByIdAndRole(int userID, int roleId) {
+        try {
+            String sql = "SELECT *\n"
+                    + "  FROM [Users] where UserID = ? and RoleId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, userID);
+            stm.setInt(2, roleId);
+            ResultSet rs = stm.executeQuery();
+
+            RoleDAO rDao = new RoleDAO();
+
+            if (rs.next()) {
+
+                Role role = rDao.getRoleByID(rs.getInt("RoleID"));
+
+                return new User(rs.getInt("UserID"),
+                        rs.getString("FullName"),
+                        rs.getString("Email"),
+                        rs.getString("Phone"),
+                        rs.getDate("DOB"),
+                        rs.getString("Address"),
+                        rs.getString("Avatar"),
+                        role,
+                        rs.getBoolean("Status"),
+                        rs.getString("Description"),
+                        rs.getInt("Gender"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public int insert(User user) {
         try {

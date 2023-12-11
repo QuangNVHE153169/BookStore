@@ -80,6 +80,10 @@
         <servlet-name>ListAuthorAdminController</servlet-name>
         <servlet-class>Controllers.Admin.ListAuthorAdminController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListCustomerController</servlet-name>
+        <servlet-class>Controllers.Admin.ListCustomerController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -155,6 +159,10 @@
     <servlet-mapping>
         <servlet-name>ListAuthorAdminController</servlet-name>
         <url-pattern>/authorManage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListCustomerController</servlet-name>
+        <url-pattern>/admin-customer</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
