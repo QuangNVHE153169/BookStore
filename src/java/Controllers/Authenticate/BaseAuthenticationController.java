@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author dell
  */
 public abstract class BaseAuthenticationController extends HttpServlet {
-
+       
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

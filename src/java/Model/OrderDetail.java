@@ -15,6 +15,17 @@ public class OrderDetail {
     private int quantity;
     private Boolean isRated;
     private Order order;
+    private Book book;
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+    
+    
 
     public OrderDetail() {
     }
@@ -75,5 +86,11 @@ public class OrderDetail {
     public void setOrder(Order order) {
         this.order = order;
     }
+
+    @Override
+    public String toString() {
+        return "OrderDetail{" + "orderDetailId=" + orderDetailId + ", orderId=" + orderId + ", bookId=" + bookId + ", quantity=" + quantity + ", isRated=" + isRated + ", order=" + order + '}';
+    }
+    
     
 }
