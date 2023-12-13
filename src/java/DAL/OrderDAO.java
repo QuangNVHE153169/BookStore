@@ -267,7 +267,7 @@ public class OrderDAO extends DBContext {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Order order = oDao.getOrderById(rs.getInt("OrderId"));
+                Order order = oDao.getOrderDetailsById(rs.getInt("OrderId"));
                 list.add(order);
             }
         } catch (SQLException ex) {

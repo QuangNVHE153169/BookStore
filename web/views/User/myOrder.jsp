@@ -72,8 +72,15 @@
                                             <td style="height: 78px;">
                                                 <div class="d-flex align-items-center h-100">
                                                     <span class="badge ${item.status == 1 ? "bg-secondary" : item.status == 2 ? "bg-danger" : "bg-success"}">
-                                                        ${item.status == 1 ? "PENDING" : (item.status == 2 ? "CANCELED" : "ACCEPTED")}
-                                                        ${item.status == 3 ? "Delivery" : (item.status == 4 ? "Finish" : "Delivery Fail")}
+                                                        ${item.status == 1 ? "PENDING" : (item.status == 2 ? "REJECTED" : "ACCEPTED")}
+                                                        ${item.status == 3 ? "Delivery" : (item.status == 4 ? "FINISH" : "FAILED")}
+                                                    </span> 
+                                                </div>
+                                            </td>
+                                            <td style="height: 78px;">
+                                                <div class="d-flex align-items-center h-100">
+                                                    <span class="badge bg-info">
+                                                        ${item.paymentMethod.paymentMethodName}
                                                     </span> 
                                                 </div>
                                             </td>
