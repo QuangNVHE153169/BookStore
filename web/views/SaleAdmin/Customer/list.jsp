@@ -8,7 +8,7 @@
 </head>
 <%@include file="../../../layout/header.jsp" %>
 <body>
-    <%@include file="../../../layout/LeftAdminBar.jsp" %>
+    <%@include file="../../../layout/LeftAdminSaleBar.jsp" %>
     <section style="margin-left: 280px; height: calc(92vh); overflow-y: auto;">
         <div class="card my-2 mx-2">
             <div class="card-header">
