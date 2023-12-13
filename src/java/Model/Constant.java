@@ -13,6 +13,12 @@ public class Constant {
     public static final int RoleAdmin = 1;
     public static final int RoleCustomer = 2;
     public static final int RoleAdminSale = 3;
+    
+    public static final int OrderPending = 1;
+    public static final int OrderReject = 2;
+    public static final int OrderDelivery = 3;
+    public static final int OrderFinish = 4;
+    public static final int OrderFail = 5;
 
     public static final int GenderMale = 1;
     public static final int GenderFemale = 0;
