@@ -24,7 +24,8 @@ public class Order {
     private int status;
     private int paymentMethodId;
     private PaymentMethod paymentMethod;
-  
+    private ArrayList<OrderDetail> orderDetails;
+
     public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
@@ -32,8 +33,6 @@ public class Order {
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
-
-    private ArrayList<OrderDetail> orderDetails;
 
     public int getOrderId() {
         return orderId;
@@ -68,8 +67,7 @@ public class Order {
         this.paymentMethod = paymentMethod;
         this.orderDetails = orderDetails;
     }
-    
-    
+
     public Order(int orderId, int customerId, String customerName, String customerEmail, String customerPhone, String customerAddress, Date orderDate, int status, int paymentMethodId, ArrayList<OrderDetail> orderDetails) {
         this.orderId = orderId;
         this.customerId = customerId;
@@ -159,6 +157,5 @@ public class Order {
     public String toString() {
         return "Order{" + "orderId=" + orderId + ", customerId=" + customerId + ", customerName=" + customerName + ", customerEmail=" + customerEmail + ", customerPhone=" + customerPhone + ", customerAddress=" + customerAddress + ", orderDate=" + orderDate + ", status=" + status + ", paymentMethodId=" + paymentMethodId + ", paymentMethod=" + paymentMethod + ", orderDetails=" + orderDetails + '}';
     }
-    
-    
+
 }
