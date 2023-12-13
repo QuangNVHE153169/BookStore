@@ -96,6 +96,14 @@
         <servlet-name>ListOrderDeliveryController</servlet-name>
         <servlet-class>Controllers.SaleAdmin.ListOrderDeliveryController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CartDetailsController</servlet-name>
+        <servlet-class>Controllers.User.CartDetailsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartCheckOutController</servlet-name>
+        <servlet-class>Controllers.User.CartCheckOutController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -187,6 +195,14 @@
     <servlet-mapping>
         <servlet-name>ListOrderDeliveryController</servlet-name>
         <url-pattern>/admin-sale-delivery-orders</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartDetailsController</servlet-name>
+        <url-pattern>/cart-details</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartCheckOutController</servlet-name>
+        <url-pattern>/cart-check-out</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

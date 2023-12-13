@@ -30,19 +30,18 @@
 
                 <div class="col-sm-6 col-md-4 col-lg-3 header_cart_wrapper">
                     <!-- HEADER CART -->
-                    <a class="d-flex align-items-center gap-3 href-unstyled hover-color-primary" href="/cart"><i
+                    <a class="d-flex align-items-center gap-3 href-unstyled hover-color-primary" href="cart-details"><i
                             class="fa fa-xl fa-shopping-cart"></i>
                         <div>
                             <div style="font-size: 18px; font-weight: 700">
                                 Shopping cart:
                                 <span style="font-size: 20; color: #fc5c3c" class="count">0</span>
                             </div>
-                            <div style="color: #fc5c3c">Checkout</div>
                         </div>
                     </a>
                 </div>
             </div>
         </header>
     </body>
-
 </html>
+
