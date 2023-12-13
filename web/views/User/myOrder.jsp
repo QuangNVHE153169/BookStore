@@ -85,7 +85,7 @@
                                                 </div>
                                             </td>
                                             <td class="d-flex gap-2 align-items-center" style="width: 280px; height: 78px;">
-                                                <a href="admin-sale-orders?orderId=${item.orderId}" type="button" class="btn btn-outline-secondary me-2">
+                                                <a href="my-order?orderId=${item.orderId}" type="button" class="btn btn-outline-secondary me-2">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                     Detail</a>                              
                                             </td>

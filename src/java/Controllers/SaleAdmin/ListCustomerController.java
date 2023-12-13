@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controllers.Admin;
+package Controllers.SaleAdmin;
 
 import Controllers.Authenticate.BaseAuthenticationController;
 import DAL.UserDAO;
@@ -33,13 +33,23 @@ public class ListCustomerController extends BaseAuthenticationController {
 
     @Override
     protected void processAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    protected void processAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    protected void processSaleAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserDAO uDao = new UserDAO();
 
         if (request.getParameter("userId") != null && !request.getParameter("userId").isEmpty()) {
             User user = uDao.getUserByIdAndRole(Integer.parseInt(request.getParameter("userId")), Constant.RoleCustomer);
             if (user != null) {
                 request.setAttribute("customer", user);
-                request.getRequestDispatcher("/views/Admin/Customer/details.jsp").forward(request, response);
+                request.getRequestDispatcher("/views/SaleAdmin/Customer/details.jsp").forward(request, response);
             } else {
                 request.getSession().setAttribute("msg", "Customer is not exist");
                 response.sendRedirect("admin-customer");
@@ -60,12 +70,12 @@ public class ListCustomerController extends BaseAuthenticationController {
             request.setAttribute("totalPage", totalPage);
             request.setAttribute("currentPage", page);
 
-            request.getRequestDispatcher("/views/Admin/Customer/list.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/SaleAdmin/Customer/list.jsp").forward(request, response);
         }
     }
 
     @Override
-    protected void processAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processSaleAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserDAO uDao = new UserDAO();
         int userId = Integer.parseInt(request.getParameter("userId"));
         boolean status = Boolean.valueOf(request.getParameter("status"));
@@ -76,16 +86,6 @@ public class ListCustomerController extends BaseAuthenticationController {
             request.getSession().setAttribute("msg", "Unlock Customer with ID: " + userId + " successful!");
         }
         response.sendRedirect("admin-customer");
-    }
-
-    @Override
-    protected void processSaleAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    protected void processSaleAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

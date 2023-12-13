@@ -82,7 +82,7 @@
     </servlet>
     <servlet>
         <servlet-name>ListCustomerController</servlet-name>
-        <servlet-class>Controllers.Admin.ListCustomerController</servlet-class>
+        <servlet-class>Controllers.SaleAdmin.ListCustomerController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListOrderController</servlet-name>
@@ -185,7 +185,7 @@
             30
         </session-timeout>
     </session-config>
-<!--    <error-page>
+    <!--    <error-page>
         <error-code>404</error-code>
         <location>/error/404.jsp</location>
     </error-page>-->
