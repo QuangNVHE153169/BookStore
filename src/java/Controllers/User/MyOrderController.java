@@ -67,7 +67,14 @@ public class MyOrderController extends BaseAuthenticationController {
 
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        OrderDAO oDao = new OrderDAO();
+        oDao.updateStatus(Integer.parseInt(request.getParameter("orderId")), Integer.parseInt(request.getParameter("status")));
+        Order o = oDao.getOrderById(Integer.parseInt(request.getParameter("orderId")));
+        o.setOrderDetails(oDao.getOrderDetailsByOrderId(o.getOrderId()));
 
+        request.setAttribute("order", o);
+        request.getSession().setAttribute("msg", "Cancel order successfully");
+        response.sendRedirect("my-order");
     }
 
     @Override

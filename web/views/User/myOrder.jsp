@@ -71,85 +71,89 @@
                                             </td>
                                             <td style="height: 78px;">
                                                 <div class="d-flex align-items-center h-100">
-                                                    <span class="badge ${item.status == 1 ? "bg-secondary" : item.status == 2 ? "bg-danger" : "bg-success"}">
-                                                        ${item.status == 1 ? "PENDING" : (item.status == 2 ? "REJECTED" : "ACCEPTED")}
-                                                        ${item.status == 3 ? "DELIVERY" : (item.status == 4 ? "FINISH" : "FAILED")}
-                                                        ${item.status == 6 ? "CANCEL" : ""}
-                                                    </span> 
-                                                </div>
-                                            </td>
-                                            <td style="height: 78px;">
-                                                <div class="d-flex align-items-center h-100">
-                                                    <span class="badge bg-info">
-                                                        ${item.paymentMethod.paymentMethodName}
-                                                    </span> 
-                                                </div>
-                                            </td>
-                                            <td class="d-flex gap-2 align-items-center" style="width: 280px; height: 78px;">
-                                                <a href="my-order?orderId=${item.orderId}" type="button" class="btn btn-outline-secondary me-2">
-                                                    <i class="fa-solid fa-pen-to-square"></i>
-                                                    Detail</a>                              
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                    <c:if test="${items.size() == 0}">
-                                        <tr>
-                                            <td colspan="8">
-                                                <div class="text-center">
-                                                    <span>No result</span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </c:if>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--Pagination of item (6 item each page)--> 
-                        <c:if test="${totalPage > 1}">
-                            <div class="d-flex justify-content-center mt-1">
-                                <nav aria-label="Page navigation example col-12">
-                                    <ul class="pagination">
-                                        <%--For displaying Previous link except for the 1st page --%>
-                                        <c:if test="${currentPage != 1}">
-                                            <li class="page-item">
-                                                <a class="page-link" href="admin-sale-orders?${queryString}page=${currentPage - 1}" aria-label="Previous">
-                                                    <span aria-hidden="true">&laquo;</span>
-                                                </a>
-                                            </li>
+                                                    <span class="badge ${(item.status == 1 || item.status == 3) ? "bg-secondary" : 
+                                                                         (item.status == 2 || item.status == 5 || item.status == 6) ? "bg-danger" : "bg-success"}">
+                                                              ${item.status == 1 ? "PENDING" : ""}
+                                                              ${item.status == 2 ? "REJECT" : ""}
+                                                              ${item.status == 3 ? "DELIVERY" : ""}
+                                                              ${item.status == 4 ? "FINISH" : ""}
+                                                              ${item.status == 5 ? "FAILED" : ""}
+                                                              ${item.status == 6 ? "CANCEL" : ""}
+                                                          </span> 
+                                                    </div>
+                                                </td>
+                                                <td style="height: 78px;">
+                                                    <div class="d-flex align-items-center h-100">
+                                                        <span class="badge bg-info">
+                                                            ${item.paymentMethod.paymentMethodName}
+                                                        </span> 
+                                                    </div>
+                                                </td>
+                                                <td class="d-flex gap-2 align-items-center" style="width: 280px; height: 78px;">
+                                                    <a href="my-order?orderId=${item.orderId}" type="button" class="btn btn-outline-secondary me-2">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                        Detail</a>                              
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                        <c:if test="${items.size() == 0}">
+                                            <tr>
+                                                <td colspan="8">
+                                                    <div class="text-center">
+                                                        <span>No result</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         </c:if>
-                                        <%--For displaying Page numbers. The when condition does not display
-                                                    a link for the current page--%>
-                                        <c:forEach begin="1" end="${totalPage}" var="i">
-                                            <c:choose>
-                                                <c:when test="${currentPage eq i}"> 
-                                                    <li class="page-item"><a class="page-link bg-light">${i}</a></li>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                    <li class="page-item"><a class="page-link" href="admin-sale-orders?page=${i}">${i}</a></li>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </c:forEach>
-
-                                        <%--For displaying Next link --%>
-                                        <c:if test="${currentPage lt totalPage}">
-                                            <li class="page-item">
-                                                <a class="page-link" href="admin-sale-orders?page=${currentPage + 1}" aria-label="Next">
-                                                    <span aria-hidden="true">&raquo;</span>
-                                                </a>
-                                            </li>
-                                        </c:if>
-                                    </ul>
-                                </nav>
+                                    </tbody>
+                                </table>
                             </div>
-                        </c:if>
-                    </div>   
+                            <!--Pagination of item (6 item each page)--> 
+                            <c:if test="${totalPage > 1}">
+                                <div class="d-flex justify-content-center mt-1">
+                                    <nav aria-label="Page navigation example col-12">
+                                        <ul class="pagination">
+                                            <%--For displaying Previous link except for the 1st page --%>
+                                            <c:if test="${currentPage != 1}">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="admin-sale-orders?${queryString}page=${currentPage - 1}" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                    </a>
+                                                </li>
+                                            </c:if>
+                                            <%--For displaying Page numbers. The when condition does not display
+                                                        a link for the current page--%>
+                                            <c:forEach begin="1" end="${totalPage}" var="i">
+                                                <c:choose>
+                                                    <c:when test="${currentPage eq i}"> 
+                                                        <li class="page-item"><a class="page-link bg-light">${i}</a></li>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                        <li class="page-item"><a class="page-link" href="admin-sale-orders?page=${i}">${i}</a></li>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:forEach>
+
+                                            <%--For displaying Next link --%>
+                                            <c:if test="${currentPage lt totalPage}">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="admin-sale-orders?page=${currentPage + 1}" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                    </a>
+                                                </li>
+                                            </c:if>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </c:if>
+                        </div>   
+                    </div>
                 </div>
-            </div>
-        </section>
-    </div>
-</body>
-<!-- Script using  -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-crossorigin="anonymous"></script>
-<script src="https://kit.fontawesome.com/8d39de38b8.js" crossorigin="anonymous"></script>
+            </section>
+        </div>
+    </body>
+    <!-- Script using  -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/8d39de38b8.js" crossorigin="anonymous"></script>
