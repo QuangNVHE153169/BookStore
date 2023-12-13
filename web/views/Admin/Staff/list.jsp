@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Staff Management</title>
+    <title>Sale Admin Management</title>
     <link href="${pageContext.request.contextPath}/css/styles.css" rel="stylesheet" type="text/css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
@@ -14,11 +14,11 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h1 class="fs-2 fw-bold">
-                        List Staff
+                        Sale Admin List
                     </h1>
                     <a type="button" class="btn btn-primary btn-lg" href="admin-manage-staff">
                         <i class="fa-solid fa-plus"></i>
-                        Add Staff</a>
+                        Add Sale Admin</a>
                 </div>
             </div>
             <div class="card-body">

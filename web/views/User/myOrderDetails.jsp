@@ -10,7 +10,7 @@
 <body>
     <div class="d-flex">
         <%@ include file="../../layout/LeftUserBar.jsp" %>
-        <section style="margin-left: 280px; height: calc(92vh); overflow-y: auto;">
+        <section style="overflow-y: auto;" class="w-100 background-gray">
             <div class="card my-2 mx-2">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">

@@ -34,7 +34,7 @@
         <li>
             <a href="${pageContext.request.contextPath}/admin-staff" class="nav-link
                ${pageContext.request.servletPath.equals("/views/Admin/Staff/list.jsp")? "active" : ""}">
-                Manage Staff
+                Manage Sale Admin
             </a>
         </li>
     </ul>

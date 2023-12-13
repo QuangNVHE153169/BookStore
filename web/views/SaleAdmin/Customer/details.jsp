@@ -33,7 +33,7 @@
                     <c:if test="${requestScope.customer != null}">
                         <div class="row">
                             <div class="col-6">
-                                <strong> <label for="category-film" class="col-form-label">StaffID: </label> ${requestScope.customer.userID}</strong>
+                                <strong> <label for="category-film" class="col-form-label">CustomerID: </label> ${requestScope.customer.userID}</strong>
                                 <input type="hidden" name="userId"
                                        value="${requestScope.customer.userID}">
                             </div>
