@@ -19,6 +19,7 @@ public class Constant {
     public static final int OrderDelivery = 3;
     public static final int OrderFinish = 4;
     public static final int OrderFail = 5;
+    public static final int OrderCancel = 6;
 
     public static final int GenderMale = 1;
     public static final int GenderFemale = 0;

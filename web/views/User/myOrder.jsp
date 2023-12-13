@@ -73,7 +73,8 @@
                                                 <div class="d-flex align-items-center h-100">
                                                     <span class="badge ${item.status == 1 ? "bg-secondary" : item.status == 2 ? "bg-danger" : "bg-success"}">
                                                         ${item.status == 1 ? "PENDING" : (item.status == 2 ? "REJECTED" : "ACCEPTED")}
-                                                        ${item.status == 3 ? "Delivery" : (item.status == 4 ? "FINISH" : "FAILED")}
+                                                        ${item.status == 3 ? "DELIVERY" : (item.status == 4 ? "FINISH" : "FAILED")}
+                                                        ${item.status == 6 ? "CANCEL" : ""}
                                                     </span> 
                                                 </div>
                                             </td>

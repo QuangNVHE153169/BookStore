@@ -38,25 +38,31 @@ public class MyOrderController extends BaseAuthenticationController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OrderDAO oDao = new OrderDAO();
+        if (request.getParameter("orderId") != null && !request.getParameter("orderId").isEmpty()) {
+            Order o = oDao.getOrderDetailsById(Integer.parseInt(request.getParameter("orderId")));
+            o.setOrderDetails(oDao.getOrderDetailsByOrderId(o.getOrderId()));
+            request.setAttribute("order", o);
+            request.getRequestDispatcher("views/User/myOrderDetails.jsp").forward(request, response);
+        } else {
+            //get current login accoutn
+            User account = (User) request.getSession().getAttribute("account");
 
-        //get current login accoutn
-        User account = (User) request.getSession().getAttribute("account");
+            int page = 1;
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(request.getParameter("page"));
+            }
 
-        int page = 1;
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
+            ArrayList<Order> orders = oDao.getOrderByUserPagnition((page - 1) * Constant.RecordPerPage, Constant.RecordPerPage, account.getUserID(), orderStatus);
+            int totalPublisher = oDao.getTotalOrderByUser(account.getUserID(), orderStatus);
+            int totalPage = (int) Math.ceil((double) totalPublisher / Constant.RecordPerPage);
+
+            request.setAttribute("items", orders);
+
+            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("currentPage", page);
+
+            request.getRequestDispatcher("/views/User/myOrder.jsp").forward(request, response);
         }
-
-        ArrayList<Order> orders = oDao.getOrderByUserPagnition((page - 1) * Constant.RecordPerPage, Constant.RecordPerPage, account.getUserID(), orderStatus);
-        int totalPublisher = oDao.getTotalOrderByUser(account.getUserID(), orderStatus);
-        int totalPage = (int) Math.ceil((double) totalPublisher / Constant.RecordPerPage);
-
-        request.setAttribute("items", orders);
-
-        request.setAttribute("totalPage", totalPage);
-        request.setAttribute("currentPage", page);
-        
-        request.getRequestDispatcher("/views/User/myOrder.jsp").forward(request, response);
     }
 
     @Override
