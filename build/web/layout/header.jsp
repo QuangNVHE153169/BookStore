@@ -124,6 +124,7 @@
                             <c:if test="${sessionScope.account.role.id != 1}"> 
                                 <li><a class="dropdown-item" href="user-profile">User Profile</a></li>
                                 <li><a class="dropdown-item" href="change-password">Change Password</a></li>
+                                <li><a class="dropdown-item" href="my-order">My Order</a></li>
                                 </c:if>                           
                             <li><a class="dropdown-item" href="logout">Sign out</a></li>
                         </ul>

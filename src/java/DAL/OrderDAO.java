@@ -8,12 +8,16 @@ import Model.Constant;
 import Model.Enums.OrderStatus;
 import Model.Order;
 import Model.OrderDetail;
+import Model.PaymentMethod;
+import Model.User;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -66,9 +70,9 @@ public class OrderDAO extends DBContext {
             stm.setInt(1, status);
             stm.setInt(2, orderId);
             stm.executeUpdate();
-            
+
             BookDAO bDao = new BookDAO();
-            
+
             ArrayList<OrderDetail> ods = getOrderDetailsByOrderId(orderId);
             for (OrderDetail od : ods) {
                 bDao.updateQuantity(od.getBook().getBookId(), od.getQuantity(), status);
@@ -129,6 +133,40 @@ public class OrderDAO extends DBContext {
         return null;
     }
 
+    public Order getOrderDetailsById(int orderId) {
+        try {
+            String sql = "Select * FROM Orders WHERE OrderId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, orderId);
+            ResultSet rs = stm.executeQuery();
+
+            PaymentMethodDAO pDao = new PaymentMethodDAO();
+            UserDAO uDao = new UserDAO();
+
+            if (rs.next()) {
+                Order order = new Order();
+                PaymentMethod payment = pDao.getPaymentMethodById(rs.getInt("PaymentMethodId"));
+                User cusrtomer = uDao.getUserByID(rs.getInt("CustomerId"));
+
+                order.setOrderId(orderId);
+                order.setCustomer(cusrtomer);
+                order.setCustomerAddress(rs.getNString("Customer_Address"));
+                order.setCustomerEmail(rs.getString("Customer_Email"));
+                order.setCustomerName(rs.getString("Customer_Name"));
+                order.setCustomerPhone(rs.getString("Customer_Phone"));
+                order.setOrderDate(rs.getDate("OrderDate"));
+                order.setPaymentMethod(payment);
+                order.setStatus(rs.getInt("OrderStatus"));
+
+                return order;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
     public ArrayList<OrderDetail> getOrderDetailsByOrderId(int orderId) {
         ArrayList<OrderDetail> list = new ArrayList<>();
         try {
@@ -165,7 +203,7 @@ public class OrderDAO extends DBContext {
                 od.setOrderId(rs.getInt("OrderId"));
                 od.setQuantity(rs.getInt("Quantity"));
                 od.setBook(bDao.getBookById(rs.getInt("BookId")));
-                
+
                 return od;
             }
         } catch (SQLException ex) {
@@ -196,5 +234,73 @@ public class OrderDAO extends DBContext {
         for (OrderStatus os : OrderStatus.values()) {
             System.out.println(os.name() + " " + os.getStatusValue());
         }
+    }
+
+    public ArrayList<Order> getOrderByUserPagnition(int offset, int RecordPerPage, int userID, int orderStatus) {
+        UserDAO uDao = new UserDAO();
+        OrderDAO oDao = new OrderDAO();
+        ArrayList<Order> list = new ArrayList<>();
+        int count = 0;
+        try {
+            String sql = "SELECT *\n"
+                    + "  FROM [dbo].[Orders]\n"
+                    + "  Where CustomerId = ?";
+            HashMap<Integer, Object> setter = new HashMap<>();
+            setter.put(++count, userID);
+
+            if (orderStatus != -1) {
+                sql += "    and OrderStatus = ?\n";
+                setter.put(++count, orderStatus);
+            }
+
+            sql += "    Order by OrderDate desc\n";
+            sql += "    offset ? rows\n"
+                    + " fetch next ? rows only";
+
+            setter.put(++count, offset);
+            setter.put(++count, RecordPerPage);
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            for (Map.Entry<Integer, Object> entry : setter.entrySet()) {
+                ps.setObject(entry.getKey(), entry.getValue());
+            }
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Order order = oDao.getOrderById(rs.getInt("OrderId"));
+                list.add(order);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public int getTotalOrderByUser(int userID, int orderStatus) {
+        int count = 0;
+        try {
+            String sql = "SELECT count(*)\n"
+                    + "  FROM [dbo].[Orders]\n"
+                    + "  Where CustomerId = ?";
+            HashMap<Integer, Object> setter = new HashMap<>();
+            setter.put(++count, userID);
+
+            if (orderStatus != -1) {
+                sql += "    and OrderStatus = ?\n";
+                setter.put(++count, orderStatus);
+            }
+            PreparedStatement ps = connection.prepareStatement(sql);
+            for (Map.Entry<Integer, Object> entry : setter.entrySet()) {
+                ps.setObject(entry.getKey(), entry.getValue());
+            }
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 }

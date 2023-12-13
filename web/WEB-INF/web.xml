@@ -88,6 +88,10 @@
         <servlet-name>ListOrderController</servlet-name>
         <servlet-class>Controllers.SaleAdmin.ListOrderController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MyOrderController</servlet-name>
+        <servlet-class>Controllers.User.MyOrderController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -172,15 +176,19 @@
         <servlet-name>ListOrderController</servlet-name>
         <url-pattern>/admin-sale-orders</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MyOrderController</servlet-name>
+        <url-pattern>/my-order</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    <error-page>
+<!--    <error-page>
         <error-code>404</error-code>
         <location>/error/404.jsp</location>
-    </error-page>
+    </error-page>-->
     <!--    <error-page>
         <error-code>500</error-code>
         <location>/error/500.jsp</location>

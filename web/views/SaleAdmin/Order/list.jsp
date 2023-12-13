@@ -70,7 +70,7 @@
                                         <td style="height: 78px;">
                                             <div class="d-flex align-items-center h-100">
                                                 <span class="badge ${item.status == 1 ? "bg-secondary" : item.status == 2 ? "bg-danger" : "bg-success"}">
-                                                    ${item.status == 1 ? "PENDING" : item.status == 2 ? "CANCELED" : "ACCEPTED"}
+                                                    ${item.status == 1 ? "PENDING" : item.status == 2 ? "REJECT" : "ACCEPTED"}
                                                 </span> 
                                             </div>
                                         </td>

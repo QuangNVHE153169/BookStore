@@ -15,6 +15,7 @@ public class Order {
 
     private int orderId;
     private int customerId;
+    private User customer;
     private String customerName;
     private String customerEmail;
     private String customerPhone;
@@ -50,6 +51,21 @@ public class Order {
     }
 
     public void setOrderDetails(ArrayList<OrderDetail> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
+    public Order(int orderId, int customerId, User customer, String customerName, String customerEmail, String customerPhone, String customerAddress, Date orderDate, int status, int paymentMethodId, PaymentMethod paymentMethod, ArrayList<OrderDetail> orderDetails) {
+        this.orderId = orderId;
+        this.customerId = customerId;
+        this.customer = customer;
+        this.customerName = customerName;
+        this.customerEmail = customerEmail;
+        this.customerPhone = customerPhone;
+        this.customerAddress = customerAddress;
+        this.orderDate = orderDate;
+        this.status = status;
+        this.paymentMethodId = paymentMethodId;
+        this.paymentMethod = paymentMethod;
         this.orderDetails = orderDetails;
     }
     
@@ -129,6 +145,14 @@ public class Order {
 
     public void setPaymentMethodId(int paymentMethodId) {
         this.paymentMethodId = paymentMethodId;
+    }
+
+    public User getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(User customer) {
+        this.customer = customer;
     }
 
     @Override

@@ -25,7 +25,7 @@
                     <c:if test="${requestScope.order.status == 1}">
                         <div class="col-2 text-end align-items-center">
                             <a type="button" class="btn btn-danger" onclick="submitForm(this)" data-status="2">
-                                CANCEL</a>
+                                REJECT</a>
                             <a type="button" class="btn btn-success" onclick="submitForm(this)" data-status="3">
                                 ACCEPT</a>
                         </div>
@@ -37,7 +37,7 @@
                     <c:if test="${requestScope.order.status != 1}">
                         <h1 class="col-2 text-end">
                             <span class="badge ${requestScope.order.status != 3 ? "bg-danger" : "bg-success"}">
-                                ${requestScope.order.status != 3 ? "CANCELED" : "ACCEPT"}
+                                ${requestScope.order.status != 3 ? "REJECT" : "ACCEPT"}
                             </span>
                         </h1>
                     </c:if>

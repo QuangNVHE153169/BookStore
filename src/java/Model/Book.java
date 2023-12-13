@@ -14,6 +14,7 @@ public class Book {
 
     private int bookId;
     private String title;
+    private String isbn;
     private double price;
     private int pageCount;
     private boolean status;
@@ -32,6 +33,22 @@ public class Book {
     private Category category;
 
     public Book() {
+    }
+
+    public Book(int bookId, String title, String isbn, double price, int pageCount, boolean status, int quantity, int categoryId, int authorId, int publisherId, int publicationYear, String description, boolean deleteFlag) {
+        this.bookId = bookId;
+        this.title = title;
+        this.isbn = isbn;
+        this.price = price;
+        this.pageCount = pageCount;
+        this.status = status;
+        this.quantity = quantity;
+        this.categoryId = categoryId;
+        this.authorId = authorId;
+        this.publisherId = publisherId;
+        this.publicationYear = publicationYear;
+        this.description = description;
+        this.deleteFlag = deleteFlag;
     }
 
     public int getBookId() {
@@ -285,4 +302,14 @@ public class Book {
     public void setImages(ArrayList<BookImage> images) {
         this.images = images;
     }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+    
+    
 }
