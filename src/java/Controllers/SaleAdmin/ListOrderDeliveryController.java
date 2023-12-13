@@ -19,7 +19,7 @@ import java.util.ArrayList;
  *
  * @author Admin
  */
-public class ListOrderController extends BaseAuthenticationController {
+public class ListOrderDeliveryController extends BaseAuthenticationController {
 
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,28 +45,29 @@ public class ListOrderController extends BaseAuthenticationController {
     protected void processSaleAdminGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OrderDAO oDao = new OrderDAO();
         if (request.getParameter("orderId") != null && !request.getParameter("orderId").isEmpty()) {
-            Order o = oDao.getOrderAdminById(Integer.parseInt(request.getParameter("orderId")));
+            Order o = oDao.getOrderDeliveryById(Integer.parseInt(request.getParameter("orderId")));
             if (o != null) {
                 o.setOrderDetails(oDao.getOrderDetailsByOrderId(o.getOrderId()));
                 request.setAttribute("order", o);
-                request.getRequestDispatcher("views/SaleAdmin/Order/details.jsp").forward(request, response);
+                request.getRequestDispatcher("views/SaleAdmin/OrderDelivery/details.jsp").forward(request, response);
             } else {
                 request.getSession().setAttribute("msg", "Order is not exist");
-                response.sendRedirect("admin-sale-orders");
+                response.sendRedirect("admin-sale-delivery-orders");
             }
+
         } else {
             int page = 1;
             if (request.getParameter("page") != null) {
                 page = Integer.parseInt(request.getParameter("page"));
             }
-            ArrayList<Order> o = oDao.getOrdersPaginate(page);
+            ArrayList<Order> o = oDao.getDeliveryOrdersPaginate(page);
             request.setAttribute("items", o);
 
             request.setAttribute("totalPage", oDao.getTotalPage(o.size()));
             request.setAttribute("orderStatus", OrderStatus.values());
             request.setAttribute("currentPage", page);
 
-            request.getRequestDispatcher("views/SaleAdmin/Order/list.jsp").forward(request, response);
+            request.getRequestDispatcher("views/SaleAdmin/OrderDelivery/list.jsp").forward(request, response);
         }
     }
 
@@ -74,9 +75,8 @@ public class ListOrderController extends BaseAuthenticationController {
     protected void processSaleAdminPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OrderDAO oDao = new OrderDAO();
         oDao.updateStatus(Integer.parseInt(request.getParameter("orderId")), Integer.parseInt(request.getParameter("status")));
-        
         request.getSession().setAttribute("msg", "Update status successfully");
-        response.sendRedirect("admin-sale-orders");
+        response.sendRedirect("admin-sale-delivery-orders");
     }
 
 }

@@ -92,6 +92,10 @@
         <servlet-name>MyOrderController</servlet-name>
         <servlet-class>Controllers.User.MyOrderController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListOrderDeliveryController</servlet-name>
+        <servlet-class>Controllers.SaleAdmin.ListOrderDeliveryController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -179,6 +183,10 @@
     <servlet-mapping>
         <servlet-name>MyOrderController</servlet-name>
         <url-pattern>/my-order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListOrderDeliveryController</servlet-name>
+        <url-pattern>/admin-sale-delivery-orders</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

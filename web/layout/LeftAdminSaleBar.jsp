@@ -14,6 +14,12 @@
             </a>
         </li>
         <li>
+            <a href="${pageContext.request.contextPath}/admin-sale-delivery-orders" class="nav-link
+               ${pageContext.request.servletPath.equals("/views/SaleAdmin/OrderDelivery/list.jsp")? "active" : ""}">
+                Manage Delivery Order
+            </a>
+        </li>
+        <li>
             <a href="${pageContext.request.contextPath}/admin-customer" class="nav-link
                ${pageContext.request.servletPath.equals("/views/SaleAdmin/Customer/list.jsp")? "active" : ""}">
                 Manage Customer
