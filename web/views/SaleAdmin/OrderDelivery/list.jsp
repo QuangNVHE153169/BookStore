@@ -69,25 +69,13 @@
                                         </td>
                                         <td style="height: 78px;">
                                             <div class="d-flex align-items-center h-100">
-                                                <c:if test="${item.status == 1}">
-                                                    <span class="badge bg-secondary">
-                                                        PENDING
-                                                    </span> 
-                                                </c:if>
-                                                <c:if test="${item.status == 2 || item.status == 5}">
-                                                    <span class="badge bg-danger">
-                                                        ${item.status == 2 ? "REJECTED" : "FAILED"}
-                                                    </span> 
-                                                </c:if>
-                                                <c:if test="${item.status == 4}">
-                                                    <span class="badge bg-success">
-                                                        FINISHED
-                                                    </span> 
-                                                </c:if>
+                                                <span class="badge bg-secondary">
+                                                    DELIVERING
+                                                </span> 
                                             </div>
                                         </td>
                                         <td class="d-flex gap-2 align-items-center" style="width: 280px; height: 78px;">
-                                            <a href="admin-sale-orders?orderId=${item.orderId}" type="button" class="btn btn-outline-secondary me-2">
+                                            <a href="admin-sale-delivery-orders?orderId=${item.orderId}" type="button" class="btn btn-outline-secondary me-2">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                                 Detail</a>                              
                                         </td>

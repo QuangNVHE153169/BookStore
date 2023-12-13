@@ -22,14 +22,14 @@
                     <h1 class="col-10 fs-2 fw-bold">
                         Order Details
                     </h1>
-                    <c:if test="${requestScope.order.status == 1}">
+                    <c:if test="${requestScope.order.status == 3}">
                         <div class="col-2 text-end align-items-center">
-                            <a type="button" class="btn btn-danger" onclick="submitForm(this)" data-status="2">
-                                REJECT</a>
-                            <a type="button" class="btn btn-success" onclick="submitForm(this)" data-status="3">
-                                ACCEPT</a>
+                            <a type="button" class="btn btn-danger" onclick="submitForm(this)" data-status="5">
+                                FAIL</a>
+                            <a type="button" class="btn btn-success" onclick="submitForm(this)" data-status="4">
+                                FINISH</a>
                         </div>
-                        <form action="admin-sale-orders" method="post" id="submitStatus">
+                        <form action="admin-sale-delivery-orders" method="post" id="submitStatus">
                             <input hidden name="orderId" value="${order.orderId}">
                             <input hidden name="status" id="statusVal" value="">
                         </form>

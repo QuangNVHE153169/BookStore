@@ -390,7 +390,7 @@ public class BookDAO extends DBContext {
 
             Book b = getBookById(bookId);
             int quantityAfter = b.getQuantity();
-            if (status == OrderStatus.CANCELED.getStatusValue()) {
+            if (status == Constant.OrderReject || status == Constant.OrderFail) {
                 quantityAfter += quantity;
             }
             if (status == OrderStatus.PENDING.getStatusValue()) {

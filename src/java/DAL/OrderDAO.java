@@ -89,7 +89,28 @@ public class OrderDAO extends DBContext {
     public ArrayList<Order> getOrdersPaginate(int page) {
         ArrayList<Order> list = new ArrayList<>();
         try {
-            String sql = "Select * FROM Orders Order By OrderId desc\n"
+            String sql = "Select * FROM Orders WHERE OrderStatus != 3 Order By OrderId desc\n"
+                    + " Offset ? row\n"
+                    + " fetch next ? rows only";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            int offset = (page - 1) * Constant.RecordPerPage;
+            stm.setInt(1, offset);
+            stm.setInt(2, Constant.RecordPerPage);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                list.add(getOrderById(rs.getInt("OrderId")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return list;
+    }
+
+    public ArrayList<Order> getDeliveryOrdersPaginate(int page) {
+        ArrayList<Order> list = new ArrayList<>();
+        try {
+            String sql = "Select * FROM Orders WHERE OrderStatus = 3 Order By OrderId desc\n"
                     + " Offset ? row\n"
                     + " fetch next ? rows only";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -110,6 +131,58 @@ public class OrderDAO extends DBContext {
     public Order getOrderById(int orderId) {
         try {
             String sql = "Select * FROM Orders WHERE OrderId = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, orderId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Order order = new Order();
+                order.setOrderId(orderId);
+                order.setCustomerAddress(rs.getNString("Customer_Address"));
+                order.setCustomerEmail(rs.getString("Customer_Email"));
+                order.setCustomerName(rs.getString("Customer_Name"));
+                order.setCustomerPhone(rs.getString("Customer_Phone"));
+                order.setOrderDate(rs.getDate("OrderDate"));
+                order.setPaymentMethodId(rs.getInt("PaymentMethodId"));
+                order.setStatus(rs.getInt("OrderStatus"));
+
+                return order;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+    
+    public Order getOrderAdminById(int orderId) {
+        try {
+            String sql = "Select * FROM Orders WHERE OrderId = ? and OrderStatus != 3";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, orderId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Order order = new Order();
+                order.setOrderId(orderId);
+                order.setCustomerAddress(rs.getNString("Customer_Address"));
+                order.setCustomerEmail(rs.getString("Customer_Email"));
+                order.setCustomerName(rs.getString("Customer_Name"));
+                order.setCustomerPhone(rs.getString("Customer_Phone"));
+                order.setOrderDate(rs.getDate("OrderDate"));
+                order.setPaymentMethodId(rs.getInt("PaymentMethodId"));
+                order.setStatus(rs.getInt("OrderStatus"));
+
+                return order;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
+    public Order getOrderDeliveryById(int orderId) {
+        try {
+            String sql = "Select * FROM Orders WHERE OrderId = ? and OrderStatus = 3";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, orderId);
             ResultSet rs = stm.executeQuery();
